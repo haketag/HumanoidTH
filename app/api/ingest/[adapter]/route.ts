@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import type { SourceType } from "../../../../generated/prisma";
 import { runAdapter } from "@/lib/ingest/adapters";
 
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 type Params = Promise<{ adapter: string }>;
 
 export async function POST(request: Request, { params }: { params: Params }) {
