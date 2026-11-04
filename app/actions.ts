@@ -3,10 +3,19 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import { timingSafeEqual } from "node:crypto";
 import type { SourceType } from "../generated/prisma";
 import { prisma } from "@/lib/prisma";
 import { runAdapter } from "@/lib/ingest/adapters";
 import { canonicalizeUrl } from "@/lib/url";
+import { createAdminSessionToken, verifyAdminSessionToken } from "@/lib/admin-session";
+
+async function requireAdminSession() {
+  const token = (await cookies()).get("admin_session")?.value;
+  if (!await verifyAdminSessionToken(token, process.env.ADMIN_SESSION_SECRET)) {
+    throw new Error("Unauthorized. A valid administrator session is required.");
+  }
+}
 
 function readTextField(formData: FormData, key: string) {
   return String(formData.get(key) ?? "").trim();
@@ -58,6 +67,7 @@ function revalidateAtlasCms() {
 }
 
 export async function createSubmission(formData: FormData) {
+  await requireAdminSession();
   const cookieStore = await cookies();
   const currentEmail = cookieStore.get("user_email")?.value;
   if (!currentEmail) {
@@ -88,11 +98,13 @@ export async function createSubmission(formData: FormData) {
 }
 
 export async function updateSubmissionStatus(id: string, status: "APPROVED" | "REJECTED" | "NEEDS_REVIEW") {
+  await requireAdminSession();
   await prisma.submittedData.update({ where: { id }, data: { status } });
   revalidateAtlasCms();
 }
 
 export async function runDataPull(formData: FormData) {
+  await requireAdminSession();
   const adapter = String(formData.get("adapter") ?? "OPENALEX") as SourceType;
   const query = String(formData.get("query") ?? "").trim();
   const limit = Number(formData.get("limit") ?? 10);
@@ -133,63 +145,13 @@ export async function runDataPull(formData: FormData) {
 }
 
 export async function loginAsUser(email: string, role: string) {
-  const user = await prisma.user.upsert({
-    where: { email },
-    update: { role: role as any },
-    create: {
-      email,
-      name: email.split("@")[0],
-      role: role as any
-    }
-  });
-
-  const cookieStore = await cookies();
-  cookieStore.set("user_email", user.email, { path: "/" });
-  cookieStore.set("user_role", user.role, { path: "/" });
-  if (user.role === "ADMIN") {
-    cookieStore.set("admin_session", "true", { path: "/" });
-  } else {
-    cookieStore.delete("admin_session");
-  }
-  revalidatePath("/profile");
-  revalidateAtlasCms();
-  redirect("/profile");
+  void email; void role;
+  redirect("/profile?error=email_verification_required");
 }
 
 export async function registerAndLoginUser(formData: FormData) {
-  const email = String(formData.get("email") ?? "").trim();
-  const name = String(formData.get("name") ?? "").trim();
-  const role = String(formData.get("role") ?? "USER") as any;
-  const redirectTo = String(formData.get("redirectTo") ?? "/profile");
-
-  if (!email) {
-    throw new Error("Email is required");
-  }
-
-  const user = await prisma.user.upsert({
-    where: { email },
-    update: {
-      name: name || undefined,
-      role
-    },
-    create: {
-      email,
-      name: name || email.split("@")[0],
-      role
-    }
-  });
-
-  const cookieStore = await cookies();
-  cookieStore.set("user_email", user.email, { path: "/" });
-  cookieStore.set("user_role", user.role, { path: "/" });
-  if (user.role === "ADMIN") {
-    cookieStore.set("admin_session", "true", { path: "/" });
-  } else {
-    cookieStore.delete("admin_session");
-  }
-  revalidatePath("/profile");
-  revalidateAtlasCms();
-  redirect(redirectTo.startsWith("/") ? redirectTo : "/profile");
+  void formData;
+  redirect("/profile?error=email_verification_required");
 }
 
 export async function logoutUser() {
@@ -204,12 +166,26 @@ export async function logoutUser() {
 
 export async function adminLoginAction(formData: FormData) {
   const email = String(formData.get("email") ?? "").trim();
-  const password = String(formData.get("password") ?? "").trim();
+  const password = String(formData.get("password") ?? "");
 
-  const expectedUser = process.env.ADMIN_BASIC_USER || "creativelab.co.th@gmail.com";
-  const expectedPassword = process.env.ADMIN_BASIC_PASSWORD || "I@M_Cr3LabTH_F4M";
+  const expectedUser = process.env.ADMIN_BASIC_USER;
+  const expectedPassword = process.env.ADMIN_BASIC_PASSWORD;
+  const requestedFrom = String(formData.get("from") ?? "/admin?collection=submitted-data");
+  const redirectTo = requestedFrom.startsWith("/") && !requestedFrom.startsWith("//") && !requestedFrom.includes("\\")
+    ? requestedFrom
+    : "/admin?collection=submitted-data";
+  const sessionToken = await createAdminSessionToken(process.env.ADMIN_SESSION_SECRET);
+  if (!expectedUser || !expectedPassword || !sessionToken) redirect("/admin-login?error=configuration");
+  const providedUser = Buffer.from(email);
+  const configuredUser = Buffer.from(expectedUser);
+  const providedPassword = Buffer.from(password);
+  const configuredPassword = Buffer.from(expectedPassword);
+  const credentialsMatch = providedUser.length === configuredUser.length
+    && providedPassword.length === configuredPassword.length
+    && timingSafeEqual(providedUser, configuredUser)
+    && timingSafeEqual(providedPassword, configuredPassword);
 
-  if (email === expectedUser && password === expectedPassword) {
+  if (credentialsMatch) {
     const user = await prisma.user.upsert({
       where: { email },
       update: { role: "ADMIN" },
@@ -217,12 +193,13 @@ export async function adminLoginAction(formData: FormData) {
     });
 
     const cookieStore = await cookies();
-    cookieStore.set("user_email", user.email, { path: "/" });
-    cookieStore.set("user_role", "ADMIN", { path: "/" });
-    cookieStore.set("admin_session", "true", { path: "/" });
+    const secure = process.env.NODE_ENV === "production";
+    cookieStore.set("user_email", user.email, { path: "/", httpOnly: true, sameSite: "strict", secure });
+    cookieStore.set("user_role", "ADMIN", { path: "/", httpOnly: true, sameSite: "strict", secure });
+    cookieStore.set("admin_session", sessionToken, { path: "/", httpOnly: true, sameSite: "strict", secure, maxAge: 8 * 60 * 60 });
     
     revalidateAtlasCms();
-    redirect("/admin?collection=submitted-data");
+    redirect(redirectTo);
   } else {
     redirect("/admin-login?error=invalid_credentials");
   }
@@ -235,6 +212,7 @@ export async function setLanguage(lang: "en" | "th") {
 }
 
 export async function upsertSourceRecordAction(formData: FormData) {
+  await requireAdminSession();
   const id = readTextField(formData, "id");
   const url = readOptionalUrlField(formData, "url");
   const sourceType = readTextField(formData, "sourceType") as any;
@@ -274,6 +252,7 @@ export async function upsertSourceRecordAction(formData: FormData) {
 }
 
 export async function upsertRobotModelAction(formData: FormData) {
+  await requireAdminSession();
   const id = readTextField(formData, "id");
   const canonicalName = readTextField(formData, "canonicalName");
 
@@ -313,6 +292,7 @@ export async function upsertRobotModelAction(formData: FormData) {
 }
 
 export async function upsertContributionAction(formData: FormData) {
+  await requireAdminSession();
   const id = readTextField(formData, "id");
   const title = readTextField(formData, "title");
   const contributionType = readTextField(formData, "contributionType");
@@ -351,6 +331,7 @@ export async function upsertContributionAction(formData: FormData) {
 }
 
 export async function upsertSubmittedDataAction(formData: FormData) {
+  await requireAdminSession();
   const id = readTextField(formData, "id");
   const title = readTextField(formData, "title");
   const submissionType = readTextField(formData, "submissionType");

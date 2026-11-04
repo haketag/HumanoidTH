@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { verifyAdminSessionToken } from "@/lib/admin-session";
 
-const protectedPrefixes = ["/admin", "/data-pulls"];
+const protectedPrefixes = ["/admin", "/data-pulls", "/database"];
 const protectedApiPrefixes = ["/api/ingest", "/api/export"];
 
 function isProtectedPath(pathname: string) {
@@ -11,15 +12,16 @@ function isProtectedApiPath(pathname: string) {
   return protectedApiPrefixes.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
 }
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const privateInventory = pathname === "/inventory" && request.nextUrl.searchParams.get("mode") !== "public";
 
   // 1. Protect Web Pages (Redirect to actual UI login page)
-  if (isProtectedPath(pathname)) {
+  if (isProtectedPath(pathname) || privateInventory) {
     const adminSession = request.cookies.get("admin_session")?.value;
-    if (adminSession !== "true") {
+    if (!await verifyAdminSessionToken(adminSession, process.env.ADMIN_SESSION_SECRET)) {
       const loginUrl = new URL("/admin-login", request.url);
-      loginUrl.searchParams.set("from", pathname);
+      loginUrl.searchParams.set("from", `${pathname}${request.nextUrl.search}`);
       return NextResponse.redirect(loginUrl);
     }
     return NextResponse.next();
@@ -27,13 +29,20 @@ export function middleware(request: NextRequest) {
 
   // 2. Protect API Routes (Return 401 JSON without WWW-Authenticate header to prevent browser popups)
   if (isProtectedApiPath(pathname)) {
-    const expectedUser = process.env.ADMIN_BASIC_USER || "creativelab.co.th@gmail.com";
-    const expectedPassword = process.env.ADMIN_BASIC_PASSWORD || "I@M_Cr3LabTH_F4M";
+    if (await verifyAdminSessionToken(request.cookies.get("admin_session")?.value, process.env.ADMIN_SESSION_SECRET)) {
+      return NextResponse.next();
+    }
+    const expectedUser = process.env.ADMIN_BASIC_USER;
+    const expectedPassword = process.env.ADMIN_BASIC_PASSWORD;
 
     const header = request.headers.get("authorization");
-    if (header?.startsWith("Basic ")) {
+    if (expectedUser && expectedPassword && header?.startsWith("Basic ")) {
       try {
-        const [user, password] = atob(header.slice("Basic ".length)).split(":");
+        const decoded = atob(header.slice("Basic ".length));
+        const separator = decoded.indexOf(":");
+        if (separator < 0) throw new Error("Malformed Basic authorization header");
+        const user = decoded.slice(0, separator);
+        const password = decoded.slice(separator + 1);
         if (user === expectedUser && password === expectedPassword) {
           return NextResponse.next();
         }
@@ -52,5 +61,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/data-pulls/:path*", "/api/ingest/:path*", "/api/export"]
+  matcher: ["/admin/:path*", "/data-pulls/:path*", "/database/:path*", "/inventory", "/api/ingest/:path*", "/api/export"]
 };

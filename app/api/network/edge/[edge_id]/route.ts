@@ -9,7 +9,8 @@ export async function GET(req: Request, { params }: { params: Params }) {
   const { edge_id } = await params;
   const { searchParams } = new URL(req.url);
   const result = await getNetworkEdge(decodeURIComponent(edge_id), {
-    sourceMode: (searchParams.get("source") as NetworkSourceMode | null) ?? undefined
+    sourceMode: (searchParams.get("source") as NetworkSourceMode | null) ?? undefined,
+    includePrivate: false
   });
   if (!result) {
     return NextResponse.json({ error: "Edge not found" }, { status: 404 });

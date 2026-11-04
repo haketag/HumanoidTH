@@ -2,14 +2,15 @@ const robotTerms = [
   "robot",
   "robotics",
   "humanoid",
-  "android",
+  "android robot",
   "social robot",
   "service robot",
   "companion robot",
-  "eldercare",
+  "dinsaw",
+  "nao",
+  "pepper robot",
   "hospital robot",
   "หุ่นยนต์",
-  "ดินสอ",
   "embodied ai",
   "hri",
   "telepresence"
@@ -40,31 +41,37 @@ const themeRules: Array<[string, string[]]> = [
 const positiveTerms = ["help", "benefit", "support", "innovation", "assist", "improve", "ช่วย", "ดี"];
 const negativeTerms = ["risk", "replace", "concern", "privacy", "unsafe", "expensive", "กังวล", "แพง"];
 
+function hasTopicTerm(text: string, term: string) {
+  if (/[\u0E00-\u0E7F]/.test(term)) return text.includes(term);
+  const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\s+/g, "\\s+");
+  return new RegExp(`(?:^|[^a-z0-9])${escaped}(?![a-z0-9])`, "i").test(text);
+}
+
 export function classifyRelevance(title: string, excerpt = "") {
   const text = `${title} ${excerpt}`.toLowerCase();
-  const robotHit = robotTerms.some((term) => text.includes(term));
-  const thailandHit = thailandTerms.some((term) => text.includes(term));
+  const robotHit = robotTerms.some((term) => hasTopicTerm(text, term));
+  const thailandHit = thailandTerms.some((term) => hasTopicTerm(text, term));
 
   if (robotHit && thailandHit) {
     return {
       relevanceStatus: "ACCEPTED" as const,
-      relevanceReason: "Robot/embodied-AI relevance with Thailand connection.",
-      relevanceConfidence: 0.82
+      relevanceReason: "Robotics topic with a Thailand connection in the title or excerpt; verify both from the source.",
+      relevanceConfidence: 0.62
     };
   }
 
-  if (!robotHit && !thailandHit) {
+  if (!robotHit) {
     return {
       relevanceStatus: "REJECTED" as const,
-      relevanceReason: "No clear humanoid/social robotics and Thailand connection.",
-      relevanceConfidence: 0.74
+      relevanceReason: "No clear robotics evidence in the title or excerpt.",
+      relevanceConfidence: 0.78
     };
   }
 
   return {
     relevanceStatus: "UNCERTAIN" as const,
-    relevanceReason: "Thin evidence; needs human review.",
-    relevanceConfidence: 0.46
+    relevanceReason: "Robotics is mentioned, but a Thailand connection is not clear; needs human review.",
+    relevanceConfidence: 0.35
   };
 }
 
@@ -84,8 +91,9 @@ export function extractPerspective(title: string, excerpt = "") {
 
   const theme =
     themeRules.find(([, terms]) => terms.some((term) => text.includes(term)))?.[0] ?? "unclear";
-  const positive = positiveTerms.some((term) => text.includes(term));
-  const negative = negativeTerms.some((term) => text.includes(term));
+  const negatedPositive = /(?:\b(?:not|never|cannot|can't)\s+(?:help|benefit|support|assist|improve)\b|(?:ไม่|ไม่ได้|มิได้|ไม่สามารถ)\s*(?:ช่วย|สนับสนุน|ปรับปรุง))/i.test(text);
+  const positive = !negatedPositive && positiveTerms.some((term) => text.includes(term));
+  const negative = negatedPositive || negativeTerms.some((term) => text.includes(term));
 
   return {
     stance: positive && negative ? "cautious_supportive" : positive ? "supportive" : negative ? "skeptical" : "neutral",
@@ -100,8 +108,12 @@ export function extractPerspective(title: string, excerpt = "") {
 
 export async function classifyWithGemini(title: string, excerpt: string) {
   const apiKey = process.env.GEMINI_API_KEY;
+  const model = process.env.GEMINI_MODEL?.trim();
   if (!apiKey) {
     throw new Error("GEMINI_API_KEY environment variable is not set.");
+  }
+  if (!model) {
+    throw new Error("GEMINI_MODEL environment variable is not set.");
   }
 
   const prompt = `
@@ -135,11 +147,12 @@ Please evaluate and classify this article. Set:
   Keep entity names clean and canonical. Return an empty array if no clear relationships can be extracted.
 `;
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;
   const response = await fetch(url, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "x-goog-api-key": apiKey
     },
     body: JSON.stringify({
       contents: [{

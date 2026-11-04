@@ -45,6 +45,7 @@ export default async function InventoryPage({ searchParams }: { searchParams: Se
   let inventory: any[] = [];
   try {
     inventory = await prisma.ownedInventory.findMany({
+      where: isPublic ? { visibility: "public" } : undefined,
       include: { robotModel: true },
       orderBy: { updatedAt: "desc" }
     });

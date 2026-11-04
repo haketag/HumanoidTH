@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
+import Link from "next/link";
 import { getTranslation } from "@/lib/translations";
 
 export const dynamic = "force-dynamic";
@@ -186,6 +187,7 @@ export default async function RobotsPage() {
               <p><span className="badge">{robot.robotType}</span> <span className="badge">{robot.thailandStatus}</span></p>
               <p><strong>{robot.manufacturer ?? robot.developerOrg ?? "Unknown developer"}</strong><br />{robot.primaryUseCase ?? "Use case unclassified"}</p>
               {robot.officialUrl && <a href={robot.officialUrl} target="_blank" rel="noopener noreferrer">Source</a>}
+              <div style={{ marginTop: 10 }}><Link className="button" href={`/research-assistant?q=${encodeURIComponent(`What evidence and limitations are available for ${robot.canonicalName}?`)}`}>Ask Research Assistant</Link></div>
             </article>
           );
         })}

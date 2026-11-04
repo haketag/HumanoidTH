@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
-import { loginAsUser, logoutUser, registerAndLoginUser } from "@/app/actions";
+import { logoutUser } from "@/app/actions";
+import { verifyAdminSessionToken } from "@/lib/admin-session";
 import { getTranslation } from "@/lib/translations";
 
 export const dynamic = "force-dynamic";
@@ -13,8 +14,9 @@ export const metadata: Metadata = {
 
 export default async function ProfilePage() {
   const cookieStore = await cookies();
-  const currentEmail = cookieStore.get("user_email")?.value;
-  const currentRole = cookieStore.get("user_role")?.value;
+  const authenticated = await verifyAdminSessionToken(cookieStore.get("admin_session")?.value, process.env.ADMIN_SESSION_SECRET);
+  const currentEmail = authenticated ? cookieStore.get("user_email")?.value : undefined;
+  const currentRole = authenticated ? "ADMIN" : undefined;
   const lang = (cookieStore.get("lang")?.value || "en") as "en" | "th";
   const t = getTranslation(lang);
 
@@ -23,7 +25,7 @@ export default async function ProfilePage() {
   let userSubmissions: any[] = [];
   try {
     [users, currentUser] = await Promise.all([
-      prisma.user.findMany({ orderBy: { createdAt: "desc" }, take: 20 }),
+      authenticated ? prisma.user.findMany({ orderBy: { createdAt: "desc" }, take: 20 }) : Promise.resolve([]),
       currentEmail
         ? prisma.user.findUnique({
             where: { email: currentEmail },
@@ -57,48 +59,10 @@ export default async function ProfilePage() {
         </section>
       ) : (
         <section className="panel" style={{ border: "1px solid var(--warning)", marginBottom: "20px" }}>
-          <h2>Authentication & Registration</h2>
+          <h2>Account access temporarily unavailable</h2>
           <p className="muted" style={{ marginBottom: 14 }}>
-            Register a new account or log in with an existing email to track submissions and show your contribution history.
+            Email-only login has been disabled because it did not verify ownership of an address. Community accounts and private submission history will return after verified sign-in is added.
           </p>
-
-          <form action={registerAndLoginUser} className="form" style={{ maxWidth: "400px", gap: "12px" }}>
-            <label>
-              Email Address
-              <input name="email" type="email" required placeholder="ichiro.kato@waseda.jp" />
-            </label>
-            <label>
-              Full Name (Optional)
-              <input name="name" placeholder="Ichiro Kato" />
-            </label>
-            <label>
-              Role
-              <select name="role" defaultValue="USER">
-                <option value="USER">User (Read-only)</option>
-                <option value="RESEARCHER">Researcher</option>
-                <option value="ADMIN">Administrator</option>
-              </select>
-            </label>
-            <button type="submit" className="primary" style={{ marginTop: "6px" }}>
-              Log In / Register
-            </button>
-          </form>
-
-          <div style={{ borderTop: "1px solid var(--border)", paddingTop: "14px", marginTop: "14px" }}>
-            <span className="muted" style={{ fontSize: "12px" }}>Quick Simulators:</span>
-            <div style={{ display: "flex", gap: "10px", marginTop: "8px" }}>
-              <form action={loginAsUser.bind(null, "creativelab.co.th@gmail.com", "ADMIN")}>
-                <button type="submit" className="button" style={{ fontSize: "11px", minHeight: "28px" }}>
-                  Login as Administrator
-                </button>
-              </form>
-              <form action={loginAsUser.bind(null, "researcher@example.com", "RESEARCHER")}>
-                <button type="submit" className="button" style={{ fontSize: "11px", minHeight: "28px" }}>
-                  Login as Researcher
-                </button>
-              </form>
-            </div>
-          </div>
         </section>
       )}
 

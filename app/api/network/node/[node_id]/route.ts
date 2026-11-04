@@ -9,7 +9,8 @@ export async function GET(req: Request, { params }: { params: Params }) {
   const { node_id } = await params;
   const { searchParams } = new URL(req.url);
   const result = await getNetworkNode(decodeURIComponent(node_id), {
-    sourceMode: (searchParams.get("source") as NetworkSourceMode | null) ?? undefined
+    sourceMode: (searchParams.get("source") as NetworkSourceMode | null) ?? undefined,
+    includePrivate: false
   });
   if (!result) {
     return NextResponse.json({ error: "Node not found" }, { status: 404 });

@@ -1,7 +1,8 @@
 import { cookies } from "next/headers";
 import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
-import { createSubmission, registerAndLoginUser } from "@/app/actions";
+import { createSubmission } from "@/app/actions";
+import { verifyAdminSessionToken } from "@/lib/admin-session";
 import { getTranslation } from "@/lib/translations";
 
 export const dynamic = "force-dynamic";
@@ -93,7 +94,8 @@ export const metadata: Metadata = {
 
 export default async function SubmitDataPage() {
   const cookieStore = await cookies();
-  const currentEmail = cookieStore.get("user_email")?.value;
+  const authenticated = await verifyAdminSessionToken(cookieStore.get("admin_session")?.value, process.env.ADMIN_SESSION_SECRET);
+  const currentEmail = authenticated ? cookieStore.get("user_email")?.value : undefined;
   const lang = (cookieStore.get("lang")?.value || "en") as "en" | "th";
   const t = getTranslation(lang);
   const localT = copy[lang];
@@ -122,21 +124,7 @@ export default async function SubmitDataPage() {
       {!currentUser && (
         <section className="panel" style={{ border: "1px solid var(--warning)", marginBottom: 16 }}>
           <h2>{localT.accountTitle}</h2>
-          <p className="muted" style={{ marginBottom: 14 }}>{localT.accountText}</p>
-          <form action={registerAndLoginUser} className="form" style={{ maxWidth: 520, gap: 12 }}>
-            <input type="hidden" name="redirectTo" value="/submit-data" />
-            <input type="hidden" name="role" value="USER" />
-            <label>
-              {localT.accountEmail}
-              <input name="email" type="email" required placeholder="ichiro.kato@waseda.jp" />
-            </label>
-            <label>
-              {localT.accountName}
-              <input name="name" placeholder="Ichiro Kato" />
-            </label>
-            <button type="submit" className="primary">{localT.accountButton}</button>
-          </form>
-          <p className="muted" style={{ fontSize: 12, marginTop: 12 }}>{localT.accountHint}</p>
+          <p className="muted" style={{ marginBottom: 14 }}>{lang === "th" ? "ปิดการเข้าสู่ระบบด้วยอีเมลชั่วคราว เพราะยังไม่มีการยืนยันว่าเป็นเจ้าของอีเมลนั้น การส่งข้อมูลจะกลับมาเมื่อมีระบบเข้าสู่ระบบที่ตรวจสอบตัวตนได้" : "Email-only sign-in is temporarily disabled because address ownership was not verified. Community submissions will return with verified sign-in."}</p>
         </section>
       )}
 
