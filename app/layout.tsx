@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
-import { IBM_Plex_Sans_Thai, Inter } from "next/font/google";
 import SidebarNav from "./components/SidebarNav";
 import LanguageSelector from "./components/LanguageSelector";
 import MobileHeader from "./components/MobileHeader";
@@ -9,20 +8,8 @@ import DataPullFab from "./components/DataPullFab";
 import FirstTimeLoader from "./components/FirstTimeLoader";
 import { getTranslation } from "@/lib/translations";
 import { defaultSeoDescription, getSiteUrl, siteName } from "@/lib/seo";
+import { verifyAdminSessionToken } from "@/lib/admin-session";
 import "./globals.css";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const ibmPlexSansThai = IBM_Plex_Sans_Thai({
-  subsets: ["thai", "latin"],
-  variable: "--font-ibm-plex-sans-thai",
-  weight: ["100", "200", "300", "400", "500", "600", "700"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
@@ -97,6 +84,7 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const cookieStore = await cookies();
+  const isAdmin = await verifyAdminSessionToken(cookieStore.get("admin_session")?.value, process.env.ADMIN_SESSION_SECRET);
   const lang = (cookieStore.get("lang")?.value || "en") as "en" | "th";
   const t = getTranslation(lang);
   const siteUrl = getSiteUrl();
@@ -129,7 +117,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   };
 
   return (
-    <html lang={lang} className={`${inter.variable} ${ibmPlexSansThai.variable}`}>
+    <html lang={lang}>
       <body>
         <script
           type="application/ld+json"
@@ -150,7 +138,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </div>
           </aside>
           <main className="main motion-page">{children}</main>
-          <DataPullFab />
+          {isAdmin && <DataPullFab />}
           <MobileTabNav currentLang={lang} />
         </div>
       </body>

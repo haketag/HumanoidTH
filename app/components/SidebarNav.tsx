@@ -36,6 +36,7 @@ export default function SidebarNav({ currentLang = "en" }: SidebarNavProps) {
     { href: "/network", label: t.network, icon: Network },
     { href: "/perspectives", label: t.perspectives, icon: Newspaper },
     { href: "/robots", label: t.robots, icon: Bot },
+    { href: "/research-assistant", label: currentLang === "th" ? "ผู้ช่วยวิจัย" : "Research Assistant", icon: Newspaper },
     { href: "/inventory", label: t.inventory, icon: Package },
     { href: "/contributions", label: t.contributors, icon: UsersRound },
     { href: "/analytics", label: t.analytics, icon: BarChart3 },

@@ -835,7 +835,7 @@ function filterBuiltGraph(nodes: NetworkNode[], edges: NetworkEdge[], options: N
     if (options.cluster && node.cluster !== options.cluster) return false;
     if (options.nodeType && node.type !== options.nodeType) return false;
     if (options.includeLowConfidence === false && node.is_low_confidence) return false;
-    if (options.includePrivate === false && node.is_private) return false;
+    if (options.includePrivate !== true && node.is_private) return false;
     if (node.confidence < minConfidence) return false;
     nodeSet.add(node.id);
     return true;

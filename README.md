@@ -49,7 +49,7 @@ I built this platform using a modern, scalable, and developer-friendly stack:
 - 💻 **Frontend & Routing:** [Next.js 15 (App Router)](https://nextjs.org/) for highly responsive Server Components and dynamic layouts.
 - 🗄️ **Database & Modeling:** [Prisma ORM](https://www.prisma.io/) with [PostgreSQL](https://www.postgresql.org/) for transparent, typed data structures.
 - ⚙️ **Data Ingestion Adapters:** Multi-source background adapters retrieving records from **OpenAlex** 🎓, **GitHub** 🐙, **GDELT** 🌍, and **YouTube** 📺.
-- 🧠 **AI Integration:** [Gemini API](https://ai.google.dev/) (`gemini-1.5-flash`) for automated relevance classification, stance extraction, and geographical contribution clustering.
+- 🧠 **AI Integration:** Optional [Gemini API](https://ai.google.dev/) configured with `GEMINI_API_KEY` and `GEMINI_MODEL`; the app does not assume a retired model name.
 
 ---
 
@@ -79,9 +79,11 @@ DATABASE_URL="postgresql://postgres:postgres@localhost:5432/thailand_humanoid_at
 YOUTUBE_API_KEY="your-youtube-api-key"
 GITHUB_TOKEN="your-github-personal-access-token"
 GEMINI_API_KEY="your-gemini-api-key"
+GEMINI_MODEL="a-model-enabled-for-your-account"
+ADMIN_SESSION_SECRET="a-random-secret-at-least-32-characters-long"
 ```
 > [!NOTE]
-> 📺 `YOUTUBE_API_KEY` is required only for video ingestion. 🔑 `GEMINI_API_KEY` is required for AI-powered contribution mapping and source analysis. 🐙 `GITHUB_TOKEN` is optional but highly recommended to avoid API rate limiting.
+> 📺 `YOUTUBE_API_KEY` is required only for video ingestion. Gemini features need both `GEMINI_API_KEY` and `GEMINI_MODEL`; source retrieval remains available without Gemini. 🐙 `GITHUB_TOKEN` is optional but highly recommended to avoid API rate limiting.
 
 ### 🗄️ 3. Initialize & Seed the Database
 ```bash
@@ -130,11 +132,14 @@ Explore the main app modules:
 - `🟡 /robots` — 🤖 Registry of robot models deployed, researched, or observed in Thailand.
 - `🟢 /perspectives` — 📣 Media coverage database, platform sentiment, and safety metrics.
 - `🟡 /contributions` — 📂 Directory of open-source repositories, makers, and papers.
-- `🟢 /map` — 🗺️ AI-powered ecosystem contribution map geolocating Thai robotics research and inventory.
+- `🟢 /map` — 🗺️ Public contribution map; optional Gemini clustering refresh is administrator-only and requires model configuration.
 - `🟢 /network` — 🔗 Dynamic Cytoscape network graph mapping connections between institutions, developers, and robots.
+- `🟡 /research-assistant` — 🔎 Search public atlas records with citations and save versioned HRI Wellness Living Lab plans.
 - `🟡 /analytics` — 📈 Statistics, sentiment graphs, and attention metrics over time.
 - `🟢 /data-pulls` — 🔌 Control room to trigger data ingestion pipelines.
-- `🟡 /submit-data` — 📥 Community submission form for sharing robot models and projects.
+- `🟡 /submit-data` — 📥 Submission form currently limited to signed-in administrators while verified community authentication is being built.
+
+Research Assistant plans are stored in the local PostgreSQL database and scoped to an HttpOnly browser capability token; losing that cookie means the guest cannot recover those plans. Search remains available without Gemini. Gemini synthesis requires a configured server key/model, explicit per-request consent, and an 18+ confirmation. See [local completion](docs/local-completion.md), [the baseline audit](docs/BASELINE_AUDIT.md), [feature specification](docs/FEATURE_SPEC.md), and [evaluation cases](docs/EVALUATION.md).
 
 ---
 
@@ -157,7 +162,7 @@ Use multiple source classes and keep provenance for each record:
 - 💻 **Code and hardware repositories:** GitHub, GitLab, project documentation.
 - 📰 **News and public media:** Thai and international news, press releases, institutional announcements.
 - 📺 **Video platforms:** YouTube demos, public talks, product launches.
-- 👥 **Community submissions:** forms, field notes, correction requests, robot sightings.
+- 👥 **Community submissions (planned):** verified sign-in is required before public contributors can submit forms, field notes, correction requests, or robot sightings. The former email-only sign-in was disabled because it did not prove address ownership.
 - 📂 **Project records:** owned inventory, custody notes, maintenance logs, deployment logs.
 
 For every source, store the canonical URL, title, platform, publication date, author or organization when available, short source excerpt, ingestion date, and any query terms used.
@@ -270,10 +275,12 @@ ADMIN_BASIC_PASSWORD="use-a-strong-password"
 YOUTUBE_API_KEY="your-api-key"
 GITHUB_TOKEN="your-token"
 GEMINI_API_KEY="your-gemini-api-key"
+GEMINI_MODEL="a-model-enabled-for-your-account"
+ADMIN_SESSION_SECRET="a-random-secret-at-least-32-characters-long"
 ```
 
 > [!IMPORTANT]
-> - 🔒 Production endpoints `/admin/*`, `/data-pulls`, and `/api/ingest/*` are protected with Basic Auth using `ADMIN_BASIC_USER` and `ADMIN_BASIC_PASSWORD`. Keep credentials safe!
+> - 🔒 Admin pages, private inventory mode, database browser, and administrative server actions require a signed admin session. `/api/ingest/*` and `/api/export` accept the signed session or configured Basic Auth. Set `ADMIN_SESSION_SECRET` to a random value of at least 32 characters.
 > - ⚙️ The Vercel build command is configured to run `pnpm vercel-build` which automatically handles schema generation. Do **not** run `db:push` inside the Vercel build phase.
 
 ---

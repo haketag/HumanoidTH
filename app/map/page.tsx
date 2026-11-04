@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Sparkles } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { getTranslation } from "@/lib/translations";
+import { verifyAdminSessionToken } from "@/lib/admin-session";
 import GoogleMapClient from "./GoogleMapClient";
 import { fetchContributionClusters, reanalyzeClustersWithGemini } from "./actions";
 
@@ -71,6 +72,7 @@ export const metadata: Metadata = {
 
 export default async function MapPage() {
   const cookieStore = await cookies();
+  const isAdmin = await verifyAdminSessionToken(cookieStore.get("admin_session")?.value, process.env.ADMIN_SESSION_SECRET);
   const lang = (cookieStore.get("lang")?.value || "en") as "en" | "th";
   const t = getTranslation(lang);
 
@@ -115,7 +117,7 @@ export default async function MapPage() {
         </div>
         <div className="panel motion-panel">
           <p className="muted" style={{ margin: 0 }}>{localT[lang].engineStat}</p>
-          <div className="stat" style={{ fontSize: 15, marginTop: 10 }}>Gemini 1.5 Flash</div>
+          <div className="stat" style={{ fontSize: 15, marginTop: 10 }}>{process.env.GEMINI_API_KEY && process.env.GEMINI_MODEL ? process.env.GEMINI_MODEL : (lang === "th" ? "ยังไม่ได้ตั้งค่า AI" : "AI not configured")}</div>
         </div>
       </div>
 
@@ -123,13 +125,13 @@ export default async function MapPage() {
         {localT[lang].noticeText}
       </div>
 
-      <form action={reanalyzeClustersWithGemini} className="toolbar" style={{ marginTop: 0 }}>
-        <button className="primary" type="submit">
-          <Sparkles size={16} aria-hidden="true" />
-          {localT[lang].buttonText}
-        </button>
-        <span className="muted">{localT[lang].buttonMuted}</span>
-      </form>
+      {isAdmin && <form action={reanalyzeClustersWithGemini} className="toolbar" style={{ marginTop: 0 }}>
+          <button className="primary" type="submit">
+            <Sparkles size={16} aria-hidden="true" />
+            {localT[lang].buttonText}
+          </button>
+          <span className="muted">{localT[lang].buttonMuted}</span>
+        </form>}
 
       <GoogleMapClient apiKey={apiKey} points={clusters} lang={lang} />
 

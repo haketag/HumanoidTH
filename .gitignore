@@ -9,6 +9,8 @@ node_modules/
 
 # Next.js / Vercel build output
 .next/
+.next-verify/
+build_verify/
 out/
 .vercel/
 tsconfig.tsbuildinfo

@@ -146,7 +146,7 @@ const localT = {
     graphFailedLoad: "Network graph failed to load.",
     noRelationships: "No network relationships have been generated yet.",
     depth: "Depth",
-    sourceWarning: "Using local JSON cache fallback"
+    sourceWarning: "Database unavailable; using imported local records"
   },
   th: {
     searchPlaceholder: "ค้นหาโหนด...",
@@ -200,7 +200,7 @@ const localT = {
     graphFailedLoad: "ไม่สามารถโหลดกราฟความสัมพันธ์ได้",
     noRelationships: "ยังไม่มีการสร้างความสัมพันธ์ในระบบ",
     depth: "ความลึกระดับ",
-    sourceWarning: "กำลังใช้งานไฟล์แคชสำรองในเครื่อง"
+    sourceWarning: "ฐานข้อมูลไม่พร้อม ใช้รายการจากไฟล์นำเข้าในเครื่อง"
   }
 };
 
@@ -273,8 +273,6 @@ function filterGraph(
     if (filters.robotType !== allOption && node.robot_type !== filters.robotType) return false;
     if (filters.organization !== allOption && node.organization !== filters.organization) return false;
     if (filters.country !== allOption && node.country !== filters.country) return false;
-    if (filters.visibility === "public" && node.is_private) return false;
-    if (filters.visibility === "private" && !node.is_private) return false;
     allowedNodes.add(node.id);
     return true;
   });
@@ -377,7 +375,6 @@ export default function NetworkGraphClient({ lang = "en" }: { lang?: "en" | "th"
     year: allOption,
     country: allOption,
     confidenceMin: "0",
-    visibility: allOption
   });
 
   useEffect(() => {
@@ -696,7 +693,7 @@ export default function NetworkGraphClient({ lang = "en" }: { lang?: "en" | "th"
     database: "Database",
     file: "Import file",
     hybrid: "Hybrid",
-    fallback_file: "File fallback"
+    fallback_file: "Import file (database unavailable)"
   }[graph?.meta.resolved_source ?? "file"];
 
   return (
@@ -805,14 +802,6 @@ export default function NetworkGraphClient({ lang = "en" }: { lang?: "en" | "th"
             <label>{lang === "th" ? "ระดับความมั่นใจขั้นต่ำ" : "Confidence range"}</label>
             <input type="range" min="0" max="1" step="0.05" value={filters.confidenceMin} onChange={(event) => setFilters((current) => ({ ...current, confidenceMin: event.target.value }))} />
             <span className={styles.pill}>{lang === "th" ? "ขั้นต่ำ" : "Min"} {Number(filters.confidenceMin).toFixed(2)}</span>
-          </div>
-          <div className={styles.filterGroup}>
-            <label>{lang === "th" ? "การมองเห็นข้อมูลภายนอก/ภายใน" : "Public/private visibility"}</label>
-            <select value={filters.visibility} onChange={(event) => setFilters((current) => ({ ...current, visibility: event.target.value }))}>
-              <option value={allOption}>{lang === "th" ? "ทั้งหมด" : "All"}</option>
-              <option value="public">{lang === "th" ? "เฉพาะสาธารณะ" : "Public only"}</option>
-              <option value="private">{lang === "th" ? "ข้อมูลภายใน/ส่วนตัว" : "Private markers"}</option>
-            </select>
           </div>
           <div className={styles.statRow}>
             <span className={styles.pill}>{visibleGraph?.nodes.length ?? 0} {lang === "th" ? "โหนด" : "nodes"}</span>

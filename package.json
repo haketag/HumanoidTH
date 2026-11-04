@@ -14,7 +14,7 @@
     "vercel-build": "prisma generate && next build",
     "postinstall": "prisma generate",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "node scripts/lint.mjs",
     "typecheck": "node ./node_modules/typescript/bin/tsc --noEmit",
     "check:no-mock-data": "tsx scripts/assert-no-mock-data.ts",
     "seo:audit": "tsx scripts/seo-optimizer.ts --dry-run",

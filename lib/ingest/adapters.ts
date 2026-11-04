@@ -9,6 +9,21 @@ type AdapterInput = {
   fromYear?: number;
 };
 
+function isHttpUrl(value: unknown): value is string {
+  if (typeof value !== "string") return false;
+  try { return ["http:", "https:"].includes(new URL(value).protocol); }
+  catch { return false; }
+}
+
+function validDate(value: unknown): Date | null {
+  if (typeof value !== "string") return null;
+  const compact = /^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z$/.exec(value);
+  const isoValue = compact ? `${compact[1]}-${compact[2]}-${compact[3]}T${compact[4]}:${compact[5]}:${compact[6]}Z` : value;
+  const date = new Date(isoValue);
+  if (compact && !Number.isNaN(date.getTime()) && date.toISOString() !== isoValue.replace(/Z$/, ".000Z")) return null;
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
 async function finish(adapter: SourceType, query: string, records: NormalizedSource[], missingKeys: string[] = []): Promise<IngestResult> {
   return {
     adapter,
@@ -17,6 +32,26 @@ async function finish(adapter: SourceType, query: string, records: NormalizedSou
     recordsSaved: records.length ? await saveSources(records) : 0,
     missingKeys
   };
+}
+
+export function reconstructOpenAlexAbstract(index: unknown) {
+  if (!index || typeof index !== "object" || Array.isArray(index)) return "";
+  const wordsByPosition: string[] = [];
+  for (const [word, rawPositions] of Object.entries(index as Record<string, unknown>)) {
+    if (!Array.isArray(rawPositions)) continue;
+    for (const position of rawPositions) {
+      if (typeof position === "number" && Number.isSafeInteger(position) && position >= 0 && position < 100_000) {
+        wordsByPosition[position] = word;
+      }
+    }
+  }
+  return wordsByPosition.filter((word): word is string => typeof word === "string").join(" ").replace(/\s+/g, " ").trim();
+}
+
+export function parseOpenAlexPublicationDate(value: unknown) {
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
+  const date = new Date(`${value}T00:00:00Z`);
+  return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value ? date : null;
 }
 
 export async function ingestOpenAlex({ query, limit = 25, fromYear = 2015 }: AdapterInput) {
@@ -29,15 +64,35 @@ export async function ingestOpenAlex({ query, limit = 25, fromYear = 2015 }: Ada
   if (!response.ok) throw new Error(`OpenAlex ${response.status}`);
   const payload = await response.json();
 
-  const records: NormalizedSource[] = (payload.results ?? []).map((work: any) => ({
-    sourceType: "OPENALEX",
-    title: work.display_name ?? "Untitled OpenAlex work",
-    url: work.doi ?? work.id,
-    excerpt: work.abstract_inverted_index ? "OpenAlex abstract metadata available." : "",
-    publishedAt: work.publication_year ? new Date(`${work.publication_year}-01-01`) : null,
-    platform: "openalex",
-    rawMeta: { openalexId: work.id, query }
-  }));
+  const records: NormalizedSource[] = (payload.results ?? []).flatMap((work: any) => {
+    const publicationDate = parseOpenAlexPublicationDate(work.publication_date);
+    const reconstructedAbstract = reconstructOpenAlexAbstract(work.abstract_inverted_index);
+    const authors = Array.isArray(work.authorships)
+      ? work.authorships.slice(0, 20).map((item: any) => item.author?.display_name).filter((name: unknown): name is string => typeof name === "string")
+      : [];
+    const url = isHttpUrl(work.doi) ? work.doi : work.id;
+    if (!isHttpUrl(url)) return [];
+    return [{
+      sourceType: "OPENALEX" as const,
+      title: typeof work.display_name === "string" && work.display_name.trim() ? work.display_name : "Untitled OpenAlex work",
+      url,
+      excerpt: reconstructedAbstract.slice(0, 1200),
+      publishedAt: publicationDate,
+      author: authors.join(", ") || null,
+      platform: "openalex",
+      rawMeta: {
+        openalexId: work.id,
+        doi: work.doi ?? null,
+        publicationYear: work.publication_year ?? null,
+        publicationDatePrecision: publicationDate ? "day" : work.publication_year ? "year_only" : "unknown",
+        abstractTruncated: reconstructedAbstract.length > 1200,
+        workType: work.type ?? null,
+        authors,
+        isRetracted: work.is_retracted ?? null,
+        query
+      }
+    }];
+  });
 
   return finish("OPENALEX", query, records);
 }
@@ -55,7 +110,7 @@ export async function ingestGithub({ query, limit = 25 }: AdapterInput) {
   if (!response.ok) throw new Error(`GitHub ${response.status}`);
   const payload = await response.json();
 
-  const records: NormalizedSource[] = (payload.items ?? []).map((repo: any) => ({
+  const records: NormalizedSource[] = (payload.items ?? []).filter((repo: any) => isHttpUrl(repo.html_url)).map((repo: any) => ({
     sourceType: "GITHUB",
     title: repo.full_name,
     url: repo.html_url,
@@ -80,12 +135,12 @@ export async function ingestGdelt({ query, limit = 25, days = 30 }: AdapterInput
   if (!response.ok) throw new Error(`GDELT ${response.status}`);
   const payload = await response.json();
 
-  const records: NormalizedSource[] = (payload.articles ?? []).map((article: any) => ({
+  const records: NormalizedSource[] = (payload.articles ?? []).filter((article: any) => isHttpUrl(article.url)).map((article: any) => ({
     sourceType: "GDELT",
     title: article.title ?? "Untitled GDELT article",
     url: article.url,
     excerpt: article.snippet ?? "",
-    publishedAt: article.seendate ? new Date(article.seendate) : null,
+    publishedAt: validDate(article.seendate),
     platform: article.domain ?? "gdelt",
     rawMeta: { query, source: article }
   }));
@@ -110,12 +165,12 @@ export async function ingestYoutube({ query, limit = 25 }: AdapterInput) {
   if (!response.ok) throw new Error(`YouTube ${response.status}`);
   const payload = await response.json();
 
-  const records: NormalizedSource[] = (payload.items ?? []).map((item: any) => ({
+  const records: NormalizedSource[] = (payload.items ?? []).filter((item: any) => typeof item.id?.videoId === "string" && /^[A-Za-z0-9_-]{11}$/.test(item.id.videoId)).map((item: any) => ({
     sourceType: "YOUTUBE",
     title: item.snippet?.title ?? "Untitled YouTube video",
     url: `https://www.youtube.com/watch?v=${item.id?.videoId}`,
     excerpt: item.snippet?.description ?? "",
-    publishedAt: item.snippet?.publishedAt ? new Date(item.snippet.publishedAt) : null,
+    publishedAt: validDate(item.snippet?.publishedAt),
     author: item.snippet?.channelTitle ?? null,
     platform: "youtube",
     rawMeta: { query, videoId: item.id?.videoId }
