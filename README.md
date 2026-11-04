@@ -68,19 +68,16 @@ pnpm install
 ```
 
 ### ⚙️ 2. Configure Environment Variables
-Create a local `.env` file by copying the template:
-```bash
-cp .env.example .env
-```
-
-Ensure your `.env` contains the required database link and API keys:
+Create a local `.env` file with the database connection and administrator credentials. Add optional ingestion and Gemini keys only when needed:
 ```env
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/thailand_humanoid_atlas?schema=public"
+ADMIN_BASIC_USER="admin@example.com"
+ADMIN_BASIC_PASSWORD="replace-with-a-long-random-password"
+ADMIN_SESSION_SECRET="a-random-secret-at-least-32-characters-long"
 YOUTUBE_API_KEY="your-youtube-api-key"
 GITHUB_TOKEN="your-github-personal-access-token"
 GEMINI_API_KEY="your-gemini-api-key"
 GEMINI_MODEL="a-model-enabled-for-your-account"
-ADMIN_SESSION_SECRET="a-random-secret-at-least-32-characters-long"
 ```
 > [!NOTE]
 > 📺 `YOUTUBE_API_KEY` is required only for video ingestion. Gemini features need both `GEMINI_API_KEY` and `GEMINI_MODEL`; source retrieval remains available without Gemini. 🐙 `GITHUB_TOKEN` is optional but highly recommended to avoid API rate limiting.
