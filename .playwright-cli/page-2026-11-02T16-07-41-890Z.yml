@@ -1,0 +1,148 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - img "Thailand Humanoid Atlas" [ref=e5]
+    - navigation "Primary" [ref=e7]:
+      - link "Company Portal" [ref=e8] [cursor=pointer]:
+        - /url: /company
+      - link "Companies" [ref=e14] [cursor=pointer]:
+        - /url: /companies
+      - link "Favorites" [ref=e21] [cursor=pointer]:
+        - /url: /favorites
+      - link "Humanoid Match" [ref=e25] [cursor=pointer]:
+        - /url: /match
+      - link "Overview" [ref=e30] [cursor=pointer]:
+        - /url: /
+      - link "Dashboard" [ref=e35] [cursor=pointer]:
+        - /url: /dashboard
+      - link "Data Pulls" [ref=e42] [cursor=pointer]:
+        - /url: /data-pulls
+      - link "Map" [ref=e47] [cursor=pointer]:
+        - /url: /map
+      - link "Network" [ref=e53] [cursor=pointer]:
+        - /url: /network
+      - link "Perspectives" [ref=e60] [cursor=pointer]:
+        - /url: /perspectives
+      - link "Robots" [ref=e65] [cursor=pointer]:
+        - /url: /robots
+      - link "Inventory" [ref=e70] [cursor=pointer]:
+        - /url: /inventory
+      - link "Contributors" [ref=e76] [cursor=pointer]:
+        - /url: /contributions
+      - link "Analytics" [ref=e82] [cursor=pointer]:
+        - /url: /analytics
+      - link "Database" [ref=e86] [cursor=pointer]:
+        - /url: /database
+      - link "Submit" [ref=e92] [cursor=pointer]:
+        - /url: /submit-data
+      - link "Admin" [ref=e97] [cursor=pointer]:
+        - /url: /admin
+      - link "Profile" [ref=e102] [cursor=pointer]:
+        - /url: /profile
+    - generic [ref=e109]:
+      - button "English" [ref=e110] [cursor=pointer]:
+        - generic [ref=e111]: 🇬🇧
+        - generic [ref=e112]: EN
+      - button "ภาษาไทย" [ref=e113] [cursor=pointer]:
+        - generic [ref=e114]: 🇹🇭
+        - generic [ref=e115]: TH
+  - main [ref=e116]:
+    - main [ref=e117]:
+      - generic [ref=e121]:
+        - generic [ref=e122]:
+          - paragraph [ref=e123]: Research Console
+          - heading "Overview & Corpus Summary" [level=1] [ref=e124]:
+            - generic [ref=e125]:
+              - text: Overview
+              - generic [ref=e126]: "& Corpus Summary"
+          - paragraph [ref=e127]: Research database for Thailand humanoid, social, and service robotics records.
+        - generic [ref=e128]:
+          - link "Run data pull" [ref=e129] [cursor=pointer]:
+            - /url: /data-pulls
+          - link "Browse database" [ref=e132] [cursor=pointer]:
+            - /url: /database
+          - link "Submit record" [ref=e135] [cursor=pointer]:
+            - /url: /submit-data
+          - link "Review Queue (0)" [ref=e139] [cursor=pointer]:
+            - /url: /admin
+            - text: Review Queue
+            - generic [ref=e143]: (0)
+      - generic [ref=e144]:
+        - generic [ref=e145]:
+          - article [ref=e146]:
+            - generic [ref=e152]:
+              - paragraph [ref=e153]: Total Sources
+              - strong [ref=e154]: 6,722
+              - generic [ref=e155]: "Accepted: 6,719"
+          - article [ref=e156]:
+            - generic [ref=e161]:
+              - paragraph [ref=e162]: Robot Models
+              - strong [ref=e163]: "17"
+              - generic [ref=e164]: Registered models
+          - article [ref=e165]:
+            - generic [ref=e170]:
+              - paragraph [ref=e171]: Owned Units
+              - strong [ref=e172]: "0"
+              - generic [ref=e173]: Team inventory
+          - article [ref=e174]:
+            - generic [ref=e181]:
+              - paragraph [ref=e182]: Contributors
+              - strong [ref=e183]: "5"
+              - generic [ref=e184]: Repos & papers
+        - generic [ref=e185]:
+          - generic [ref=e186]:
+            - paragraph [ref=e187]: Pipeline Status
+            - generic [ref=e188]: No active runs
+            - generic [ref=e189]: "Last: N/A"
+          - generic [ref=e190]:
+            - paragraph [ref=e191]: Temporal Coverage
+            - heading "1970 – 2026" [level=3] [ref=e192]
+            - generic [ref=e193]: Source publication dates
+        - generic [ref=e194]:
+          - heading "Sources by Ingestion Platform" [level=3] [ref=e195]
+          - generic [ref=e196]:
+            - generic [ref=e202]:
+              - paragraph [ref=e203]: openalex
+              - strong [ref=e204]: "3551"
+            - generic [ref=e211]:
+              - paragraph [ref=e212]: github
+              - strong [ref=e213]: "2659"
+            - generic [ref=e220]:
+              - paragraph [ref=e221]: youtube
+              - strong [ref=e222]: "327"
+            - generic [ref=e229]:
+              - paragraph [ref=e230]: chiangraitimes.com
+              - strong [ref=e231]: "16"
+            - generic [ref=e238]:
+              - paragraph [ref=e239]: manilatimes.net
+              - strong [ref=e240]: "14"
+            - generic [ref=e247]:
+              - paragraph [ref=e248]: livenews.co.nz
+              - strong [ref=e249]: "8"
+            - generic [ref=e256]:
+              - paragraph [ref=e257]: blog.udn.com
+              - strong [ref=e258]: "8"
+            - generic [ref=e265]:
+              - paragraph [ref=e266]: 163.com
+              - strong [ref=e267]: "7"
+            - generic [ref=e274]:
+              - paragraph [ref=e275]: philippinetimes.com
+              - strong [ref=e276]: "6"
+      - generic [ref=e278]:
+        - generic [ref=e279]:
+          - heading "Database Empty State Guide" [level=3] [ref=e280]
+          - button "Copy all" [ref=e281] [cursor=pointer]
+        - paragraph [ref=e282]: "If there are no robot models or source signals populated, initialize the active Next.js database with the project setup commands:"
+        - generic [ref=e283]:
+          - generic [ref=e284]:
+            - generic [ref=e285]: "1"
+            - strong [ref=e286]: Initialize DB tables
+            - code [ref=e287]: python -m humanoid_atlas db init
+          - generic [ref=e288]:
+            - generic [ref=e289]: "2"
+            - strong [ref=e290]: Seed robot models
+            - code [ref=e291]: python -m humanoid_atlas ingest seeds --file data/seeds/robot_models.seed.yml
+          - generic [ref=e292]:
+            - generic [ref=e293]: "3"
+            - strong [ref=e294]: Seed inventory and relations
+            - code [ref=e295]: python -m humanoid_atlas ingest seeds --file data/seeds/inventory.seed.yml
+  - button "Run data pull" [ref=e296] [cursor=pointer]

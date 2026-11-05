@@ -1,0 +1,18 @@
+{
+  "live": {
+    "robots": 17,
+    "sources": 6722,
+    "contributions": 5,
+    "users": 1,
+    "companies": 0,
+    "portal_accounts": 0
+  },
+  "temporaryDatabasesRemaining": 0,
+  "temporarySchemasRemaining": 0,
+  "adminPasswordLengthValid": true,
+  "unitAndIntegrationTests": 14,
+  "httpChecks": 52,
+  "productionBuild": "passed",
+  "prismaSchema": "valid",
+  "lint": "blocked_existing_interactive_setup"
+}

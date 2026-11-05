@@ -1,347 +1,93 @@
-import { prisma } from "@/lib/prisma";
-import type { Metadata } from "next";
-import { cookies } from "next/headers";
-import { getTranslation } from "@/lib/translations";
+import { prisma } from '@/lib/prisma';
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { cookies } from 'next/headers';
+import { ArrowUpRight, Bot, BookOpen, FileText, ImageIcon, Network, ShieldCheck } from 'lucide-react';
+import { groupRobotTypes, share, type CountRow } from '@/lib/dashboard';
+import { getRobotImageCredit, getRobotSourceImage } from '@/lib/robot-images';
+import styles from './dashboard.module.css';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
+export const metadata: Metadata = { title: 'ภาพรวมหุ่นยนต์ที่เกี่ยวข้องกับไทย | Robotics Dashboard', description: 'สำรวจรุ่นหุ่นยนต์ การใช้งาน และแหล่งข้อมูลที่รวบรวมไว้ พร้อมข้อจำกัดที่ควรรู้ก่อนนำข้อมูลไปใช้', alternates: { canonical: '/dashboard' } };
 
-export const metadata: Metadata = {
-  title: "Robotics Ecosystem Dashboard",
-  description: "Aggregate dashboard for Thailand humanoid robotics records, robot types, sources, contributions, perspective themes, and confidence levels.",
-  alternates: { canonical: "/dashboard" }
-};
+function Bars({ rows, empty, unit }: { rows: CountRow[]; empty: string; unit: string }) {
+  const max = Math.max(1, ...rows.map(row => row.count));
+  const total = rows.reduce((sum, row) => sum + row.count, 0);
+  return rows.length ? <ul className={styles.bars}>{rows.map(row => <li key={row.label}>
+    <span className={styles.barLabel}>{row.label}</span>
+    <span className={styles.barTrack} aria-hidden="true"><span style={{ width: `${share(row.count, max)}%` }} /></span>
+    <span className={styles.barValue}>{row.count.toLocaleString()}<small>{unit} · {share(row.count, total).toFixed(1)}%</small></span>
+  </li>)}</ul> : <p className={styles.empty}>{empty}</p>;
+}
 
 export default async function DashboardPage() {
-  const cookieStore = await cookies();
-  const lang = (cookieStore.get("lang")?.value || "en") as "en" | "th";
-  const t = getTranslation(lang);
-
-  let data = {
-    locations: [] as any[],
-    robotTypes: [] as any[],
-    sourceTypes: [] as any[],
-    embodimentLevels: [] as any[],
-    contributionTypes: [] as any[],
-    themes: [] as any[],
-    highConfidenceAnn: 0,
-    medConfidenceAnn: 0,
-    lowConfidenceAnn: 0,
-    highConfidenceSrc: 0,
-    medConfidenceSrc: 0,
-    lowConfidenceSrc: 0,
-    dbOffline: false
-  };
-
+  const thai = (await cookies()).get('lang')?.value === 'th';
+  const text = (th: string, en: string) => thai ? th : en;
+  const countRows = <K extends string>(rows: ({ _count: { _all: number } } & Record<K, string | null>)[], key: K, labels: Record<string, string> = {}): CountRow[] => rows.map(row => ({ label: labels[row[key] || ''] || row[key]?.replace(/_/g, ' ') || text('ยังไม่ระบุ', 'Not recorded'), count: row._count._all })).sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
+  let data;
   try {
-    const [
-      locations,
-      robotTypes,
-      sourceTypes,
-      embodimentLevels,
-      contributionTypes,
-      themes,
-      highConfidenceAnn,
-      medConfidenceAnn,
-      lowConfidenceAnn,
-      highConfidenceSrc,
-      medConfidenceSrc,
-      lowConfidenceSrc
-    ] = await Promise.all([
-      prisma.robotModel.groupBy({ by: ["countryOfOrigin"], _count: { _all: true } }),
-      prisma.robotModel.groupBy({ by: ["robotType"], _count: { _all: true } }),
-      prisma.sourceRecord.groupBy({ by: ["sourceType"], _count: { _all: true } }),
-      prisma.robotModel.groupBy({ by: ["embodimentLevel"], _count: { _all: true } }),
-      prisma.contribution.groupBy({ by: ["contributionType"], _count: { _all: true } }),
-      prisma.perspectiveAnnotation.groupBy({ by: ["perspectiveTheme"], _count: { _all: true } }),
-      // Confidence buckets
+    const [locations, robotTypes, sourceTypes, embodimentLevels, contributionTypes, themes, highConfidenceAnn, medConfidenceAnn, lowConfidenceAnn, highConfidenceSrc, medConfidenceSrc, lowConfidenceSrc, robots] = await Promise.all([
+      prisma.robotModel.groupBy({ by: ['countryOfOrigin'], _count: { _all: true } }),
+      prisma.robotModel.groupBy({ by: ['robotType'], _count: { _all: true } }),
+      prisma.sourceRecord.groupBy({ by: ['sourceType'], _count: { _all: true } }),
+      prisma.robotModel.groupBy({ by: ['embodimentLevel'], _count: { _all: true } }),
+      prisma.contribution.groupBy({ by: ['contributionType'], _count: { _all: true } }),
+      prisma.perspectiveAnnotation.groupBy({ by: ['perspectiveTheme'], _count: { _all: true } }),
       prisma.perspectiveAnnotation.count({ where: { confidence: { gte: 0.8 } } }),
       prisma.perspectiveAnnotation.count({ where: { confidence: { gte: 0.5, lt: 0.8 } } }),
       prisma.perspectiveAnnotation.count({ where: { confidence: { lt: 0.5 } } }),
       prisma.sourceRecord.count({ where: { relevanceConfidence: { gte: 0.8 } } }),
       prisma.sourceRecord.count({ where: { relevanceConfidence: { gte: 0.5, lt: 0.8 } } }),
-      prisma.sourceRecord.count({ where: { relevanceConfidence: { lt: 0.5 } } })
+      prisma.sourceRecord.count({ where: { relevanceConfidence: { lt: 0.5 } } }),
+      prisma.robotModel.findMany({ select: { canonicalName: true, officialUrl: true, sourceMeta: true } }),
     ]);
-
-    data = {
-      locations,
-      robotTypes,
-      sourceTypes,
-      embodimentLevels,
-      contributionTypes,
-      themes,
-      highConfidenceAnn,
-      medConfidenceAnn,
-      lowConfidenceAnn,
-      highConfidenceSrc,
-      medConfidenceSrc,
-      lowConfidenceSrc,
-      dbOffline: false
-    };
-  } catch (error) {
-    console.error("Database connection failed in dashboard:", error);
-    data = {
-      locations: [],
-      robotTypes: [],
-      sourceTypes: [],
-      embodimentLevels: [],
-      contributionTypes: [],
-      themes: [],
-      highConfidenceAnn: 0,
-      medConfidenceAnn: 0,
-      lowConfidenceAnn: 0,
-      highConfidenceSrc: 0,
-      medConfidenceSrc: 0,
-      lowConfidenceSrc: 0,
-      dbOffline: true
-    };
-  }
-
-  // Helper to calculate total count for percentages
-  const sumCounts = (arr: { _count: { _all: number } }[]) => 
-    arr.reduce((acc, curr) => acc + curr._count._all, 0);
-
-  const locTotal = sumCounts(data.locations);
-  const typeTotal = sumCounts(data.robotTypes);
-  const srcTotal = sumCounts(data.sourceTypes);
-  const embTotal = sumCounts(data.embodimentLevels);
-  const contribTotal = sumCounts(data.contributionTypes);
-  const themeTotal = sumCounts(data.themes);
-
-  const totalAnnotations = data.highConfidenceAnn + data.medConfidenceAnn + data.lowConfidenceAnn;
-  const totalSources = data.highConfidenceSrc + data.medConfidenceSrc + data.lowConfidenceSrc;
-
-  return (
-    <>
-      <div className="topline">
-        <div>
-          <h1>{t.dashboardTitle}</h1>
-          <p className="muted">
-            {t.dashboardDesc}
-          </p>
-        </div>
-      </div>
-
-      {data.dbOffline && (
-        <div className="notice" style={{ backgroundColor: "#fffbeb", borderLeftColor: "var(--warning)", marginBottom: "16px" }}>
-          <strong>Database Offline:</strong> Live PostgreSQL is unavailable. This dashboard is not substituting example records.
-        </div>
-      )}
-
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "16px", marginTop: "12px" }}>
-        
-        {/* Location Distribution */}
-        <section className="panel">
-          <h2>Robot Origin Locations</h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            {data.locations.map((loc) => {
-              const count = loc._count._all;
-              const pct = locTotal > 0 ? (count / locTotal) * 100 : 0;
-              return (
-                <div key={loc.countryOfOrigin || "unknown"}>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", marginBottom: "4px" }}>
-                    <span>{loc.countryOfOrigin || "Unknown"}</span>
-                    <strong>{count} ({pct.toFixed(1)}%)</strong>
-                  </div>
-                  <div style={{ height: "8px", background: "var(--surface-muted)", borderRadius: "4px", overflow: "hidden" }}>
-                    <div style={{ width: `${pct}%`, height: "100%", background: "var(--accent)" }} />
-                  </div>
-                </div>
-              );
-            })}
-            {!data.locations.length && <div className="empty">No location statistics available.</div>}
-          </div>
-        </section>
-
-        {/* Robot Categories */}
-        <section className="panel">
-          <h2>Robot Categories</h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            {data.robotTypes.map((type) => {
-              const count = type._count._all;
-              const pct = typeTotal > 0 ? (count / typeTotal) * 100 : 0;
-              return (
-                <div key={type.robotType}>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", marginBottom: "4px" }}>
-                    <span style={{ textTransform: "capitalize" }}>{type.robotType.replace(/_/g, " ")}</span>
-                    <strong>{count} ({pct.toFixed(1)}%)</strong>
-                  </div>
-                  <div style={{ height: "8px", background: "var(--surface-muted)", borderRadius: "4px", overflow: "hidden" }}>
-                    <div style={{ width: `${pct}%`, height: "100%", background: "var(--accent)" }} />
-                  </div>
-                </div>
-              );
-            })}
-            {!data.robotTypes.length && <div className="empty">No category statistics available.</div>}
-          </div>
-        </section>
-
-        {/* Source Record Types */}
-        <section className="panel">
-          <h2>Source Record Types</h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            {data.sourceTypes.map((st) => {
-              const count = st._count._all;
-              const pct = srcTotal > 0 ? (count / srcTotal) * 100 : 0;
-              return (
-                <div key={st.sourceType}>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", marginBottom: "4px" }}>
-                    <span style={{ textTransform: "capitalize" }}>{st.sourceType.replace(/_/g, " ")}</span>
-                    <strong>{count} ({pct.toFixed(1)}%)</strong>
-                  </div>
-                  <div style={{ height: "8px", background: "var(--surface-muted)", borderRadius: "4px", overflow: "hidden" }}>
-                    <div style={{ width: `${pct}%`, height: "100%", background: "var(--accent)" }} />
-                  </div>
-                </div>
-              );
-            })}
-            {!data.sourceTypes.length && <div className="empty">No source types statistics available.</div>}
-          </div>
-        </section>
-
-        {/* Embodiment Level */}
-        <section className="panel">
-          <h2>Robot Embodiment Levels</h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            {data.embodimentLevels.map((el) => {
-              const count = el._count._all;
-              const pct = embTotal > 0 ? (count / embTotal) * 100 : 0;
-              return (
-                <div key={el.embodimentLevel}>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", marginBottom: "4px" }}>
-                    <span style={{ textTransform: "capitalize" }}>{el.embodimentLevel.replace(/_/g, " ")}</span>
-                    <strong>{count} ({pct.toFixed(1)}%)</strong>
-                  </div>
-                  <div style={{ height: "8px", background: "var(--surface-muted)", borderRadius: "4px", overflow: "hidden" }}>
-                    <div style={{ width: `${pct}%`, height: "100%", background: "var(--accent)" }} />
-                  </div>
-                </div>
-              );
-            })}
-            {!data.embodimentLevels.length && <div className="empty">No embodiment levels statistics available.</div>}
-          </div>
-        </section>
-
-        {/* Contribution Type */}
-        <section className="panel">
-          <h2>Contribution Types</h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            {data.contributionTypes.map((ct) => {
-              const count = ct._count._all;
-              const pct = contribTotal > 0 ? (count / contribTotal) * 100 : 0;
-              return (
-                <div key={ct.contributionType}>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", marginBottom: "4px" }}>
-                    <span style={{ textTransform: "capitalize" }}>{ct.contributionType.replace(/_/g, " ")}</span>
-                    <strong>{count} ({pct.toFixed(1)}%)</strong>
-                  </div>
-                  <div style={{ height: "8px", background: "var(--surface-muted)", borderRadius: "4px", overflow: "hidden" }}>
-                    <div style={{ width: `${pct}%`, height: "100%", background: "var(--accent)" }} />
-                  </div>
-                </div>
-              );
-            })}
-            {!data.contributionTypes.length && <div className="empty">No contribution type statistics available.</div>}
-          </div>
-        </section>
-
-        {/* Perspective Themes */}
-        <section className="panel">
-          <h2>Perspective Themes</h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            {data.themes.map((th) => {
-              const count = th._count._all;
-              const pct = themeTotal > 0 ? (count / themeTotal) * 100 : 0;
-              return (
-                <div key={th.perspectiveTheme}>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", marginBottom: "4px" }}>
-                    <span style={{ textTransform: "capitalize" }}>{th.perspectiveTheme.replace(/_/g, " ")}</span>
-                    <strong>{count} ({pct.toFixed(1)}%)</strong>
-                  </div>
-                  <div style={{ height: "8px", background: "var(--surface-muted)", borderRadius: "4px", overflow: "hidden" }}>
-                    <div style={{ width: `${pct}%`, height: "100%", background: "var(--accent)" }} />
-                  </div>
-                </div>
-              );
-            })}
-            {!data.themes.length && <div className="empty">No theme statistics available.</div>}
-          </div>
-        </section>
-
-      </div>
-
-      {/* Confidence Score Buckets */}
-      <h2 style={{ marginTop: "24px" }}>Extracted Confidence Distribution</h2>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "16px", marginTop: "12px" }}>
-        
-        {/* Perspective Confidence Distribution */}
-        <section className="panel">
-          <h2>Perspective Annotations (total: {totalAnnotations})</h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px" }}>
-            <div>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", marginBottom: "4px" }}>
-                <span>High (Confidence &ge; 0.8)</span>
-                <strong>{data.highConfidenceAnn}</strong>
-              </div>
-              <div style={{ height: "6px", background: "var(--surface-muted)", borderRadius: "3px", overflow: "hidden" }}>
-                <div style={{ width: `${totalAnnotations > 0 ? (data.highConfidenceAnn / totalAnnotations) * 100 : 0}%`, height: "100%", background: "var(--success)" }} />
-              </div>
-            </div>
-            <div>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", marginBottom: "4px" }}>
-                <span>Moderate (0.5 &le; Confidence &lt; 0.8)</span>
-                <strong>{data.medConfidenceAnn}</strong>
-              </div>
-              <div style={{ height: "6px", background: "var(--surface-muted)", borderRadius: "3px", overflow: "hidden" }}>
-                <div style={{ width: `${totalAnnotations > 0 ? (data.medConfidenceAnn / totalAnnotations) * 100 : 0}%`, height: "100%", background: "var(--warning)" }} />
-              </div>
-            </div>
-            <div>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", marginBottom: "4px" }}>
-                <span>Low (Confidence &lt; 0.5)</span>
-                <strong>{data.lowConfidenceAnn}</strong>
-              </div>
-              <div style={{ height: "6px", background: "var(--surface-muted)", borderRadius: "3px", overflow: "hidden" }}>
-                <div style={{ width: `${totalAnnotations > 0 ? (data.lowConfidenceAnn / totalAnnotations) * 100 : 0}%`, height: "100%", background: "var(--low-confidence)" }} />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Source Relevance Confidence Distribution */}
-        <section className="panel">
-          <h2>Source Relevance Confidence (total: {totalSources})</h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px" }}>
-            <div>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", marginBottom: "4px" }}>
-                <span>High (Confidence &ge; 0.8)</span>
-                <strong>{data.highConfidenceSrc}</strong>
-              </div>
-              <div style={{ height: "6px", background: "var(--surface-muted)", borderRadius: "3px", overflow: "hidden" }}>
-                <div style={{ width: `${totalSources > 0 ? (data.highConfidenceSrc / totalSources) * 100 : 0}%`, height: "100%", background: "var(--success)" }} />
-              </div>
-            </div>
-            <div>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", marginBottom: "4px" }}>
-                <span>Moderate (0.5 &le; Confidence &lt; 0.8)</span>
-                <strong>{data.medConfidenceSrc}</strong>
-              </div>
-              <div style={{ height: "6px", background: "var(--surface-muted)", borderRadius: "3px", overflow: "hidden" }}>
-                <div style={{ width: `${totalSources > 0 ? (data.medConfidenceSrc / totalSources) * 100 : 0}%`, height: "100%", background: "var(--warning)" }} />
-              </div>
-            </div>
-            <div>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", marginBottom: "4px" }}>
-                <span>Low (Confidence &lt; 0.5)</span>
-                <strong>{data.lowConfidenceSrc}</strong>
-              </div>
-              <div style={{ height: "6px", background: "var(--surface-muted)", borderRadius: "3px", overflow: "hidden" }}>
-                <div style={{ width: `${totalSources > 0 ? (data.lowConfidenceSrc / totalSources) * 100 : 0}%`, height: "100%", background: "var(--low-confidence)" }} />
-              </div>
-            </div>
-          </div>
-        </section>
-
-      </div>
-    </>
-  );
+    data = { locations, robotTypes, sourceTypes, embodimentLevels, contributionTypes, themes, highConfidenceAnn, medConfidenceAnn, lowConfidenceAnn, highConfidenceSrc, medConfidenceSrc, lowConfidenceSrc, robots };
+  } catch (error) { console.error('Database query failed in dashboard:', error); }
+  const totalRobots = data?.robots.length || 0;
+  const totalSources = data?.sourceTypes.reduce((sum, row) => sum + row._count._all, 0) || 0;
+  const withImages = data?.robots.filter(robot => getRobotImageCredit(robot.sourceMeta) && getRobotSourceImage(robot, [])).length || 0;
+  const sourceLabels: Record<string, string> = { WEB: text('หน้าเว็บและบทความออนไลน์', 'Web pages & online articles'), OPENALEX: text('ระเบียนวิชาการจาก OpenAlex', 'Scholarly records from OpenAlex'), GITHUB: text('โครงการบน GitHub', 'GitHub projects'), YOUTUBE: text('วิดีโอจาก YouTube', 'YouTube videos'), GDELT: text('ข่าวจาก GDELT', 'News from GDELT') };
+  const empty = data ? text('ยังไม่มีข้อมูลในหมวดนี้', 'No records in this category yet.') : text('ยังแสดงข้อมูลไม่ได้ กรุณาลองใหม่ภายหลัง', 'Data unavailable. Please try again later.');
+  const unit = text('รายการ', 'records');
+  const confidence = (high: number, medium: number, low: number): CountRow[] => [
+    { label: text('คะแนนสูง (ตั้งแต่ 0.8)', 'High score (0.8 or more)'), count: high },
+    { label: text('คะแนนกลาง (0.5–ต่ำกว่า 0.8)', 'Medium score (0.5–under 0.8)'), count: medium },
+    { label: text('คะแนนต่ำ (ต่ำกว่า 0.5)', 'Low score (under 0.5)'), count: low },
+  ];
+  const details = data ? [
+    { title: text('ประเทศต้นกำเนิดหุ่นยนต์', 'Robot countries of origin'), note: text('ประเทศของผู้พัฒนาหรือผู้ผลิต ไม่ใช่ตำแหน่งที่หุ่นยนต์ใช้งานอยู่', 'Origin of the developer or manufacturer, not deployment locations.'), rows: countRows(data.locations, 'countryOfOrigin', thai ? { Thailand: 'ไทย', China: 'จีน', Japan: 'ญี่ปุ่น', France: 'ฝรั่งเศส' } : {}) },
+    { title: text('ประเภทตามทะเบียนเดิม', 'Original registry types'), note: text('รายละเอียดประเภททั้งหมดก่อนรวมเป็นกลุ่มด้านบน', 'All original categories before the display groups above.'), rows: countRows(data.robotTypes, 'robotType') },
+    { title: text('รูปร่างและรูปแบบของหุ่นยนต์', 'Robot forms'), note: text('เช่น หุ่นยนต์เคลื่อนที่ แบบตั้งโต๊ะ หรืออุปกรณ์สวมใส่', 'Includes mobile, desktop and wearable platforms.'), rows: countRows(data.embodimentLevels, 'embodimentLevel') },
+    { title: text('ผลงานที่บันทึกไว้', 'Recorded contributions'), note: text('รวมโครงการและบทความ สถานะการตรวจสอบของแต่ละรายการอาจต่างกัน', 'Includes projects and papers with different review statuses.'), rows: countRows(data.contributionTypes, 'contributionType', thai ? { research_paper: 'บทความวิจัย', education_robotics_project: 'โครงการหุ่นยนต์เพื่อการศึกษา', education_capacity_building_program: 'โครงการพัฒนาทักษะ', community_healthcare_robotics_project: 'โครงการสุขภาพชุมชน' } : {}) },
+    { title: text('ประเด็นที่พบในบทวิเคราะห์', 'Topics in source annotations'), note: text('นับจากข้อความที่บันทึกไว้ ไม่ใช่ผลสำรวจความคิดเห็นของคนไทยทั้งหมด', 'Counts recorded annotations, not a representative public opinion survey.'), rows: countRows(data.themes, 'perspectiveTheme', thai ? { public_safety_and_surveillance: 'ความปลอดภัยและการเฝ้าระวัง', quality_of_life_and_service_robotics: 'คุณภาพชีวิตและหุ่นยนต์บริการ', elderly_care_safety: 'ความปลอดภัยในการดูแลผู้สูงอายุ', industrial_market_opportunity: 'โอกาสในภาคอุตสาหกรรม' } : {}) },
+    { title: text('คะแนนคัดกรองแหล่งข้อมูล', 'Source relevance scores'), note: text('คะแนนว่าข้อมูลเกี่ยวข้องกับหัวข้อเพียงใด ไม่ใช่คะแนนความถูกต้อง', 'How relevant a source is to the topic, not how factually accurate it is.'), rows: confidence(data.highConfidenceSrc, data.medConfidenceSrc, data.lowConfidenceSrc) },
+    { title: text('คะแนนการวิเคราะห์ข้อความ', 'Annotation confidence scores'), note: text('ความมั่นใจของระบบในการวิเคราะห์ข้อความ ไม่ใช่การยืนยันข้อเท็จจริง', 'System confidence in interpreting text, not factual verification.'), rows: confidence(data.highConfidenceAnn, data.medConfidenceAnn, data.lowConfidenceAnn) },
+  ] : [];
+  return <div className={styles.dashboard} lang={thai ? 'th' : 'en'}>
+    <div className={styles.breadcrumb}><Link href="/">{text('ภาพรวม', 'Overview')}</Link><span>/</span><span>{text('แดชบอร์ด', 'Dashboard')}</span></div>
+    <header className={styles.header}><div><h1>{text('รู้จักหุ่นยนต์ที่เกี่ยวข้องกับไทย', 'Explore robots connected to Thailand')}</h1><p>{text('ดูว่ามีรุ่นไหน ใช้ทำอะไร และมีข้อมูลจากที่ใดให้ตรวจสอบต่อ', 'See which models are recorded, what they are used for and where to learn more.')}</p></div><Link className={styles.sourceButton} href="/database"><FileText size={16} aria-hidden="true" />{text('ดูแหล่งข้อมูล', 'Browse sources')}</Link></header>
+    {!data && <div className={styles.offline} role="alert">{text('เชื่อมต่อฐานข้อมูลไม่ได้ในขณะนี้ จึงยังแสดงยอดจริงไม่ได้ ลองโหลดหน้านี้ใหม่อีกครั้ง', 'The database is unavailable. Live totals cannot be shown. Please reload to try again.')}</div>}
+    <div className={styles.summary}>
+      <dl><dt>{text('รุ่นที่รวบรวมไว้', 'Recorded robot models')}</dt><dd>{data ? totalRobots.toLocaleString() : '—'}</dd></dl>
+      <dl><dt>{text('แหล่งข้อมูลในระบบ', 'Source records')}</dt><dd>{data ? totalSources.toLocaleString() : '—'}</dd></dl>
+      <dl><dt>{text('รุ่นที่มีภาพพร้อมที่มา', 'Models with credited images')}</dt><dd>{data ? `${withImages}/${totalRobots}` : '—'}</dd></dl>
+      <Link href="/robots">{text('สำรวจหุ่นยนต์ทั้งหมด', 'Explore the registry')}<ArrowUpRight size={18} aria-hidden="true" /></Link>
+    </div>
+    <p className={styles.scope}>{text('นับเฉพาะข้อมูลที่รวบรวมไว้ในเว็บนี้ ไม่ใช่จำนวนหุ่นยนต์ทั้งหมดที่ใช้งานในประเทศไทย', 'These totals describe this website’s records, not all robots deployed in Thailand.')}</p>
+    <div className={styles.grid}>
+      <section className={styles.panel}><div className={styles.panelHeading}><div><h2>{text('หุ่นยนต์เหล่านี้ใช้ทำอะไร', 'What are these robots used for?')}</h2><p>{text('จัดกลุ่มตามประเภทที่บันทึกไว้ในทะเบียน', 'Grouped by the types recorded in the registry.')}</p></div><Bot size={21} aria-hidden="true" /></div><Bars rows={groupRobotTypes(data?.robotTypes || [], thai)} empty={empty} unit={text('รุ่น', 'models')} /><p className={styles.footnote}>{text('บางรุ่นยังเป็นต้นแบบ การอยู่ในกลุ่มนี้ไม่ได้ยืนยันว่าทำงานได้ตามที่ระบุทุกข้อ', 'Some models are prototypes. A category does not verify every claimed capability.')}</p></section>
+      <section className={styles.panel}><h2>{text('อ่านข้อมูลนี้อย่างไร', 'How to read these records')}</h2><p className={styles.sectionIntro}>{text('แยกสิ่งที่มีแหล่งอ้างอิง ออกจากสิ่งที่ยังต้องตรวจสอบ', 'Distinguish sourced information from claims that still need checking.')}</p><ul className={styles.guidance}>
+        <li><BookOpen size={24} aria-hidden="true" /><div><h3>{text('ข่าวโครงการ ≠ งานวิจัย', 'Project news ≠ research')}</h3><p>{text('ข่าวบอกว่าโครงการทำอะไร ส่วนบทความวิจัยจึงค่อยดูวิธีทดสอบและผลที่รายงาน', 'Project news describes an initiative. Research papers document methods and results.')}</p></div></li>
+        <li><ImageIcon size={24} aria-hidden="true" /><div><h3>{text('ดูรูปแล้วตามไปยังต้นทางได้', 'Follow images to their source')}</h3><p>{text('ภาพที่มีเครดิตช่วยให้ตรวจชื่อรุ่นและบริบทได้ แต่ไม่ได้รับรองความสามารถ', 'Credits help check model identity and context, not performance.')}</p></div></li>
+        <li><ShieldCheck size={24} aria-hidden="true" /><div><h3>{text('ยังไม่มีข้อมูล ไม่ได้แปลว่าทำไม่ได้', 'Missing evidence is not inability')}</h3><p>{text('ถ้ายังไม่มีหลักฐานเพียงพอ เราจะระบุว่ายังไม่ยืนยัน แทนการสรุปแทนผู้อ่าน', 'When evidence is insufficient, the claim remains unverified.')}</p></div></li>
+      </ul><p className={styles.footnote}>{text('ตรวจแหล่งที่มาแล้ว ≠ รับรองประสิทธิภาพหรือความปลอดภัยแล้ว', 'Source checked ≠ performance or safety certified')}</p></section>
+      <section className={styles.panel}><div className={styles.panelHeading}><div><h2>{text('ข้อมูลมาจากไหน', 'Where does the data come from?')}</h2><p>{text('นับตามชนิดระเบียนที่ระบบเก็บไว้', 'Counts by the source record type stored in the system.')}</p></div><FileText size={21} aria-hidden="true" /></div><Bars rows={data ? countRows(data.sourceTypes, 'sourceType', sourceLabels) : []} empty={empty} unit={unit} /><p className={styles.footnote}>{text('หน้าเว็บอาจเป็นข่าวหรือหน้าโครงการ จึงไม่ควรนับทั้งหมดเป็นงานวิจัย', 'Web records can include news and project pages; they are not all research papers.')}</p></section>
+      <section className={styles.explore}><h2>{text('อยากรู้เรื่องไหนต่อ', 'Where would you like to go next?')}</h2>{[
+        { href: '/robots', title: text('ดูหุ่นยนต์แต่ละรุ่น', 'Explore robot models'), description: text('รูป ผู้พัฒนา การใช้งาน และแหล่งอ้างอิง', 'Images, developers, use cases and source links'), icon: Bot },
+        { href: '/contributions', title: text('ดูงานวิจัยและโครงการ', 'Browse papers and projects'), description: text('อ่านผลงานที่เชื่อมโยงกับหุ่นยนต์', 'Read contributions connected to the registry'), icon: BookOpen },
+        { href: '/network', title: text('ดูว่าใครเกี่ยวข้องกับใคร', 'Explore connections'), description: text('สำรวจความเชื่อมโยงที่มีบันทึกในระบบ', 'Explore relationships recorded in the database'), icon: Network },
+      ].map(item => <Link key={item.href} href={item.href}><item.icon size={24} aria-hidden="true" /><span><strong>{item.title}</strong><small>{item.description}</small></span><ArrowUpRight size={18} aria-hidden="true" /></Link>)}</section>
+    </div>
+    <section className={styles.details} aria-labelledby="dashboard-details"><h2 id="dashboard-details">{text('ดูรายละเอียดของข้อมูล', 'Explore the data in detail')}</h2><p>{text('กดหัวข้อที่สนใจ เพื่อดูการแบ่งประเภทและคะแนนทั้งหมด', 'Expand a topic to see the original categories and score distributions.')}</p>{details.map(item => <details key={item.title}><summary>{item.title}</summary><div className={styles.detailBody}><p>{item.note}</p><Bars rows={item.rows} empty={empty} unit={unit} /></div></details>)}</section>
+  </div>;
 }

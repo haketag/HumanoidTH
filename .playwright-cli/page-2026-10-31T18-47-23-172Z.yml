@@ -1,0 +1,55 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - img "Thailand Humanoid Atlas" [ref=e8]
+    - generic [ref=e9]:
+      - paragraph [ref=e10]: Thailand Humanoid
+      - heading "Ecosystem Atlas" [level=1] [ref=e11]
+    - generic [ref=e14]:
+      - generic [ref=e15]: CONNECTING
+      - generic [ref=e16]: 5%
+  - generic [ref=e17]:
+    - complementary [ref=e18]:
+      - img "Thailand Humanoid Atlas" [ref=e20]
+      - navigation "Primary" [ref=e22]:
+        - link "Favorites" [ref=e23] [cursor=pointer]:
+          - /url: /favorites
+        - link "Humanoid Match" [ref=e27] [cursor=pointer]:
+          - /url: /match
+        - link "Overview" [ref=e32] [cursor=pointer]:
+          - /url: /
+        - link "Dashboard" [ref=e37] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Data Pulls" [ref=e44] [cursor=pointer]:
+          - /url: /data-pulls
+        - link "Map" [ref=e49] [cursor=pointer]:
+          - /url: /map
+        - link "Network" [ref=e55] [cursor=pointer]:
+          - /url: /network
+        - link "Perspectives" [ref=e62] [cursor=pointer]:
+          - /url: /perspectives
+        - link "Robots" [ref=e67] [cursor=pointer]:
+          - /url: /robots
+        - link "Inventory" [ref=e72] [cursor=pointer]:
+          - /url: /inventory
+        - link "Contributors" [ref=e78] [cursor=pointer]:
+          - /url: /contributions
+        - link "Analytics" [ref=e84] [cursor=pointer]:
+          - /url: /analytics
+        - link "Database" [ref=e88] [cursor=pointer]:
+          - /url: /database
+        - link "Submit" [ref=e94] [cursor=pointer]:
+          - /url: /submit-data
+        - link "Admin" [ref=e99] [cursor=pointer]:
+          - /url: /admin
+        - link "Profile" [ref=e104] [cursor=pointer]:
+          - /url: /profile
+      - generic [ref=e111]:
+        - button "English" [ref=e112] [cursor=pointer]:
+          - generic [ref=e113]: 🇬🇧
+          - generic [ref=e114]: EN
+        - button "ภาษาไทย" [ref=e115] [cursor=pointer]:
+          - generic [ref=e116]: 🇹🇭
+          - generic [ref=e117]: TH
+    - main [ref=e118]
+    - button "Run data pull" [ref=e123] [cursor=pointer]
+  - alert [ref=e129]

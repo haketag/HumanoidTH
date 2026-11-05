@@ -1,0 +1,47 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e2]:
+    - complementary [ref=f3e3]:
+      - img "Thailand Humanoid Atlas" [ref=f3e5]
+      - navigation "Primary" [ref=f3e7]:
+        - link "Favorites" [ref=f3e8] [cursor=pointer]:
+          - /url: /favorites
+        - link "Humanoid Match" [ref=f3e12] [cursor=pointer]:
+          - /url: /match
+        - link "Overview" [ref=f3e17] [cursor=pointer]:
+          - /url: /
+        - link "Dashboard" [ref=f3e22] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Data Pulls" [ref=f3e29] [cursor=pointer]:
+          - /url: /data-pulls
+        - link "Map" [ref=f3e34] [cursor=pointer]:
+          - /url: /map
+        - link "Network" [ref=f3e40] [cursor=pointer]:
+          - /url: /network
+        - link "Perspectives" [ref=f3e47] [cursor=pointer]:
+          - /url: /perspectives
+        - link "Robots" [ref=f3e52] [cursor=pointer]:
+          - /url: /robots
+        - link "Inventory" [ref=f3e57] [cursor=pointer]:
+          - /url: /inventory
+        - link "Contributors" [ref=f3e63] [cursor=pointer]:
+          - /url: /contributions
+        - link "Analytics" [ref=f3e69] [cursor=pointer]:
+          - /url: /analytics
+        - link "Database" [ref=f3e73] [cursor=pointer]:
+          - /url: /database
+        - link "Submit" [ref=f3e79] [cursor=pointer]:
+          - /url: /submit-data
+        - link "Admin" [ref=f3e84] [cursor=pointer]:
+          - /url: /admin
+        - link "Profile" [ref=f3e89] [cursor=pointer]:
+          - /url: /profile
+      - generic [ref=f3e96]:
+        - button "English" [ref=f3e97] [cursor=pointer]:
+          - generic [ref=f3e98]: 🇬🇧
+          - generic [ref=f3e99]: EN
+        - button "ภาษาไทย" [ref=f3e100] [cursor=pointer]:
+          - generic [ref=f3e101]: 🇹🇭
+          - generic [ref=f3e102]: TH
+    - main [ref=f3e103]
+    - button "Run data pull" [ref=f3e108] [cursor=pointer]
+  - alert [ref=f3e114]

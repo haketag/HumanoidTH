@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AdminConsolePage from "./AdminConsolePage";
+import Link from 'next/link';
 
 type SearchParams = Promise<{
   collection?: string;
@@ -14,5 +15,5 @@ export const metadata: Metadata = {
 };
 
 export default function AdminPage({ searchParams }: { searchParams: SearchParams }) {
-  return <AdminConsolePage searchParams={searchParams} />;
+  return <><p><Link href="/company-review">ตรวจคำขอและข้อเสนอจากบริษัท / Company Review</Link></p><AdminConsolePage searchParams={searchParams} /></>;
 }

@@ -1,0 +1,29 @@
+{
+  "id": "cmujs9wru001du77wh1kqxcjn",
+  "sourceMeta": {
+    "title": "Mr SAM",
+    "category": "robot_model",
+    "sourceReview": {
+      "checkedAt": "2026-10-31T18:57:35.965Z",
+      "sourceUrl": "https://www.md.chula.ac.th/%E0%B8%AB%E0%B8%B8%E0%B9%88%E0%B8%99%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B9%8C-mr-sam/",
+      "status": "primary_source_checked",
+      "notes": "Original Faculty of Medicine report confirms the January 2024 launch of five Mr.SAM outpatient-service robots. This source supersedes the earlier secondary-only reference and its conflicting rollout timing. No journal research paper or clinical certification established."
+    },
+    "sourcePlatform": "news",
+    "previousSourceReview": {
+      "kind": "secondary_news_only",
+      "notes": "Secondary report found; it describes planned March 2024 rollout, not a completed deployment at publication. Photo attributed to Bangkok Post, so no primary-source photo selected.",
+      "scope": "Source attribution and reported functions only; not independent capability or clinical validation.",
+      "status": "partial",
+      "checkedAt": "2026-10-31T18:45:49.197Z",
+      "sourceUrl": "https://en.vietnamplus.vn/thailand-introduces-robot-assistants-at-hospital-post276507.vnp"
+    },
+    "imageUrl": "/images/robots/sourced/followup-c18895314a9b.jpg",
+    "imageOriginalUrl": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4120-1400x988.jpg",
+    "imageSourceUrl": "https://www.md.chula.ac.th/%E0%B8%AB%E0%B8%B8%E0%B9%88%E0%B8%99%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B9%8C-mr-sam/",
+    "imageSha256": "a1d75ab6b7544c619d5e62d354f96c334757676dc4dda5bbfb49192b08f81137",
+    "imageCredit": "Faculty of Medicine, Chulalongkorn University / King Chulalongkorn Memorial Hospital",
+    "imageCaption": "Mr.SAM outpatient robot launch, 17 January 2024 — original Faculty of Medicine photograph.",
+    "imageRights": "Original publisher retains rights; reuse permission not established."
+  }
+}

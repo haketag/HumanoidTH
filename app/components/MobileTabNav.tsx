@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import NavigationLink from './NavigationLink';
+import { Star } from 'lucide-react';
 import { usePathname } from "next/navigation";
 import {
   Home,
@@ -19,6 +20,7 @@ export default function MobileTabNav({ currentLang = "en" }: MobileTabNavProps) 
   const pathname = usePathname() || "/";
   const t = getTranslation(currentLang);
   const tabs = [
+    { href: '/favorites', label: currentLang === 'th' ? 'รายการที่ถูกใจ' : 'Favorites', icon: Star },
     { href: "/", label: t.overview, icon: Home },
     { href: "/dashboard", label: t.dashboard, icon: LayoutDashboard },
     { href: "/network", label: t.network, icon: Network },
@@ -36,15 +38,15 @@ export default function MobileTabNav({ currentLang = "en" }: MobileTabNavProps) 
         const isActive = isExact || isPrefix;
 
         return (
-          <Link 
+          <NavigationLink
             key={`${tab.href}-${tab.label}`} 
             href={tab.href} 
             className={`tab-item ${isActive || isAdminSection ? "active" : ""}`}
-            aria-current={isActive || isAdminSection ? "page" : undefined}
+            current={isActive || isAdminSection}
           >
             <Icon size={20} className="tab-icon" />
             <span className="tab-label">{tab.label}</span>
-          </Link>
+          </NavigationLink>
         );
       })}
     </nav>

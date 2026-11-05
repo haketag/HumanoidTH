@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
 import { getTranslation } from "@/lib/translations";
+import { currentActor } from '@/lib/company-auth';
 
 export const dynamic = "force-dynamic";
 
@@ -31,6 +32,7 @@ export default async function DatabasePage({ searchParams }: { searchParams: Sea
   const cookieStore = await cookies();
   const lang = (cookieStore.get("lang")?.value || "en") as "en" | "th";
   const t = getTranslation(lang);
+  const actor = await currentActor();
 
   let data: any[] = [];
 
@@ -45,21 +47,22 @@ export default async function DatabasePage({ searchParams }: { searchParams: Sea
         break;
       case "owned_inventory":
         data = await prisma.ownedInventory.findMany({
-          where: q ? { displayName: { contains: q, mode: "insensitive" } } : {},
+          where: { ...(actor?.isAdmin ? {} : { visibility: 'public' }), ...(q ? { displayName: { contains: q, mode: "insensitive" } } : {}) },
           orderBy: { createdAt: "desc" },
           take: 250
         });
         break;
       case "contributions":
         data = await prisma.contribution.findMany({
-          where: q ? { title: { contains: q, mode: "insensitive" } } : {},
+          where: { ...(actor?.isAdmin ? {} : { visibility: 'public' }), ...(q ? { title: { contains: q, mode: "insensitive" } } : {}) },
           orderBy: { createdAt: "desc" },
           take: 250
         });
         break;
       case "submissions":
+        if (!actor) break;
         data = await prisma.submittedData.findMany({
-          where: q ? { title: { contains: q, mode: "insensitive" } } : {},
+          where: { ...(actor.isAdmin ? {} : { submittedById: actor.id }), ...(q ? { title: { contains: q, mode: "insensitive" } } : {}) },
           orderBy: { createdAt: "desc" },
           take: 250
         });

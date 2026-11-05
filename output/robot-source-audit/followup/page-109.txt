@@ -1,0 +1,47 @@
+107
+4.7.1 
+Desktop Ninja Robot*
+This is an innovative robot for 
+the care of the older persons, 
+the “Chula-Aree Version.” It 
+can be controlled and com -
+manded from a distance. It 
+has the equipment to mea -
+sure and record vital signs 
+such as blood pressure, ECG, pulse, and temperature, 
+for real-time diagnosis.
+4.7
+Innovations 
+for the Older Persons 
+4.7.2 
+Pinto Robot*
+This is a robot used to 
+deliver food and medical 
+supplies from a distance.  
+It is controlled by a telecommunications system 
+(Telepresence). It is applicable in the COVID-19 
+situation to reduce the risk of infection between 
+staff and patients.  
+4.7.3 
+Mirror Robot*
+This is used as an Android 
+tablet device for voice-  
+activated interaction,  
+removing the need to 
+touch the device when answering or calling for help. 
+This can be used in hospitals in COVID-19 situations 
+to help reduce the risk of infection.
+4.7.4 
+DoctoSight Intelligent 
+Medical Robot**
+This is a robot used in  
+diagnosis and treatment via 
+telemedicine. It can perform routine tasks 
+without the supervision of a clinician. Doctors 
+or nurses can consult with people through the 
+robot. The robot can measure the pulse, blood 
+pressure, and heart rate, and help transport 
+medicines and materials to persons with fever 
+to reduce the risk of infection.
+* Inventor: Faculty of Engineering, Chulalongkorn University
+** Inventor: Faculty of Engineering, Mahidol University

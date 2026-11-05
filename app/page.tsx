@@ -131,7 +131,7 @@ export default async function OverviewPage() {
   const formatMetric = (value: number | null) => value?.toLocaleString() ?? "Unavailable";
 
   return (
-    <main className="atlas-page">
+    <div className="atlas-page">
       <style dangerouslySetInnerHTML={{ __html: `
         .atlas-page {
           display: grid;
@@ -139,7 +139,7 @@ export default async function OverviewPage() {
             "header header"
             "stack robot"
             "terminal terminal";
-          grid-template-columns: minmax(560px, 0.98fr) minmax(420px, 1.02fr);
+          grid-template-columns: minmax(0, 0.98fr) minmax(0, 1.02fr);
           column-gap: 34px;
           row-gap: 18px;
           width: 100%;
@@ -168,35 +168,33 @@ export default async function OverviewPage() {
 
         .topbar h1 {
           font-family: var(--font-sans);
-          font-size: clamp(32px, 2.6vw, 42px);
-          font-weight: 950;
-          text-transform: uppercase;
+          font-size: clamp(30px, 2.7vw, 42px);
+          font-weight: 700;
           letter-spacing: 0;
-          line-height: 0.98;
+          line-height: 1.28;
           margin: 6px 0 0;
           color: #07150f;
         }
 
         .topbar h1 span {
           color: var(--warning);
-          font-weight: 800;
+          font-weight: 600;
         }
 
         .eyebrow {
-          font-size: 11px;
-          text-transform: uppercase;
-          letter-spacing: 1.5px;
+          font-size: 12px;
+          letter-spacing: normal;
           color: var(--warning);
-          font-weight: 750;
+          font-weight: 600;
           margin: 0;
         }
 
         .subtitle {
-          font-size: 13px;
-          color: #17221d;
+          font-size: 15px;
+          color: var(--text-secondary);
           margin: 9px 0 0 0;
           max-width: 600px;
-          line-height: 1.5;
+          line-height: 1.65;
         }
 
         .topbar .actions {
@@ -293,25 +291,25 @@ export default async function OverviewPage() {
 
         .metric-card p {
           margin: 0;
-          font-size: 11px;
-          text-transform: uppercase;
+          font-size: 12px;
           letter-spacing: 0;
           color: #07150f;
-          font-weight: 850;
+          font-weight: 600;
         }
 
         .metric-card strong {
           display: block;
           font-size: 29px;
-          font-weight: 950;
+          font-weight: 700;
           color: #07150f;
           margin-top: 4px;
-          line-height: 1.1;
+          line-height: 1.25;
+          font-variant-numeric: tabular-nums;
         }
 
         .metric-card small {
           display: block;
-          font-size: 11px;
+          font-size: 12px;
           color: var(--text-secondary);
           margin-top: 4px;
         }
@@ -338,9 +336,8 @@ export default async function OverviewPage() {
 
         .card-label {
           margin: 0 0 10px 0;
-          font-size: 11px;
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
+          font-size: 12px;
+          letter-spacing: normal;
           color: var(--text-secondary);
           font-weight: 600;
         }
@@ -360,12 +357,12 @@ export default async function OverviewPage() {
         .glass-card h3 {
           margin: 0;
           font-size: 25px;
-          font-weight: 950;
+          font-weight: 700;
           color: #07150f;
         }
 
         .glass-card small {
-          font-size: 11px;
+          font-size: 12px;
           color: var(--text-secondary);
           margin-top: 8px;
           display: block;
@@ -383,10 +380,9 @@ export default async function OverviewPage() {
         .platform-card h3 {
           margin: 0 0 16px 0;
           font-size: 12px;
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
+          letter-spacing: normal;
           color: var(--text-primary);
-          font-weight: 800;
+          font-weight: 600;
         }
 
         .platform-grid {
@@ -437,7 +433,7 @@ export default async function OverviewPage() {
 
         .platform-item strong {
           font-size: 19px;
-          font-weight: 950;
+          font-weight: 700;
           color: #07150f;
         }
 
@@ -458,7 +454,7 @@ export default async function OverviewPage() {
           border: none;
           border-radius: 0;
           height: min(74vh, 760px);
-          min-height: 620px;
+          min-height: 540px;
           position: relative;
           overflow: visible;
           display: flex;
@@ -524,7 +520,7 @@ export default async function OverviewPage() {
         }
 
         .robot-model-wrapper {
-          width: min(860px, 120%);
+          width: min(860px, 100%);
           height: 120%;
           position: relative;
           z-index: 2;
@@ -559,10 +555,9 @@ export default async function OverviewPage() {
         .terminal-header h3 {
           margin: 0;
           font-size: 14px;
-          font-weight: 800;
+          font-weight: 600;
           color: var(--warning);
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
+          letter-spacing: normal;
         }
 
         .terminal-panel p {
@@ -593,7 +588,7 @@ export default async function OverviewPage() {
           left: 16px;
           background: var(--warning);
           color: #0b1a15;
-          font-weight: 800;
+          font-weight: 600;
           font-size: 10px;
           width: 18px;
           height: 18px;
@@ -617,7 +612,7 @@ export default async function OverviewPage() {
           border-radius: 4px;
           color: #10B981;
           font-family: var(--font-sans);
-          font-size: 11px;
+          font-size: 12px;
           word-break: break-all;
           white-space: pre-wrap;
         }
@@ -630,6 +625,18 @@ export default async function OverviewPage() {
         @keyframes spinRingInverse {
           0% { transform: rotateX(75deg) rotateY(-15deg) rotate(360deg); }
           100% { transform: rotateX(75deg) rotateY(-15deg) rotate(0deg); }
+        }
+
+        html[data-theme="dark"] .atlas-page :is(.topbar h1,.subtitle,.metric-card p,.metric-card strong,.glass-card h3,.platform-item p,.platform-item strong,.topbar .actions .button:not(.primary)) { color: var(--text-primary); }
+        html[data-theme="dark"] .atlas-page :is(.glass-card,.platform-item) { background: var(--surface); border-color: var(--border); }
+        html[data-theme="dark"] .atlas-page .alert { color: var(--danger); }
+        html[data-theme="dark"] .atlas-page .topbar .actions .button.primary { color: #0a0d0c; }
+
+        @media (min-width: 861px) and (max-width: 1190px) {
+          .atlas-page .topbar { flex-wrap: wrap; }
+          .atlas-page .topbar .actions { justify-content: flex-start; }
+          .atlas-page .platform-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+          .atlas-page .metric-card { padding: 12px; gap: 8px; }
         }
 
         @media (max-width: 860px) {
@@ -652,9 +659,9 @@ export default async function OverviewPage() {
             gap: 4px;
           }
           .topbar h1 {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
+            font-size: 26px;
+            font-weight: 600;
+            letter-spacing: normal;
             margin: 0;
             color: #2e3230;
           }
@@ -663,8 +670,8 @@ export default async function OverviewPage() {
             display: none !important;
           }
           .robot-stage {
-            height: 180px;
-            min-height: 180px;
+            height: 320px;
+            min-height: 320px;
             background: var(--surface-muted);
             border: 1px solid var(--border);
             border-radius: 12px;
@@ -743,7 +750,7 @@ export default async function OverviewPage() {
         <div>
           <p className="eyebrow">
             <span className="desktop-only">{lang === "th" ? "คอนโซลวิจัยระบบ" : "Research Console"}</span>
-            <span className="mobile-only">{lang === "th" ? "คลังข้อมูลประเทศไทย" : "THAILAND ATLAS"}</span>
+            <span className="mobile-only">{lang === "th" ? "คลังข้อมูลประเทศไทย" : "Thailand Atlas"}</span>
           </p>
           <h1>
             <span className="desktop-only">
@@ -751,7 +758,7 @@ export default async function OverviewPage() {
               <span>& {lang === "th" ? "สรุปคลังข้อมูล" : "Corpus Summary"}</span>
             </span>
             <span className="mobile-only">
-              {lang === "th" ? "ภาพรวมและสรุปคลังข้อมูล" : "OVERVIEW & CORPUS SUMMARY"}
+              {lang === "th" ? "ภาพรวมและสรุปคลังข้อมูล" : "Overview & Corpus Summary"}
             </span>
           </h1>
           <p className="subtitle">{t.overviewDesc}</p>
@@ -969,7 +976,7 @@ export default async function OverviewPage() {
           })
         }}
       />
-    </main>
+    </div>
 
   );
 }

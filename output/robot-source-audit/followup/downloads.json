@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Dinsaw Mini Home AI Assistance",
+    "source": "https://www.dinsaw.com/dinsaw-mini-home-ai/",
+    "image": "https://www.dinsaw.com/wp-content/uploads/2023/09/Cover-Product_Dinsaw-mini-Home-AI.jpg",
+    "file": "C:\\Users\\oknan\\HumanoidTH\\output\\robot-source-audit\\followup\\813c420059ba.jpg",
+    "mime": "image/jpeg",
+    "bytes": 328899,
+    "sha256": "64588f0605b8a0fb1c57ed031aec5e059c147ef60f2148df58dbccf50166d356"
+  },
+  {
+    "name": "Exoskeleton Wheelchair Robot",
+    "source": "https://www.ise.eng.chula.ac.th/events/assoc-prof-ronnapee-chaichaowarat-ise-lecturer-has-opened-a-laboratory-to-showca",
+    "image": "https://s3ise.siwatsystem.com/ise-web/public/adc3fc13-5abd-40fe-a769-c1c9480efdfe-images_PR_Feb2025_Wheelchair_Exoskeleton_1-1ipbg0.jpg",
+    "file": "C:\\Users\\oknan\\HumanoidTH\\output\\robot-source-audit\\followup\\7606f3e9a4b2.jpg",
+    "mime": "image/jpeg",
+    "bytes": 92429,
+    "sha256": "2e6b5ece8045801290740a21d61d43d3cfc1d5da7b853c8123bde4087e27bbcc"
+  },
+  {
+    "name": "SR1 Security Robot",
+    "source": "https://mqdc.com/news/354-robot-helpers-start-work-at-whizdom-station-ratchada-thapra",
+    "image": "https://mqdc.com/storage/uploads/mqdc_backend/originals/303b0f90-890f-4019-9e05-99250d15e341.jpg",
+    "file": "C:\\Users\\oknan\\HumanoidTH\\output\\robot-source-audit\\followup\\054e78f76d88.jpg",
+    "mime": "image/jpeg",
+    "bytes": 212310,
+    "sha256": "9e175f6efb922a1adb60267c4eef593e6a2d40c00c6c228d31a6a4929e02a9e7"
+  },
+  {
+    "name": "Exoskeleton paper figure 3",
+    "source": "https://www.mdpi.com/2218-6581/12/1/16",
+    "image": "https://pub.mdpi-res.com/robotics/robotics-12-00016/article_deploy/html/images/robotics-12-00016-g003.png",
+    "file": "C:\\Users\\oknan\\HumanoidTH\\output\\robot-source-audit\\followup\\a4ad5e6dd7ed.png",
+    "mime": "image/png",
+    "bytes": 1588616,
+    "sha256": "0ca4930482173c1c029e7ac8a966a1695eeb83af8e9f19959810a4fb0ed0e866"
+  }
+]

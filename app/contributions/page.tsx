@@ -48,7 +48,7 @@ export default async function ContributionsPage({ searchParams }: { searchParams
   const t = getTranslation(lang);
 
   // Build filter conditions
-  const where: any = {};
+  const where: any = { visibility: 'public' };
   if (type) where.contributionType = type;
   if (org) where.organization = org;
   if (robot) where.relatedRobotModelId = robot;
@@ -77,7 +77,7 @@ export default async function ContributionsPage({ searchParams }: { searchParams
       prisma.contribution.findMany({
         select: { organization: true },
         distinct: ["organization"],
-        where: { organization: { not: null } }
+        where: { organization: { not: null }, visibility: 'public' }
       })
     ]);
     dbItems = resItems;

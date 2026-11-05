@@ -1,0 +1,29 @@
+{
+  "id": "cmujs9wr8000ru77wosumdha0",
+  "sourceMeta": {
+    "title": "Ninja Robot",
+    "category": "robot_model",
+    "sourceReview": {
+      "checkedAt": "2026-10-31T19:00:06.488Z",
+      "sourceUrl": "https://www.chula.ac.th/en/news/33484/",
+      "status": "primary_source_checked",
+      "notes": "Canonical university article now accessible and explicitly identifies Ninja and its development team. The exact article image was retrieved from the university CDN and inspected. The photograph shows two project configurations; do not infer identical specifications. This is a university project report, not a verified journal paper."
+    },
+    "sourcePlatform": "news",
+    "previousSourceReview": {
+      "kind": "university_news_access_limited",
+      "notes": "Indexed Chula report describes telepresence and vital-sign monitoring. Stage source fails TLS validation. Original article at Nation remains in the database; no generic CU-RoboCOVID image substituted.",
+      "scope": "Source attribution and reported functions only; not independent capability or clinical validation.",
+      "status": "partial",
+      "checkedAt": "2026-10-31T18:45:49.197Z",
+      "sourceUrl": "https://web-stage.ccc.chula.ac.th/en/news/33484/"
+    },
+    "imageUrl": "/images/robots/sourced/followup-0edce93e9cb9.jpg",
+    "imageOriginalUrl": "https://web-cdn.chula.ac.th/web-dev/2020/07/20200723_2_im03_hotnews.jpg",
+    "imageSourceUrl": "https://www.chula.ac.th/en/news/33484/",
+    "imageSha256": "4a8c8d53501631c1104072a418f9a2786b9406742d37162b219ee22aab89a4e4",
+    "imageCredit": "Chulalongkorn University / Faculty of Engineering",
+    "imageCaption": "Telemedicine robot prototypes pictured in the university report on the Ninja development team, August 2020; hardware configurations differ.",
+    "imageRights": "Original publisher retains rights; reuse permission not established."
+  }
+}

@@ -57,6 +57,10 @@ model User {
   name            String?
   role            UserRole        @default(USER)
   submissions     SubmittedData[]
+  companyAccount  CompanyAccount?
+  companyMemberships CompanyMembership[]
+  companySubmissions CompanySubmission[]
+  companyReviews CompanyReview[]
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
 }
@@ -102,6 +106,8 @@ model RobotModel {
   lastVerifiedAt    DateTime?
   contributions     Contribution[]
   inventory         OwnedInventory[]
+  companyLinks      CompanyRobot[]
+  companyProposals  CompanySubmission[]
   createdAt         DateTime       @default(now())
   updatedAt         DateTime       @updatedAt
 
@@ -116,6 +122,7 @@ model Entity {
   canonicalKey String   @unique
   sourceMeta   Json     @default("{}")
   createdAt    DateTime @default(now())
+  company      Company?
 
   @@index([entityType])
 }
@@ -249,4 +256,102 @@ model OwnedInventory {
   updatedAt          DateTime    @updatedAt
 
   @@index([robotModelId])
+}
+
+model CompanyAccount {
+  userId String @id
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  passwordHash String
+  isAdmin Boolean @default(false)
+  sessions CompanySession[]
+}
+
+model CompanySession {
+  tokenHash String @id
+  userId String
+  account CompanyAccount @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  expiresAt DateTime
+  @@index([expiresAt])
+}
+
+model Company {
+  id String @id
+  name String
+  nameKey String @unique
+  website String
+  domain String @unique
+  published Json?
+  revision Int @default(0)
+  entityId String? @unique
+  entity Entity? @relation(fields: [entityId], references: [id], onDelete: Restrict)
+  memberships CompanyMembership[]
+  submissions CompanySubmission[]
+  robots CompanyRobot[]
+  createdAt DateTime @default(now())
+}
+
+model CompanyMembership {
+  id String @id
+  companyId String
+  company Company @relation(fields: [companyId], references: [id], onDelete: Restrict)
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Restrict)
+  status String @default("PENDING_REVIEW")
+  businessEmail String
+  evidence String
+  feedback String @default("")
+  version Int @default(1)
+  createdAt DateTime @default(now())
+  reviews CompanyReview[]
+  @@unique([companyId, userId])
+}
+
+model CompanySubmission {
+  id String @id
+  companyId String
+  company Company @relation(fields: [companyId], references: [id], onDelete: Restrict)
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Restrict)
+  kind String
+  status String @default("DRAFT")
+  proposed Json
+  baseline Json
+  targetRobotId String?
+  targetRobot RobotModel? @relation(fields: [targetRobotId], references: [id], onDelete: Restrict)
+  publicId String?
+  version Int @default(1)
+  feedback String @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  submittedAt DateTime?
+  reviews CompanyReview[]
+  @@index([companyId, status])
+}
+
+model CompanyReview {
+  id String @id
+  submissionId String?
+  submission CompanySubmission? @relation(fields: [submissionId], references: [id], onDelete: Restrict)
+  membershipId String?
+  membership CompanyMembership? @relation(fields: [membershipId], references: [id], onDelete: Restrict)
+  actorId String
+  actor User @relation(fields: [actorId], references: [id], onDelete: Restrict)
+  decision String
+  feedback String
+  snapshot Json
+  createdAt DateTime @default(now())
+}
+
+model CompanyRobot {
+  companyId String
+  company Company @relation(fields: [companyId], references: [id], onDelete: Restrict)
+  robotId String @unique
+  robot RobotModel @relation(fields: [robotId], references: [id], onDelete: Restrict)
+  @@id([companyId, robotId])
+}
+
+model CompanyRateLimit {
+  key String @id
+  attempts Int
+  expiresAt DateTime
 }

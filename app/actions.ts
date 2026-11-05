@@ -1,12 +1,13 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import type { SourceType } from "../generated/prisma";
 import { prisma } from "@/lib/prisma";
 import { runAdapter } from "@/lib/ingest/adapters";
 import { canonicalizeUrl } from "@/lib/url";
+import { authenticate, currentActor, logoutCompany, requireCompanyAdmin } from '@/lib/company-auth';
 
 function readTextField(formData: FormData, key: string) {
   return String(formData.get(key) ?? "").trim();
@@ -37,6 +38,7 @@ function readOptionalDateField(formData: FormData, key: string) {
 }
 
 function revalidateAtlasCms() {
+  revalidateTag('public-robot-image-sources');
   const paths = [
     "/",
     "/dashboard",
@@ -58,8 +60,7 @@ function revalidateAtlasCms() {
 }
 
 export async function createSubmission(formData: FormData) {
-  const cookieStore = await cookies();
-  const currentEmail = cookieStore.get("user_email")?.value;
+  const currentEmail = (await currentActor())?.email;
   if (!currentEmail) {
     redirect("/profile?from=/submit-data");
   }
@@ -88,11 +89,13 @@ export async function createSubmission(formData: FormData) {
 }
 
 export async function updateSubmissionStatus(id: string, status: "APPROVED" | "REJECTED" | "NEEDS_REVIEW") {
+  await requireCompanyAdmin();
   await prisma.submittedData.update({ where: { id }, data: { status } });
   revalidateAtlasCms();
 }
 
 export async function runDataPull(formData: FormData) {
+  await requireCompanyAdmin();
   const adapter = String(formData.get("adapter") ?? "OPENALEX") as SourceType;
   const query = String(formData.get("query") ?? "").trim();
   const limit = Number(formData.get("limit") ?? 10);
@@ -133,66 +136,16 @@ export async function runDataPull(formData: FormData) {
 }
 
 export async function loginAsUser(email: string, role: string) {
-  const user = await prisma.user.upsert({
-    where: { email },
-    update: { role: role as any },
-    create: {
-      email,
-      name: email.split("@")[0],
-      role: role as any
-    }
-  });
-
-  const cookieStore = await cookies();
-  cookieStore.set("user_email", user.email, { path: "/" });
-  cookieStore.set("user_role", user.role, { path: "/" });
-  if (user.role === "ADMIN") {
-    cookieStore.set("admin_session", "true", { path: "/" });
-  } else {
-    cookieStore.delete("admin_session");
-  }
-  revalidatePath("/profile");
-  revalidateAtlasCms();
-  redirect("/profile");
+  // The legacy email/role selector is not proof of identity.
+  redirect('/company');
 }
 
 export async function registerAndLoginUser(formData: FormData) {
-  const email = String(formData.get("email") ?? "").trim();
-  const name = String(formData.get("name") ?? "").trim();
-  const role = String(formData.get("role") ?? "USER") as any;
-  const redirectTo = String(formData.get("redirectTo") ?? "/profile");
-
-  if (!email) {
-    throw new Error("Email is required");
-  }
-
-  const user = await prisma.user.upsert({
-    where: { email },
-    update: {
-      name: name || undefined,
-      role
-    },
-    create: {
-      email,
-      name: name || email.split("@")[0],
-      role
-    }
-  });
-
-  const cookieStore = await cookies();
-  cookieStore.set("user_email", user.email, { path: "/" });
-  cookieStore.set("user_role", user.role, { path: "/" });
-  if (user.role === "ADMIN") {
-    cookieStore.set("admin_session", "true", { path: "/" });
-  } else {
-    cookieStore.delete("admin_session");
-  }
-  revalidatePath("/profile");
-  revalidateAtlasCms();
-  redirect(redirectTo.startsWith("/") ? redirectTo : "/profile");
+  redirect('/company');
 }
 
 export async function logoutUser() {
+  await logoutCompany();
   const cookieStore = await cookies();
   cookieStore.delete("user_email");
   cookieStore.delete("user_role");
@@ -204,12 +157,14 @@ export async function logoutUser() {
 
 export async function adminLoginAction(formData: FormData) {
   const email = String(formData.get("email") ?? "").trim();
-  const password = String(formData.get("password") ?? "").trim();
+  const password = String(formData.get("password") ?? "");
 
-  const expectedUser = process.env.ADMIN_BASIC_USER || "creativelab.co.th@gmail.com";
-  const expectedPassword = process.env.ADMIN_BASIC_PASSWORD || "I@M_Cr3LabTH_F4M";
+  const expectedUser = process.env.ADMIN_BASIC_USER;
+  const expectedPassword = process.env.ADMIN_BASIC_PASSWORD;
 
-  if (email === expectedUser && password === expectedPassword) {
+  if (expectedUser && expectedPassword && email === expectedUser && password === expectedPassword) {
+    const actor = await authenticate({email,password},false);
+    if (!actor.isAdmin) throw new Error('Admin authorization required');
     const user = await prisma.user.upsert({
       where: { email },
       update: { role: "ADMIN" },
@@ -235,6 +190,7 @@ export async function setLanguage(lang: "en" | "th") {
 }
 
 export async function upsertSourceRecordAction(formData: FormData) {
+  await requireCompanyAdmin();
   const id = readTextField(formData, "id");
   const url = readOptionalUrlField(formData, "url");
   const sourceType = readTextField(formData, "sourceType") as any;
@@ -274,6 +230,7 @@ export async function upsertSourceRecordAction(formData: FormData) {
 }
 
 export async function upsertRobotModelAction(formData: FormData) {
+  await requireCompanyAdmin();
   const id = readTextField(formData, "id");
   const canonicalName = readTextField(formData, "canonicalName");
 
@@ -313,6 +270,7 @@ export async function upsertRobotModelAction(formData: FormData) {
 }
 
 export async function upsertContributionAction(formData: FormData) {
+  await requireCompanyAdmin();
   const id = readTextField(formData, "id");
   const title = readTextField(formData, "title");
   const contributionType = readTextField(formData, "contributionType");
@@ -351,6 +309,7 @@ export async function upsertContributionAction(formData: FormData) {
 }
 
 export async function upsertSubmittedDataAction(formData: FormData) {
+  await requireCompanyAdmin();
   const id = readTextField(formData, "id");
   const title = readTextField(formData, "title");
   const submissionType = readTextField(formData, "submissionType");

@@ -1,0 +1,158 @@
+[
+  {
+    "id": "cmujs9ws6001ou77wz2r6p0kb",
+    "canonicalName": "Exoskeleton Wheelchair Robot",
+    "manufacturer": "Chulalongkorn University",
+    "developerOrg": "Chulalongkorn University",
+    "countryOfOrigin": "Thailand",
+    "robotType": "assistive_wearable_robot",
+    "embodimentLevel": "wearable_exoskeleton",
+    "primaryUseCase": "Assistive robotics; include if atlas scope covers service and care robots.",
+    "thailandStatus": "observed_in_thailand",
+    "statusConfidence": 0.86,
+    "officialUrl": "https://www.chula.ac.th/en/highlight/218151",
+    "description": "Wearable robotic wheelchair/exoskeleton system that can assist people with disabilities in sitting, standing, and moving.",
+    "sourceMeta": {
+      "title": "Exoskeleton Wheelchair Robot",
+      "category": "robot_model",
+      "sourceReview": {
+        "kind": "university_news_access_limited",
+        "notes": "University article indexed and reviewed: prototype, with ethics approval and patient trials described as future steps in the February 2025 article. Not evidence of deployment readiness. Original photo not retrieved reliably.",
+        "scope": "Source attribution and reported functions only; not independent capability or clinical validation.",
+        "status": "partial",
+        "checkedAt": "2026-10-31T18:45:49.197Z",
+        "sourceUrl": "https://www.chula.ac.th/en/highlight/218151/"
+      },
+      "sourcePlatform": "university_news"
+    },
+    "firstSeenYear": 2025,
+    "lastVerifiedAt": null,
+    "createdAt": "2026-09-27T05:17:09.174Z",
+    "updatedAt": "2026-10-31T11:45:49.197Z"
+  },
+  {
+    "id": "cmujs9wqq000bu77wie28id19",
+    "canonicalName": "Dinsaw Mini Home AI Assistance",
+    "manufacturer": "CT Asia Robotics",
+    "developerOrg": "CT Asia Robotics",
+    "countryOfOrigin": "Thailand",
+    "robotType": "elderly_care_robot",
+    "embodimentLevel": "mobile_screen_based_robot",
+    "primaryUseCase": "Good seed item for robot_model registry and elderly-care perspective layer.",
+    "thailandStatus": "observed_in_thailand",
+    "statusConfidence": 0.92,
+    "officialUrl": "https://www.chula.ac.th/en/highlight/198924",
+    "description": "Elderly-care home assistance robot model that can move in the house, support companionship, and connect to hospitals for remote care.",
+    "sourceMeta": {
+      "title": "Dinsaw Mini Home AI Assistance",
+      "category": "robot_model",
+      "sourceReview": {
+        "kind": "university_news_access_limited",
+        "notes": "Indexed university article found, but direct retrieval returns no readable body. Distinguish Home AI Assistance from Mini 3 IPD and Pro4 OPD; no interchangeable model photo selected.",
+        "scope": "Source attribution and reported functions only; not independent capability or clinical validation.",
+        "status": "partial",
+        "checkedAt": "2026-10-31T18:45:49.197Z",
+        "sourceUrl": "https://www.chula.ac.th/en/highlight/198924/"
+      },
+      "sourcePlatform": "university_news"
+    },
+    "firstSeenYear": 2024,
+    "lastVerifiedAt": null,
+    "createdAt": "2026-09-27T05:17:09.123Z",
+    "updatedAt": "2026-10-31T11:45:49.197Z"
+  },
+  {
+    "id": "cmujs9wr7000qu77w69i2ul9j",
+    "canonicalName": "Mirror Telepresence System",
+    "manufacturer": "CU-RoboCOVID / Chulalongkorn University / Obodroid",
+    "developerOrg": "CU-RoboCOVID / Chulalongkorn University / Obodroid",
+    "countryOfOrigin": "Thailand",
+    "robotType": "telepresence_robot_system",
+    "embodimentLevel": "telepresence_screen_system",
+    "primaryUseCase": "Published date approximate from source year/month in search result.",
+    "thailandStatus": "observed_in_thailand",
+    "statusConfidence": 0.85,
+    "officialUrl": "https://csii.chula.ac.th/robots-and-the-covid-strip-test-innovations-by-chulalongkorn-university-to-combat-the-covid-pandemic",
+    "description": "Long-distance communication system used with Pinto in the CU-RoboCOVID deployment to reduce infection exposure.",
+    "sourceMeta": {
+      "title": "Mirror Telepresence System",
+      "category": "robot_model",
+      "sourceReview": {
+        "kind": "university_news_access_limited",
+        "notes": "Indexed university report names Mirror as a telepresence system. Direct source failed TLS validation; no security bypass or substitute photo used.",
+        "scope": "Source attribution and reported functions only; not independent capability or clinical validation.",
+        "status": "partial",
+        "checkedAt": "2026-10-31T18:45:49.197Z",
+        "sourceUrl": "https://web-stage.ccc.chula.ac.th/en/news/30492/"
+      },
+      "sourcePlatform": "university_research_website"
+    },
+    "firstSeenYear": 2020,
+    "lastVerifiedAt": null,
+    "createdAt": "2026-09-27T05:17:09.139Z",
+    "updatedAt": "2026-10-31T11:45:49.197Z"
+  },
+  {
+    "id": "cmujs9wr2000lu77wfc0hn5rg",
+    "canonicalName": "Pinto Robot",
+    "manufacturer": "CU-RoboCOVID / Chulalongkorn Engineering / Mi Workspace / HG Robotics / Obodroid",
+    "developerOrg": "CU-RoboCOVID / Chulalongkorn Engineering / Mi Workspace / HG Robotics / Obodroid",
+    "countryOfOrigin": "Thailand",
+    "robotType": "medical_delivery_robot",
+    "embodimentLevel": "mobile_non_humanoid_robot",
+    "primaryUseCase": "Normalize Thai name ปิ่นโต to Pinto Robot.",
+    "thailandStatus": "observed_in_thailand",
+    "statusConfidence": 0.94,
+    "officialUrl": "https://www.chula.ac.th/en/news/29278",
+    "description": "Small quarantine delivery robot used to deliver food, medicine, or medical supplies and reduce infection exposure for healthcare workers.",
+    "sourceMeta": {
+      "title": "Pinto Robot",
+      "category": "robot_model",
+      "sourceReview": {
+        "kind": "university_news_access_limited",
+        "notes": "Original page has no readable body on direct retrieval. University and Obodroid reports identify Pinto delivery functions, but no exact-model primary photo was verified in this pass.",
+        "scope": "Source attribution and reported functions only; not independent capability or clinical validation.",
+        "status": "partial",
+        "checkedAt": "2026-10-31T18:45:49.197Z",
+        "sourceUrl": "https://www.chula.ac.th/en/news/29278/"
+      },
+      "sourcePlatform": "university_news"
+    },
+    "firstSeenYear": 2020,
+    "lastVerifiedAt": null,
+    "createdAt": "2026-09-27T05:17:09.135Z",
+    "updatedAt": "2026-10-31T11:45:49.197Z"
+  },
+  {
+    "id": "cmujs9wrc000uu77wqz2ny7ho",
+    "canonicalName": "SR1 Security Robot",
+    "manufacturer": "Obodroid",
+    "developerOrg": "Obodroid",
+    "countryOfOrigin": "Thailand",
+    "robotType": "security_robot",
+    "embodimentLevel": "mobile_non_humanoid_robot",
+    "primaryUseCase": "Security patrol and guard assistance, as described by Obodroid.",
+    "thailandStatus": "observed_in_thailand",
+    "statusConfidence": 0.84,
+    "officialUrl": "https://www.obodroid.com/about-us",
+    "description": "Residential security robot from Obodroid, described in the company timeline as a security robot with advanced navigation.",
+    "sourceMeta": {
+      "title": "SR1 Security Robot",
+      "category": "robot_model",
+      "importNotes": "Needs additional product-page verification for detailed specifications.",
+      "sourceReview": {
+        "kind": "manufacturer_report",
+        "notes": "Product page names SR1 and states outdoor visual-navigation patrol. Claims are manufacturer-reported; detailed performance and certification not independently verified.",
+        "scope": "Source attribution and reported functions only; not independent capability or clinical validation.",
+        "status": "primary_source_checked",
+        "checkedAt": "2026-10-31T18:45:49.197Z",
+        "sourceUrl": "https://www.obodroid.com/product/security/"
+      },
+      "sourcePlatform": "official_company_website"
+    },
+    "firstSeenYear": null,
+    "lastVerifiedAt": null,
+    "createdAt": "2026-09-27T05:17:09.144Z",
+    "updatedAt": "2026-10-31T11:45:49.197Z"
+  }
+]

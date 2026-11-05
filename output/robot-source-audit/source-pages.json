@@ -1,0 +1,1604 @@
+[
+  {
+    "id": "cmujs9ws8001qu77wejjcwm57",
+    "name": "AI Police Cyborg 1.0",
+    "requestedUrl": "https://aws.amazon.com/th/blogs/thailand/aws-thai-ai-police-cyborg",
+    "finalUrl": "https://aws.amazon.com/th/blogs/thailand/aws-thai-ai-police-cyborg/",
+    "status": 200,
+    "meta": {
+      "": "default-src 'self' data: https://a0.awsstatic.com https://prod.us-east-1.ui.gcr-chat.marketing.aws.dev; base-uri 'none'; connect-src 'self' *.akamaized.net *.googlevideo.com/videoplayback https://*.analytics.console.aws.a2z.com https://*.harmony.a2z.com https://*.marketing.aws.dev https://*.panorama.console.api.aws https://*.prod.chc-features.uxplatform.aws.dev https://*.prod.cxm.marketing.aws.dev https://0vctm1i0if.execute-api.eusc-de-east-1.amazonaws.eu/gamma/spot.json https://112-tzm-766.mktoresp.com https://112-tzm-766.mktoutil.com https://8810.clrt.ai https://a0.awsstatic.com https://a0.p.awsstatic.com https://a1.awsstatic.com https://amazonwebservices.d2.sc.omtrdc.net https://amazonwebservicesinc.tt.omtrdc.net https://api-v2.builderprofile.aws.dev https://api.builderprofile.aws.dev https://api.prod.tools.shortbread.aws.dev https://api.pulse.aws https://api.regional-table.region-services.aws.a2z.com https://api.us-west-2.prod.pricing.aws.a2z.com https://artifacts.us-west-2.prod.plc.billing.aws.dev https://assets.storylane.io https://auth.aws.amazon.com https://auth.aws.com https://auth.builder-profile-auth.aws.com https://aws.amazon.com https://aws.amazon.com/p/sf/ https://aws.com https://aws.com/p/sf/ https://aws.demdex.net https://b0.p.awsstatic.com https://c0.b0.p.awsstatic.com https://calculator.aws https://chatbot-api.us-east-1.prod.mrc-sunrise.marketing.aws.dev https://chatbot-stream-api.us-east-1.prod.mrc-sunrise.marketing.aws.dev https://cm.everesttech.net https://cx0.m.awsstatic.com https://d-90676d7478.awsapps.com https://d0.awsstatic.com https://d0.m.awsstatic.com https://d1.awsstatic.com https://d1fgizr415o1r6.cloudfront.net https://d2bmgek65me099.cloudfront.net https://d2c.aws.amazon.com https://d3borx6sfvnesb.cloudfront.net https://dftu77xade0tc.cloudfront.net https://dpm.demdex.net https://edge.adobedc.net https://fls-na.amazon.com https://global-api-v2.builderprofile.aws.dev https://global-api.builderprofile.aws.dev https://i18n-string.us-west-2.prod.pricing.aws.a2z.com https://iad.staging.prod.tv.awsstatic.com https://infra-api.us-east-1.prod.mrc-sunrise.marketing.aws.dev https://ingestion.aperture-public-api.feedback.console.aws.dev https://insights.builderprofile.aws.dev https://livechat-api.us-east-1.prod.mrc-sunrise.marketing.aws.dev https://log.clrt.ai https://oidc.us-east-1.amazonaws.com https://pricing-table.us-west-2.prod.site.p.awsstatic.com https://prod-api.cosmic.aws.dev https://prod-us-west-2.csp-report.marketing.aws.dev https://prod-us-west-2.csp-report.marketing.aws.dev/submit https://prod.log.shortbread.aws.dev https://prod.tools.shortbread.aws.dev https://prod.us-east-1.api.gcr-chat.marketing.aws.dev https://prod.us-east-1.rest-bot.gcr-chat.marketing.aws.dev https://prod.us-east-1.ui.gcr-chat.marketing.aws.dev https://public.lotus.awt.aws.a2z.com https://r0.m.awsstatic.com https://s0.awsstatic.com https://s3.amazonaws.com/aws-messaging-pricing-information/ https://s3.amazonaws.com/aws-messaging-pricing-information/TextMessageInbound/prices.json https://s3.amazonaws.com/aws-messaging-pricing-information/TextMessageOutbound/prices.json https://s3.amazonaws.com/public-pricing-agc/ https://s3.eusc-de-east-1.amazonaws.eu/aws-messaging-pricing-information/TextMessageInbound/prices.json https://s3.eusc-de-east-1.amazonaws.eu/aws-messaging-pricing-information/TextMessageOutbound/prices.json https://spot-bid-advisor.s3.amazonaws.com https://spot-price-gamma-iad.s3.us-east-1.amazonaws.com/spot.json https://t0.m.awsstatic.com https://tes.builder-profile-auth.aws.com https://token.us-west-2.prod.site.p.awsstatic.com https://tv.awsstatic.com https://view-stage.us-west-2.prod.pricing.aws.a2z.com https://view-staging.us-east-1.prod.plc1-prod.pricing.aws.a2z.com https://vs.aws.amazon.com https://vs.aws.com https://webchat-aws.clink.cn https://website.spot.ec2.aws.a2z.com https://www.aws.com https://www.youtube-nocookie.com https://www.youtube.com https://xcxrmtkxx5.execute-api.us-east-1.amazonaws.com/prod/ https://zbrymci1c2.execute-api.eusc-de-east-1.amazonaws.eu/prod/spot.json wss://*.transport.connect.us-east-1.amazonaws.com wss://prod.us-east-1.wss-bot.gcr-chat.marketing.aws.dev wss://webchat-aws.clink.cn; font-src 'self' data: https://a0.awsstatic.com https://cx0.m.awsstatic.com https://f0.awsstatic.com https://fonts.gstatic.com https://prod.us-east-1.ui.gcr-chat.marketing.aws.dev; frame-src 'self' https://*.widget.console.aws.amazon.com https://*.widget.console.aws.com https://aws.demdex.net https://aws.storylane.io https://c0.b0.p.awsstatic.com https://calculator.aws https://commenting.awsblogs.com https://conversational-experience-worker.widget.console.aws.amazon.com/lotus/isolatedIFrame https://conversational-experience-worker.widget.console.aws.com/lotus/isolatedIFrame https://dpm.demdex.net https://player.vimeo.com https://pricing-table.us-west-2.prod.site.p.awsstatic.com https://token.us-west-2.prod.site.p.awsstatic.com https://www.youtube-nocookie.com https://www.youtube.com; img-src 'self' blob: data: https://*.vidyard.com https://*.ytimg.com https://a0.awsstatic.com https://amazonwebservices.d2.sc.omtrdc.net https://app-pages.storylane.io https://avatars.builderprofile.aws.dev https://aws-quickstart.s3.amazonaws.com https://aws.amazon.com https://aws.com https://aws.demdex.net https://awsmedia.s3.amazonaws.com https://cm.everesttech.net https://cx0.m.awsstatic.com https://d1.awsstatic.com https://d1d1et6laiqoh9.cloudfront.net https://d2.m.awsstatic.com https://d2908q01vomqb2.cloudfront.net https://d2c.aws.amazon.com https://d2cpw7vd6a2efr.cloudfront.net https://d36cz9buwru1tt.cloudfront.net https://d7umqicpi7263.cloudfront.net https://docs.aws.amazon.com https://docs.aws.com https://dpm.demdex.net https://f.d2.m.awsstatic.com https://fls-na.amazon.com https://google.ca https://google.co.in https://google.co.jp https://google.co.th https://google.co.uk https://google.com https://google.com.ar https://google.com.au https://google.com.br https://google.com.hk https://google.com.mx https://google.com.tr https://google.com.tw https://google.de https://google.es https://google.fr https://google.it https://google.nl https://google.pl https://google.ru https://iad.staging.prod.tv.awsstatic.com https://img.youtube.com https://marketingplatform.google.com https://media.amazonwebservices.com https://p.adsymptotic.com https://pages.awscloud.com https://prod.cosmic.aws.dev https://prod.us-east-1.ui.gcr-chat.marketing.aws.dev https://s3.amazonaws.com/aws-quickstart/ https://s3.cn-north-1.amazonaws.com.cn/awschinablog/ https://s3.cn-north-1.amazonaws.com.cn/images-bjs/ https://ssl-static.libsyn.com https://static-cdn.jtvnw.net https://tv.awsstatic.com https://webchat-aws.clink.cn https://www.google.com https://www.linkedin.com https://yt3.ggpht.com; media-src 'self' https://*.libsyn.com https://a0.awsstatic.com https://anchor.fm https://awsmedia.s3.amazonaws.com https://awspodcastsiberiaent.s3.eu-west-3.amazonaws.com https://chtbl.com https://content.production.cdn.art19.com https://cx0.m.awsstatic.com https://d1.awsstatic.com https://d1hemuljm71t2j.cloudfront.net https://d1le29qyzha1u4.cloudfront.net https://d1oqpvwii7b6rh.cloudfront.net https://d1vo51ubqkiilx.cloudfront.net https://d1yyh5dhdgifnx.cloudfront.net https://d2908q01vomqb2.cloudfront.net https://d2a6igt6jhaluh.cloudfront.net https://d3ctxlq1ktw2nl.cloudfront.net https://d3h2ozso0dirfl.cloudfront.net https://dgen8gghn3u86.cloudfront.net https://dk261l6wntthl.cloudfront.net https://download.stormacq.com/aws/podcast/ https://dts.podtrac.com https://iad.staging.prod.tv.awsstatic.com https://media.amazonwebservices.com https://mktg-apac.s3-ap-southeast-1.amazonaws.com https://rss.art19.com https://s3-ap-northeast-1.amazonaws.com/aws-china-media/ https://tv.awsstatic.com https://www.buzzsprout.com; object-src 'none'; script-src 'sha256-2lU6jK6HyCDqixA/suIPxepMsNYSGpo5DFFH27oYrDg=' 'nonce-mpAOlqvXltoH2iR41P8R1dDAI53tG+w3HjIFesl2EWc=' 'self' blob: https://*.cdn.console.awsstatic.com https://*.cdn.uis.awsstatic.com https://a.b.cdn.console.awsstatic.com https://a0.awsstatic.com https://amazonwebservicesinc.tt.omtrdc.net https://artifacts.us-west-2.prod.plc.billing.aws.dev https://b0.p.awsstatic.com https://cdn.builderprofile.aws.dev https://cx0.m.awsstatic.com https://d0.m.awsstatic.com https://d2bmgek65me099.cloudfront.net https://d2c.aws.amazon.com https://loader.us-east-1.prod.mrc-sunrise.marketing.aws.dev https://prod.cosmic.aws.dev https://prod.us-east-1.ui.gcr-chat.marketing.aws.dev https://r0.m.awsstatic.com https://spot-price.s3.amazonaws.com https://t0.m.awsstatic.com https://token.us-west-2.prod.site.p.awsstatic.com https://website.spot.ec2.aws.a2z.com https://www.youtube.com/iframe_api https://www.youtube.com/s/player/; style-src 'self' 'unsafe-inline' https://a0.awsstatic.com https://artifacts.us-west-2.prod.plc.billing.aws.dev https://assets.storylane.io https://b0.p.awsstatic.com https://cx0.m.awsstatic.com https://prod.us-east-1.ui.gcr-chat.marketing.aws.dev https://t0.m.awsstatic.com https://token.us-west-2.prod.site.p.awsstatic.com; report-uri https://prod-us-west-2.csp-report.marketing.aws.dev/submit",
+      "viewport": "width=device-width, initial-scale=1",
+      "robots": "index, follow",
+      "og:locale": "th_TH",
+      "og:site_name": "Amazon Web Services",
+      "og:title": "พลิกโฉมความปลอดภัยสาธารณะในประเทศไทย: นำร่อง “AI Police Cyborg” ด้วย AWS Cloud | Amazon Web Services",
+      "og:type": "article",
+      "og:url": "https://aws.amazon.com/th/blogs/thailand/aws-thai-ai-police-cyborg/",
+      "og:description": "บทนำ ในช่วงเทศกาลสำคัญของประเทศไทย เช่น สงกรานต์ หน่วยงานตำรวจต้องรับมือกับผู้คนจำนวนมหาศาลและความท้าทายด้านความปลอดภัยสาธารณะ เทศกาลสงกรานต์ปี 2568 มีผู้เข้าร่วมงานที่สนามหลวงมากกว่า 550,000 คน ถนนสีลมและข้าวสารมีผู้ร่วมงานรวมเกือบ 400,000 คน สำนักงานตำรวจแห่งชาติจึงต้องหาวิธีใหม่ในการดูแลความปลอดภัยของประชาชน และนักท่องเที่ยวให้มีประสิทธิภาพและครอบคลุมยิ่งขึ้น บริษัท Security Pitch พันธมิตรของ Amazon Web Services (AWS) ได้พัฒนา “AI Police Cyborg 1.0” หุ่นยนต์ตำรวจอัจฉริยะที่ขับเคลื่อนด้วย AWS Cloud และ AI Services ของ AWS เพื่อช่วยตรวจตราความปลอดภัยในพื้นที่ที่มีผู้คนหนาแน่น โดยนำร่องใช้งานจริงในเทศกาลสงกรานต์ที่จังหวัดนครปฐมที่ผ่านมา รูปที่ 1. หุ่นยนต์ AI Police Cyborg 1.0 ซึ่งพัฒนาโดยบริษัท Security Pitch และดำเนินการโดยสำนักงานตำรวจแห่งชาติ หุ่นยนต์นี้มีชื่อว่า “พ.ต.อ.นครปฐม ปลอดภัย” คุณสมบัติเด่นของ AI Police […]",
+      "og:image": "https://d2908q01vomqb2.cloudfront.net/59129aacfb6cebbe2c52f30ef3424209f7252e82/2025/07/15/Picture2-4-1.png",
+      "og:image:width": "811",
+      "og:image:height": "456",
+      "og:updated_time": "2025-08-13T15:16:36+00:00",
+      "article:publisher": "https://www.facebook.com/amazonwebservices",
+      "article:section": "Amazon Machine Learning",
+      "article:tag": "Public Sector",
+      "article:published_time": "2025-08-13T15:16:36+00:00",
+      "article:modified_time": "2025-08-13T15:16:36+00:00",
+      "twitter:card": "summary_large_image",
+      "twitter:site": "@awscloud",
+      "twitter:domain": "https://aws.amazon.com/th/blogs/",
+      "twitter:title": "พลิกโฉมความปลอดภัยสาธารณะในประเทศไทย: นำร่อง “AI Police Cyborg” ด้วย AWS Cloud | Amazon Web Services",
+      "twitter:description": "บทนำ ในช่วงเทศกาลสำคัญของประเทศไทย เช่น สงกรานต์ หน่วยงานตำรวจต้องรับมือกับผู้คนจำนวนมหาศาลและความท้าทายด้านความปลอดภัยสาธารณะ เทศกาลสงกรานต์ปี 2568 มีผู้เข้าร่วมงานที่สนามหลวงมากกว่า 550,000 คน ถนนสีลมและข้าวสารมีผู้ร่วมงานรวมเกือบ 400,000 คน สำนักงานตำรวจแห่งชาติจึงต้องหาวิธีใหม่ในการดูแลความปลอดภัยของประชาชน และนักท่องเที่ยวให้มีประสิทธิภาพและครอบคลุมยิ่งขึ้น บริษัท Security Pitch พันธมิตรของ Amazon Web Services (AWS) ได้พัฒนา “AI Police Cyborg 1.0” หุ่นยนต์ตำรวจอัจฉริยะที่ขับเคลื่อนด้วย AWS Cloud และ AI Services ของ AWS เพื่อช่วยตรวจตราความปลอดภัยในพื้นที่ที่มีผู้คนหนาแน่น โดยนำร่องใช้งานจริงในเทศกาลสงกรานต์ที่จังหวัดนครปฐมที่ผ่านมา รูปที่ 1. หุ่นยนต์ AI Police Cyborg 1.0 ซึ่งพัฒนาโดยบริษัท Security Pitch และดำเนินการโดยสำนักงานตำรวจแห่งชาติ หุ่นยนต์นี้มีชื่อว่า “พ.ต.อ.นครปฐม ปลอดภัย” คุณสมบัติเด่นของ AI Police […]",
+      "twitter:image": "https://d2908q01vomqb2.cloudfront.net/59129aacfb6cebbe2c52f30ef3424209f7252e82/2025/07/15/Picture2-4-1.png",
+      "inLanguage": "th-TH",
+      "image": "https://d2908q01vomqb2.cloudfront.net/59129aacfb6cebbe2c52f30ef3424209f7252e82/2025/07/15/Picture2-4-1.png"
+    },
+    "images": [
+      {
+        "src": "https://d2908q01vomqb2.cloudfront.net/59129aacfb6cebbe2c52f30ef3424209f7252e82/2025/07/15/Picture2-4-1.png",
+        "alt": "หุ่นยนต์ AI Police Cyborg 1.0 ซึ่งพัฒนาโดยบริษัท Security Pitch และดำเนินการโดยสำนักงานตำรวจแห่งชาติ หุ่นยนต์นี้มีชื่อว่า “พ.ต.อ.นครปฐม ปลอดภัย”"
+      },
+      {
+        "src": "https://d2908q01vomqb2.cloudfront.net/59129aacfb6cebbe2c52f30ef3424209f7252e82/2025/07/15/Picture3-4-1-e1752574119137-1024x579.png",
+        "alt": "สถาปัตยกรรมหลักของ AWS ที่อยู่เบื้องหลัง AI Police Cyborg 1.0"
+      },
+      {
+        "src": "https://d2908q01vomqb2.cloudfront.net/59129aacfb6cebbe2c52f30ef3424209f7252e82/2023/09/14/Satsawat_picture.jpg",
+        "alt": "Satsawat Natakarnkitkul"
+      }
+    ],
+    "text": "พลิกโฉมความปลอดภัยสาธารณะในประเทศไทย: นำร่อง “AI Police Cyborg” ด้วย AWS Cloud | AWS Thai Blog\nSkip to Main Content\nFilter: ทั้งหมด\nEnglish\nติดต่อเรา\nAWS Marketplace\nการสนับสนุน\nบัญชีของฉัน\nการค้นหา\nFilter: ทั้งหมด\nลงชื่อเข้าใช้คอนโซล\nสร้างบัญชี\nบล็อกของ AWS\nหน้าหลัก\nรุ่น\nAWS Thai Blog\nพลิกโฉมความปลอดภัยสาธารณะในประเทศไทย: นำร่อง “AI Police Cyborg” ด้วย AWS Cloud\nby Satsawat Natakarnkitkul\non\n13 AUG 2025\nin\nAmazon Machine Learning\n,\nAmazon SageMaker\n,\nAmazon SageMaker AI\n,\nArtificial Intelligence\n,\nPartner solutions\n,\nPublic Safety\n,\nPublic Sector\nPermalink\nShare\nบทนำ\nในช่วงเทศกาลสำคัญของประเทศไทย เช่น สงกรานต์ หน่วยงานตำรวจต้องรับมือกับผู้คนจำนวนมหาศาลและความท้าทายด้านความปลอดภัยสาธารณะ เทศกาลสงกรานต์ปี 2568 มีผู้เข้าร่วมงานที่สนามหลวงมากกว่า 550,000 คน ถนนสีลมและข้าวสารมีผู้ร่วมงานรวมเกือบ 400,000 คน สำนักงานตำรวจแห่งชาติจึงต้องหาวิธีใหม่ในการดูแลความปลอดภัยของประชาชน และนักท่องเที่ยวให้มีประสิทธิภาพและครอบคลุมยิ่งขึ้น\nบริษัท Security Pitch\nพันธมิตรของ\nAmazon Web Services (AWS)\nได้พัฒนา “\nAI Police Cyborg 1.0\n” หุ่นยนต์ตำรวจอัจฉริยะที่ขับเคลื่อนด้วย AWS Cloud และ AI Services ของ AWS เพื่อช่วยตรวจตราความปลอดภัยในพื้นที่ที่มีผู้คนหนาแน่น โดยนำร่องใช้งานจริงในเทศกาลสงกรานต์ที่จังหวัดนครปฐมที่ผ่านมา\nรูปที่ 1. หุ่นยนต์ AI Police Cyborg 1.0 ซึ่งพัฒนาโดยบริษัท Security Pitch และดำเนินการโดยสำนักงานตำรวจแห่งชาติ หุ่นยนต์นี้มีชื่อว่า “พ.ต.อ.นครปฐม ปลอดภัย”\nคุณสมบัติเด่นของ AI Police Cyborg\nAI Police Cyborg 1.0 มาพร้อมกับเทคโนโลยีล้ำสมัยที่ช่วยให้การตรวจตราความปลอดภัยสาธารณะมีประสิทธิภาพมากขึ้น หุ่นยนต์นี้ติดตั้งกล้อง AI 360 องศา ที่สามารถตรวจสอบสภาพแวดล้อมแบบเรียลไทม์ พร้อมระบบจดจำใบหน้าโดยเลือกเฟรมใบหน้าที่เหมาะสมที่สุดจากวิดีโอเพื่อตรวจสอบกับฐานข้อมูลผู้ต้องสงสัย นอกจากนี้ยังสามารถติดตามผู้ต้องสงสัยในพื้นที่งานด้วยเทคโนโลยีจดจำใบหน้า ค้นหาบุคคลตามลักษณะใบหน้า เสื้อผ้า รูปร่าง และเพศ รวมถึงตรวจจับอาวุธ เช่น มีดหรือปืน โดยสามารถแยกแยะของเล่นอย่างปืนฉีดน้ำในช่วงเทศกาลได้อย่างแม่นยำ หุ่นยนต์ยังสามารถวิเคราะห์พฤติกรรม ตรวจจับพฤติกรรมก้าวร้าวหรือเหตุฉุกเฉินทางการแพทย์ และแจ้งเตือนเจ้าหน้าที่ทันทีเมื่อเกิดเหตุผิดปกติ ทั้งหมดนี้เชื่อมโยงกับศูนย์บัญชาการกลางที่รวมข้อมูลจากกล้องของ AI cyborg, กล้อง CCTV และโดรน เพื่อการติดตามและประสานงานแบบเรียลไทม์\nสถาปัตยกรรมระบบ AI บน AWS\nSecurity Pitch ได้เลือกใช้บริการของ AWS เพื่อสร้างระบบ AI สำหรับหุ่นยนต์ตำรวจอัจฉริยะ โดยเน้นความยืดหยุ่น ความปลอดภัย และความสามารถในการขยายตัวได้อย่างมีประสิทธิภาพ เริ่มจากการใช้\nAmazon SageMaker AI\nในการฝึกและให้บริการโมเดล Machine Learning ที่เกี่ยวข้องกับการจดจำใบหน้าและการตรวจจับอาวุธ โดย Amazon SageMaker AI ช่วยให้ทีมพัฒนาโมเดลสามารถประมวลผลข้อมูลจำนวนมากและปรับขนาดทรัพยากร GPU ได้ตามความต้องการ นอกจากนี้ยังมีระบบ\nMachine Learning Operation (MLOps)\nที่ช่วยจัดการขั้นตอนการฝึกและนำโมเดลไปใช้งานบน production อย่างต่อเนื่อง\nเมื่อโมเดล AI ได้รับการฝึกและพร้อมใช้งาน ข้อมูลภาพใบหน้าที่ได้จากกล้องและวิดีโอจะถูกนำมาเปรียบเทียบกับฐานข้อมูลผู้ต้องสงสัยผ่าน\nAmazon Aurora PostgreSQL-Compatible Edition\nซึ่งรองรับการจัดเก็บและเปรียบเทียบเวกเตอร์ใบหน้าได้อย่างปลอดภัยและรวดเร็ว ข้อมูลวิดีโอ โมเดล Machine Learning และภาพถ่ายจำนวนมากที่เกิดขึ้นในแต่ละวันจะถูกจัดเก็บไว้ใน\nAmazon Simple Storage Service (Amazon S3)\nเพื่อให้สามารถเข้าถึงและบริหารจัดการได้อย่างมีประสิทธิภาพ\nสำหรับการประสานงานระหว่างอุปกรณ์และบริการต่าง ๆ Security Pitch ใช้\nAmazon Simple Queue Service (Amazon SQS)\nและ\nAWS Lambda\nเพื่อจัดคิวและประมวลผลข้อมูลแบบไร้เซิร์ฟเวอร์ (serverless architecture) ทำให้ระบบสามารถปรับ workflowให้เป็นอัตโนมัติ ลดเวลาตอบสนอง และเพิ่มความคล่องตัวในการรับมือกับสถานการณ์ฉุกเฉิน ขณะเดียวกัน\nAmazon Simple Notification Service (Amazon SNS)\nถูกนำมาใช้ในการแจ้งเตือนเหตุการณ์สำคัญไปยังเจ้าหน้าที่ที่เกี่ยวข้องอย่างทันท่วงที ส่วน\nAmazon Route 53\nช่วยให้การเข้าถึงข้อมูลภายในระบบเป็นไปอย่างรวดเร็วและปลอดภัย\nรูปที่ 2. สถาปัตยกรรมหลักของ AWS ที่อยู่เบื้องหลัง AI Police Cyborg 1.0\nสถาปัตยกรรมแบบนี้ทำให้ AI Police Cyborg สามารถประมวลผลวิดีโอสดจากกล้อง CCTV และโดรน วิเคราะห์พฤติกรรมฝูงชน รวมถึงระบุบุคคลหรืออาวุธต้องสงสัยได้อย่างแม่นยำ โดยทุกกระบวนการตั้งแต่การประมวลผลข้อมูล การแจ้งเตือน ไปจนถึงการประสานงานกับเจ้าหน้าที่ ล้วนขับเคลื่อนด้วยบริการของ AWS ที่ออกแบบมาเพื่อรองรับงานขนาดใหญ่และความต้องการด้านความปลอดภัยในระดับสูงสำหรับการดูแลประชาชนในพื้นที่ที่มีความหนาแน่นสูง\nผลลัพธ์ที่เกิดขึ้นจริง\nการนำ AI Police Cyborg 1.0 ไปใช้ในเทศกาลสงกรานต์ ส่งผลให้ตำรวจภูธรภาค 7 สามารถจับกุมผู้ต้องสงสัยตามหมายจับได้มากกว่า 20 ราย เช่น การจับกุมผู้ต้องสงสัยที่ตลาดนัดเครื่องบิน อำเภอเมืองนครปฐม ในข้อหายาเสพติด ลักทรัพย์ พยายามฆ่า และอาวุธปืน รวมถึงการจับกุมผู้ต้องสงสัยที่ศูนย์การค้าเซ็นทรัลศาลายา ในข้อหาค้ายาเสพติดและเล่นการพนันผิดกฎหมาย เมื่อเทียบกับปีก่อน ๆ อัตราการจับกุมตามหมายจับเพิ่มขึ้น 30% และเหตุการณ์ที่ถูกรายงานลดลง 20% ในช่วงเทศกาล\nก้าวต่อไป: AI Security Cyborg 2.0\nSecurity Pitch เตรียมเปิดตัว “\nRAION V2 Sentinel\n” หรือ\nAI Security Cyborg 2.0\nที่ประเทศสหรัฐอเมริกา ในเดือนกันยายน 2568 โดยรุ่นใหม่นี้จะรองรับการโต้ตอบด้วยภาษาธรรมชาติ หลายภาษา และระบบแจ้งเหตุฉุกเฉินที่ชาญฉลาดยิ่งขึ้น เพื่อเสริมสร้างบทบาทของหุ่นยนต์ตำรวจจากการเฝ้าระวังไปสู่การมีส่วนร่วมและสนับสนุนชุมชนอย่างแท้จริง\nสรุป\nAI Police Cyborg 1.0 แสดงให้เห็นถึงศักยภาพของการนำ AI services ของ AWS Cloud มายกระดับความปลอดภัยสาธารณะในประเทศไทย ทั้งในด้านประสิทธิภาพและความเชื่อมั่นของประชาชน Security Pitch และ AWS จะเดินหน้าพัฒนานวัตกรรมเพื่อสร้างมาตรฐานใหม่ของความปลอดภัยสาธารณะในอนาคต หากต้องการเรียนรู้เพิ่มเติมเกี่ยวกับการนำ AI services ของ AWS Cloud ไปใช้ในงานภาครัฐ สามารถติดต่อทีมงาน AWS ได้ทันที\nสามารถดูรายละเอียดเพิ่มเติมจากบทความภาษาอังกฤษได้\nที่นี่\nSatsawat Natakarnkitkul\nSatsawat is the data and AI solutions lead for emerging ASEAN Public Sector at AWS Thailand, spearheading generative AI initiatives across Southeast Asia. With over a decade of experience in digital transformation and AI/ML solutions, he is a recognized thought leader in artificial intelligence, data science, and cloud architecture. A frequent speaker at technology events across APJ, Satsawat is passionate about leveraging emerging technologies like generative AI to create tangible business value in the public sector.\nสร้างบัญชี AWS\nเรียนรู้\nAWS คืออะไร\nการประมวลผลบนคลาวด์คืออะไร\nAgentic AI คืออะไร\nฮับแนวคิดการประมวลผลบนคลาวด์\nAWS Cloud Security\nมีอะไรใหม่\nบล็อก\nข่าวประชาสัมพันธ์\nทรัพยากร\nเริ่มต้นใช้งาน\nการฝึกอบรม\nไลบราลีโซลูชันของ AWS\nArchitecture Center\nคำถามที่พบบ่อยเกี่ยวกับผลิตภัณฑ์และเทคนิค\nรายงานการวิเคราะห์\nพาร์ทเนอร์ AWS\nการไม่แบ่งแยก ความหลากหลาย และความเสมอภาคของ AWS\nDeveloper\nDeveloper Center\nSDK และเครื่องมือ\n.NET บน AWS\nPython บน AWS\nJava บน AWS\nPHP บน AWS\nJavaScript บน AWS\nความช่วยเหลือ\nติดต่อเรา\nยื่นตั๋วแจ้งปัญหา\nAWS re:Post\nศูนย์ความรู้\nภาพรวมของ AWS Support\nรับความช่วยเหลือจากผู้เชี่ยวชาญ\nการช่วยการเข้าถึงของ AWS\nกฎหมาย\nEnglish\nกลับขึ้นด้านบน\nAmazon คือ ผู้ว่าจ้างที่มอบโอกาสอย่างเท่าเทียมให้กับทุกคน ได้แก่ ชนกลุ่มน้อย / สตรี / ผู้พิการ / ทหารผ่านศึก / อัตลักษณ์ทางเพศ / รสนิยมทางเพศ / อายุ\nfacebook\nlinkedin\ninstagram\ntwitch\nyoutube\npodcasts\nemail\nความเป็นส่วนตัว\nข้อกำหนดเว็บไซต์\nค่ากำหนดของคุกกี้\n© 2025, Amazon Web Services, Inc. หรือบริษัทในเครือ สงวนลิขสิทธิ์"
+  },
+  {
+    "id": "cmujs9wsn0025u77w8a3rsaeq",
+    "name": "Bumi humanoid robot",
+    "requestedUrl": "https://noetixrobotics.com/en/news/events/962",
+    "finalUrl": "https://www.noetixrobotics.com/en/news/events/962",
+    "status": 200,
+    "meta": {
+      "": "",
+      "viewport": "width=device-width, initial-scale=1.0",
+      "description": "松延动力官方网站。北京松延动力科技集团股份有限公司 (Noetix Robotics) 是一家专注于人形机器人与具身智能的科技企业,创始团队来自清华大学、浙江大学等知名科研院校。核心产品包括万元消费级人形机器人小布米、双足人形机器人 (N 系列、E 系列)、仿生人头「小诺」及轮式机器人 W1。",
+      "keywords": "NOETIX,Noetix,noetix,Noetix Robotics,松延动力,松延动力官网,北京松延动力,北京松延动力科技集团股份有限公司,松延动力机器人,人形机器人,仿生机器人,具身智能,小布米,N2,E1,W1,小诺,双足机器人",
+      "author": "北京松延动力科技集团股份有限公司",
+      "robots": "index, follow",
+      "format-detection": "telephone=no",
+      "og:type": "website",
+      "og:site_name": "松延动力 | Noetix Robotics",
+      "og:title": "北京松延动力科技集团股份有限公司官网",
+      "og:description": "松延动力官方网站。北京松延动力科技集团股份有限公司 (Noetix Robotics) 是一家专注于人形机器人与具身智能的科技企业,创始团队来自清华大学、浙江大学等知名科研院校。核心产品包括万元消费级人形机器人小布米、双足人形机器人 (N 系列、E 系列)、仿生人头「小诺」及轮式机器人 W1。",
+      "og:url": "https://www.noetixrobotics.com/",
+      "og:image": "https://image.noetixrobotics.com/pc/home_bumi_banner.jpg",
+      "og:image:width": "5760",
+      "og:image:height": "3440",
+      "og:image:alt": "松延动力 (Noetix Robotics) - 人形机器人与具身智能",
+      "og:locale": "zh_CN",
+      "og:locale:alternate": "en_US",
+      "twitter:card": "summary_large_image",
+      "twitter:title": "北京松延动力科技集团股份有限公司官网",
+      "twitter:description": "松延动力官方网站。北京松延动力科技集团股份有限公司 (Noetix Robotics) 是一家专注于人形机器人与具身智能的科技企业,创始团队来自清华大学、浙江大学等知名科研院校。核心产品包括万元消费级人形机器人小布米、双足人形机器人 (N 系列、E 系列)、仿生人头「小诺」及轮式机器人 W1。",
+      "twitter:image": "https://image.noetixrobotics.com/pc/home_bumi_banner.jpg"
+    },
+    "images": [],
+    "text": "北京松延动力科技集团股份有限公司官网"
+  },
+  {
+    "id": "cmujs9ws5001nu77w7txze78u",
+    "name": "Chula Rehabilitation Robots for Stroke Patients",
+    "requestedUrl": "https://sustainability.chula.ac.th/report/2683",
+    "finalUrl": "https://sustainability.chula.ac.th/report/2683/",
+    "status": 200,
+    "meta": {
+      "": "",
+      "viewport": "width=device-width, initial-scale=1, minimum-scale=1",
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "og:locale": "en_US",
+      "og:locale:alternate": "th_TH",
+      "og:type": "article",
+      "og:title": "Robotic Innovation for Strokes Patients – Chulalongkorn University For Sustainable Development",
+      "og:description": "Strokes happen a lot in Thailand. Each year, there are more than 300,000 new patients and over 500,000 total patients. More than 70 percent of stroke patients need rehab after their recovery, bringing the total costs of treatment to over 20 billion baht per year. In Thailand, many stroke patients who need restoration do not...",
+      "og:url": "https://sustainability.chula.ac.th/report/2683/",
+      "og:site_name": "Chulalongkorn University For Sustainable Development",
+      "article:publisher": "https://www.facebook.com/ChulalongkornUniversity",
+      "article:modified_time": "2022-04-02T16:01:36+00:00",
+      "og:image": "https://sustainability.chula.ac.th/wp-content/uploads/2022/04/im_051164_763.jpeg",
+      "og:image:width": "800",
+      "og:image:height": "534",
+      "og:image:type": "image/jpeg",
+      "twitter:card": "summary_large_image",
+      "twitter:site": "@ChulalongkornU",
+      "twitter:label1": "Est. reading time",
+      "twitter:data1": "4 minutes",
+      "msapplication-TileImage": "https://sustainability.chula.ac.th/wp-content/uploads/2021/07/cropped-logo-admin-270x270.png",
+      "generator": "WP Rocket 3.23.5.1"
+    },
+    "images": [
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20480%20160'%3E%3C/svg%3E",
+        "alt": "Chulalongkorn University For Sustainable Development"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula-sdg-dark.png",
+        "alt": "Chulalongkorn University For Sustainable Development",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula-sdg-dark.png 480w, https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula-sdg-dark-300x100.png 300w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20480%20160'%3E%3C/svg%3E",
+        "alt": "Chulalongkorn University For Sustainable Development"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula-sdg-dark.png",
+        "alt": "Chulalongkorn University For Sustainable Development",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula-sdg-dark.png 480w, https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula-sdg-dark-300x100.png 300w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20547%20233'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2022/04/haxter.jpg",
+        "alt": "",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2022/04/haxter.jpg 547w, https://sustainability.chula.ac.th/wp-content/uploads/2022/04/haxter-300x128.jpg 300w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20534'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2022/04/im_051164_763.jpeg",
+        "alt": "",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2022/04/im_051164_763.jpeg 800w, https://sustainability.chula.ac.th/wp-content/uploads/2022/04/im_051164_763-300x200.jpeg 300w, https://sustainability.chula.ac.th/wp-content/uploads/2022/04/im_051164_763-768x513.jpeg 768w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20534'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2022/04/im_051164_762.jpeg",
+        "alt": "",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2022/04/im_051164_762.jpeg 800w, https://sustainability.chula.ac.th/wp-content/uploads/2022/04/im_051164_762-300x200.jpeg 300w, https://sustainability.chula.ac.th/wp-content/uploads/2022/04/im_051164_762-768x513.jpeg 768w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201024%20539'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2022/04/robot-innovative-features-1024x539.jpg",
+        "alt": "",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2022/04/robot-innovative-features-1024x539.jpg 1024w, https://sustainability.chula.ac.th/wp-content/uploads/2022/04/robot-innovative-features-300x158.jpg 300w, https://sustainability.chula.ac.th/wp-content/uploads/2022/04/robot-innovative-features-768x404.jpg 768w, https://sustainability.chula.ac.th/wp-content/uploads/2022/04/robot-innovative-features-1536x809.jpg 1536w, https://sustainability.chula.ac.th/wp-content/uploads/2022/04/robot-innovative-features.jpg 1804w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201024%20684'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2022/04/DSC_4533-2048x1367-1-1024x684.jpeg",
+        "alt": "",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2022/04/DSC_4533-2048x1367-1-1024x684.jpeg 1024w, https://sustainability.chula.ac.th/wp-content/uploads/2022/04/DSC_4533-2048x1367-1-300x200.jpeg 300w, https://sustainability.chula.ac.th/wp-content/uploads/2022/04/DSC_4533-2048x1367-1-768x513.jpeg 768w, https://sustainability.chula.ac.th/wp-content/uploads/2022/04/DSC_4533-2048x1367-1-1536x1025.jpeg 1536w, https://sustainability.chula.ac.th/wp-content/uploads/2022/04/DSC_4533-2048x1367-1-800x533.jpeg 800w, https://sustainability.chula.ac.th/wp-content/uploads/2022/04/DSC_4533-2048x1367-1.jpeg 2048w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20534'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2022/04/im_051164_768.jpeg",
+        "alt": "",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2022/04/im_051164_768.jpeg 800w, https://sustainability.chula.ac.th/wp-content/uploads/2022/04/im_051164_768-300x200.jpeg 300w, https://sustainability.chula.ac.th/wp-content/uploads/2022/04/im_051164_768-768x513.jpeg 768w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E",
+        "alt": "The Global Goals"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/themes/chula_sustainability/assets/images/icon-the-global-goals.png",
+        "alt": "The Global Goals"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 3: Good Health and Well-being"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-3.jpg",
+        "alt": "Goal 3: Good Health and Well-being"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-4.jpg",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 9: Industry, Innovation and Infrastructure"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-9.jpg",
+        "alt": "Goal 9: Industry, Innovation and Infrastructure"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 10: Reduced Inequalities"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-10.jpg",
+        "alt": "Goal 10: Reduced Inequalities"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 16: Peace, Justice and Strong Institutions"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-16.jpg",
+        "alt": "Goal 16: Peace, Justice and Strong Institutions"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-17.jpg",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20533'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2022/11/565000000839203-800x533.webp",
+        "alt": ""
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 1: No Poverty"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-1.jpg",
+        "alt": "Goal 1: No Poverty"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 3: Good Health and Well-being"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-3.jpg",
+        "alt": "Goal 3: Good Health and Well-being"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-4.jpg",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 8: Decent Work and Economic Growth"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-8.jpg",
+        "alt": "Goal 8: Decent Work and Economic Growth"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 10: Reduced Inequalities"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-10.jpg",
+        "alt": "Goal 10: Reduced Inequalities"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 11: Sustainable Cities and Communities"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-11.jpg",
+        "alt": "Goal 11: Sustainable Cities and Communities"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 13: Climate Action"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-13.jpg",
+        "alt": "Goal 13: Climate Action"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 15: Life on Land"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-15.jpg",
+        "alt": "Goal 15: Life on Land"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 16: Peace, Justice and Strong Institutions"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-16.jpg",
+        "alt": "Goal 16: Peace, Justice and Strong Institutions"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-17.jpg",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20533'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2025/11/polina-kuzovkova-xsSaskivVNs-unsplash-800x533.jpg",
+        "alt": "",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2025/11/polina-kuzovkova-xsSaskivVNs-unsplash-800x533.jpg 800w, https://sustainability.chula.ac.th/wp-content/uploads/2025/11/polina-kuzovkova-xsSaskivVNs-unsplash-300x200.jpg 300w, https://sustainability.chula.ac.th/wp-content/uploads/2025/11/polina-kuzovkova-xsSaskivVNs-unsplash-1024x683.jpg 1024w, https://sustainability.chula.ac.th/wp-content/uploads/2025/11/polina-kuzovkova-xsSaskivVNs-unsplash-768x512.jpg 768w, https://sustainability.chula.ac.th/wp-content/uploads/2025/11/polina-kuzovkova-xsSaskivVNs-unsplash.jpg 1440w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-4.jpg",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 9: Industry, Innovation and Infrastructure"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-9.jpg",
+        "alt": "Goal 9: Industry, Innovation and Infrastructure"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 11: Sustainable Cities and Communities"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-11.jpg",
+        "alt": "Goal 11: Sustainable Cities and Communities"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-17.jpg",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20419'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2021/11/20210722_cover1428pm_hotnews.jpeg",
+        "alt": "",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2021/11/20210722_cover1428pm_hotnews.jpeg 800w, https://sustainability.chula.ac.th/wp-content/uploads/2021/11/20210722_cover1428pm_hotnews-300x157.jpeg 300w, https://sustainability.chula.ac.th/wp-content/uploads/2021/11/20210722_cover1428pm_hotnews-768x402.jpeg 768w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 3: Good Health and Well-being"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-3.jpg",
+        "alt": "Goal 3: Good Health and Well-being"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-4.jpg",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 11: Sustainable Cities and Communities"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-11.jpg",
+        "alt": "Goal 11: Sustainable Cities and Communities"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 16: Peace, Justice and Strong Institutions"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-16.jpg",
+        "alt": "Goal 16: Peace, Justice and Strong Institutions"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-17.jpg",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20700%20466'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2022/11/20210816_imf1850_hotnews.jpeg",
+        "alt": "",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2022/11/20210816_imf1850_hotnews.jpeg 700w, https://sustainability.chula.ac.th/wp-content/uploads/2022/11/20210816_imf1850_hotnews-300x200.jpeg 300w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 3: Good Health and Well-being"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-3.jpg",
+        "alt": "Goal 3: Good Health and Well-being"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 5: Gender Equality"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-5.jpg",
+        "alt": "Goal 5: Gender Equality"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 9: Industry, Innovation and Infrastructure"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-9.jpg",
+        "alt": "Goal 9: Industry, Innovation and Infrastructure"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 10: Reduced Inequalities"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-10.jpg",
+        "alt": "Goal 10: Reduced Inequalities"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 16: Peace, Justice and Strong Institutions"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-16.jpg",
+        "alt": "Goal 16: Peace, Justice and Strong Institutions"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-17.jpg",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20166%2060'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula.png",
+        "alt": "",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula.png 332w, https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula-300x108.png 300w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20150%20150'%3E%3C/svg%3E",
+        "alt": "PDPA Icon"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/plugins/designil-pdpa/public/assets/images/cookie.webp",
+        "alt": "PDPA Icon"
+      }
+    ],
+    "text": "Robotic Innovation for Strokes Patients – Chulalongkorn University For Sustainable Development\nSkip to content\nSearch for:\nSearch\nEN\nTH\nSustainability Agenda\nCase Studies\nRelevant Rules and Regulations\nReports\nSDGs\nSearch\nSearch\nMenu\nToggle Menu\nCase Studies\nRobotic Innovation for Strokes Patients\nResearch and Innovation\nStrokes happen a lot in Thailand. Each year, there are more than 300,000 new patients and over 500,000 total patients. More than 70 percent of stroke patients need rehab after their recovery, bringing the total costs of treatment to over 20 billion baht per year. In Thailand, many stroke patients who need restoration do not have access to treatment and rehabilitation resources due to the shortage of physical therapists, limited services and facilities, and high costs. The development of rehab robots is an attempt to solve these problems that Chulalongkorn University could get it done.\nCUREs Robot (Chulalongkorn University Rehabilitation Exoskeleton/End Effector system) is the rehabilitation robot for stroke patients which was born from a collaboration between a research team from the Faculty of Engineering and the Faculty of Medicine. They recently won first place in the “Robots and Software for Medical and Public Health Services” category from the i-MEDBOT Innovation Contest 2021 organized by Thailand Center of Excellence for Life Sciences (Public Organization) or TCELS, Ministry of Higher Education, Science, Research and Innovation.\nThere are five types of robots: two types of shoulder and elbow training robots, two wrist training robots, and one type of hip, knee, ankle training robot. The robots train patients to use their arms and legs repeatedly to stimulate the brain’s command center through interesting games, and return them to a normal life. They will assist patients only when necessary. The speed and support level can be adjusted according to the doctor’s requirements. If the patients try to do an exercise by themselves but are unable, they will help them on an “assist as needed” basis. Each exercise typically lasts 15 minutes. The effort and diligence of the patients during the exercise is recorded for analysis and the results can be reported to a single doctor or team of physicians through cloud computing networks.\nCompared to traditional methods, using a robot combined with various games enables patients to do more repetitions while having fun and feel challenged. This helps enhance brain commands and motor control.  Most importantly, patients have to exert themselves to make the recovery effective. A monitor is displaying a graph of the amount of exertion by patients in relation to being assisted by the robot.\nThe key to the development lies in the structural design and aerodynamic control system with a high level of safety, intended to design small robots, for easy transport, and aimed for Thai people with 100% of their own technology, so further development to create a variety of robots is easy.\nThe robot production sites are at the Faculty of Engineering at Colombo Building Research Lab, and Haxter Robotics, an ISO13485 certified for medical equipment manufacturing, founded by a start-up incubated by CU Innovation Hub. The factory also passed the Thai FDA certification for the manufacturing of medical devices. Nowadays, 39 rehabilitation robots have been installed at 12 rehabilitation organizations or hospitals for real testing and cure processes of post-stroke rehabilitation.\nBy\nRobotics and Automation Center, Faculty of Engineering, Chulalongkorn University\nRelated articles:\nhttps://www.youtube.com/watch?v=wloik6nXka0\nhttps://www.chula.ac.th/en/highlight/59061\nhttps://www.chula.ac.th/en/clipping/61324\nhttps://cacm.acm.org/careers/257900-plan-will-send-rehabilitation-robots-home-with-stroke-patients/fulltext\nRelated SDGs\nGoal 3: Good Health and Well-being\nGoal 4: Quality Education\nGoal 9: Industry, Innovation and Infrastructure\nGoal 10: Reduced Inequalities\nGoal 16: Peace, Justice and Strong Institutions\nGoal 17: Partnerships for the Goals\nShare\nFacebook\nFacebook\nX\nTwitter\nLINE\nLine\nPrevious:\n“MindSpace” New online platform to tackle problems on students’ mental health\nNext:\nPark @ Siam, Chula’s Public Urban Green Space\nDiscover More\nOthers\nResearch and Innovation\nFulfilling a Royal Wish: Passing on ecological diversity to future generations\nContinue reading\nResearch and Innovation\nThe Ordinary Urban Heritage (OUH) Map of Bangkok’s Historic District: A Participatory Digital Mapping Project for the Conservation and Economic Growth of Everyday Local Foods and Sacred Spaces\nContinue reading\nResearch and Innovation\nBehavioral insights and perceived consequences of Coronavirus Disease 2019 (COVID-19): an international survey\nContinue reading\nResearch and Innovation\n“Chula-Cov19” Thai-made mRNA vaccine’s step closer to success\nContinue reading\nDiscover More\nChulalongkorn University\n254 Phayathai Road,\nPathumwan, Bangkok 10330\nThailand\nTel:\n+66 2218 0223\nEmail:\ncts@chula.ac.th\nFacebook\nTwitter\nYoutube\nInstagram\nLine\nHome\nSustainability Agenda\nCase Studies\nRelevant Rules and Regulations\nReports\nSDGs\nWe use cookies to enhance your browsing experience (\nSettings\n)\nSettings\nAccept\nPrivacy Preferences\nYou can choose your cookie settings by enabling/disabling cookies for each category as needed, except for necessary cookies.\nAccept All\nManage Consent Preferences\nNecessary cookies\nAlways Active\nNecessary cookies are essential for the functioning of the website, allowing you to use and browse the site normally. You cannot disable these cookies in our website's system.\nAnalytical Cookies for Enhancing User Experience\nAnalytical Cookies for Enhancing User Experience\nThese cookies are used to collect information about website usage, such as the number of visitors, popular web pages, and browsing behavior, which helps the website owner improve the user experience.\nFunctional Cookies for Remembering User Settings\nFunctional Cookies for Remembering User Settings\nThese cookies help enhance the website's functionality by remembering user settings such as username, language, region, or customizations.\nSave\nPrivacy Preferences\nSearch for:\nSearch\nEN\nTH\nHome\nSustainability Agenda\nCase Studies\nRelevant Rules and Regulations\nReports\nSDGs\nToggle Menu Close\nSearch for:\nSearch"
+  },
+  {
+    "id": "cmujs9wrp0018u77wi5y0pklf",
+    "name": "CORGI Healthcare and Physical Therapy Assistant Robot",
+    "requestedUrl": "https://www.truedigital.com/en/tdg-story/%E0%B8%97%E0%B8%A3%E0%B8%B9-%E0%B8%94%E0%B8%B4%E0%B8%88%E0%B8%B4%E0%B8%97%E0%B8%B1%E0%B8%A5-%E0%B8%9C%E0%B8%99%E0%B8%B6%E0%B8%81%E0%B8%81%E0%B8%B3%E0%B8%A5%E0%B8%B1%E0%B8%87-%E0%B8%A3%E0%B8%9E",
+    "finalUrl": "https://www.truedigital.com/en/tdg-story/%E0%B8%97%E0%B8%A3%E0%B8%B9-%E0%B8%94%E0%B8%B4%E0%B8%88%E0%B8%B4%E0%B8%97%E0%B8%B1%E0%B8%A5-%E0%B8%9C%E0%B8%99%E0%B8%B6%E0%B8%81%E0%B8%81%E0%B8%B3%E0%B8%A5%E0%B8%B1%E0%B8%87-%E0%B8%A3%E0%B8%9E",
+    "status": 200,
+    "meta": {
+      "": "",
+      "viewport": "width=device-width, initial-scale=1",
+      "description": "Empowering Digital Equity",
+      "og:description": "Empowering Digital Equity",
+      "robots": "max-image-preview:large",
+      "title": "True Digital Partners with King Chulalongkorn Memorial Hospital to Launch “Digital Hospital” Powered by “Physical AI” and Smart Medical Robots",
+      "og:title": "True Digital Partners with King Chulalongkorn Memorial Hospital to Launch “Digital Hospital” Powered by “Physical AI” and Smart Medical Robots",
+      "og:image": "https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_1.jpg",
+      "msapplication-TileImage": "https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2025/03/b9500a_bb8c68781edd467bbce2bbca2d2ca190mv2.png"
+    },
+    "images": [
+      {
+        "src": "https://tdg-assets.sgp1.digitaloceanspaces.com/wp-content/uploads/2025/03/tdg-logo.png",
+        "alt": "Site Logo"
+      },
+      {
+        "src": "https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2025/03/b9500a_bb8c68781edd467bbce2bbca2d2ca190mv2.png",
+        "alt": "TDG Editor"
+      },
+      {
+        "src": "https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_1.jpg",
+        "alt": "True Digital Partners with King Chulalongkorn Memorial Hospital to Launch “Digital Hospital” Powered by “Physical AI” and Smart Medical Robots"
+      },
+      {
+        "src": "https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_2-640x427.jpg",
+        "alt": "",
+        "srcset": "https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_2-640x427.jpg 640w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_2-1200x800.jpg 1200w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_2-768x512.jpg 768w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_2-1536x1024.jpg 1536w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_2-18x12.jpg 18w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_2.jpg 1700w"
+      },
+      {
+        "src": "https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_3-640x427.jpg",
+        "alt": "",
+        "srcset": "https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_3-640x427.jpg 640w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_3-1200x800.jpg 1200w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_3-768x512.jpg 768w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_3-1536x1024.jpg 1536w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_3-18x12.jpg 18w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_3.jpg 1550w"
+      },
+      {
+        "src": "https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_4-2048x1365-1-640x427.jpg",
+        "alt": "",
+        "srcset": "https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_4-2048x1365-1-640x427.jpg 640w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_4-2048x1365-1-1200x800.jpg 1200w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_4-2048x1365-1-768x512.jpg 768w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_4-2048x1365-1-1536x1024.jpg 1536w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_4-2048x1365-1-18x12.jpg 18w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_4-2048x1365-1.jpg 2048w"
+      },
+      {
+        "src": "https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_1-1-640x427.jpg",
+        "alt": "",
+        "srcset": "https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_1-1-640x427.jpg 640w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_1-1-1200x800.jpg 1200w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_1-1-768x512.jpg 768w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_1-1-18x12.jpg 18w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_1-1.jpg 1500w"
+      },
+      {
+        "src": "https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/IMG_7905-1-640x427.jpg",
+        "alt": "",
+        "srcset": "https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/IMG_7905-1-640x427.jpg 640w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/IMG_7905-1-1200x800.jpg 1200w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/IMG_7905-1-768x512.jpg 768w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/IMG_7905-1-1536x1024.jpg 1536w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/IMG_7905-1-2048x1365.jpg 2048w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/IMG_7905-1-18x12.jpg 18w, https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/IMG_7905-1-scaled.jpg 2560w"
+      },
+      {
+        "src": "https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2025/03/b9500a_bb8c68781edd467bbce2bbca2d2ca190mv2.png",
+        "alt": "TDG Editor"
+      },
+      {
+        "src": "https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2025/11/S__21479499-640x360.jpg",
+        "alt": "Image"
+      },
+      {
+        "src": "https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2025/10/Screenshot-2568-10-27-at-18.56.02-640x357.png",
+        "alt": "Image"
+      },
+      {
+        "src": "https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2025/04/dd811c_2b4efe5d13b44612b2f433a290f99e55mv2-640x360.webp",
+        "alt": "Image"
+      },
+      {
+        "src": "https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2025/04/dd811c_a1af83fa382c4102a222d128507d5d54mv2.jpeg",
+        "alt": "Image"
+      },
+      {
+        "src": "https://tdg-assets.sgp1.digitaloceanspaces.com/wp-content/uploads/2025/03/tdg-logo.png",
+        "alt": "Site Logo"
+      }
+    ],
+    "text": "True Digital Partners with King Chulalongkorn Memorial Hospital to Launch “Digital Hospital” Powered by “Physical AI” and Smart Medical Robots – True Digital Group\nOur Business\nTDG Story\nAbout Us\nCareer\nContact Us\nOur Business\nTDG Story\nAbout Us\nCareer\nContact Us\nth\nen\nth\nen\nTDG Story\nTrue Digital Partners with King Chulalongkorn Memorial Hospital to Launch “Digital Hospital” Powered by “Physical AI” and Smart Medical Robots\nPR News\n|\n09 Feb 2026\nTable of Content\nRelated Business\nDigital Health\nTDG Editor\nTable of Content\nKing Chulalongkorn Memorial Hospital and the Faculty of Medicine, Chulalongkorn University, have strengthened their strategic partnership with True Digital Group to upscale digital healthcare services. By deploying a fleet of innovative service robots powered by Digital Intelligence Fabric and Physical AI, the collaboration aims to bolster “Digital Hospital” capabilities and accelerate the transition into the Smart Healthcare 5.0\nBangkok, January 30, 2026 – King Chulalongkorn Memorial Hospital, the Thai Red Cross Society, and the Faculty of Medicine, Chulalongkorn University, are elevating their strategic partnership with True Digital Group. This collaboration harnesses the power of “Digital Intelligence Fabric,” a next-generation infrastructure that seamlessly weaves together technologies from the foundational level up to software and applications. By integrating Physical AI, Cloud, and Robotics with deep medical expertise, this initiative paves the way for the “Smart Healthcare 5.0” era, establishing a regional benchmark for the future of medical standards.\nThis collaboration represents a significant breakthrough in intelligent robotic innovation, designed to meet every dimension of medical service. These robots are engineered to elevate the quality of patient care, assist medical personnel in enhancing operational efficiency and precision, reduce occupational risks, and strengthen the hospital’s journey toward becoming a Digital Hospital.\nIt begins with the prototype\n“HAPPY,”\na robot dedicated to assisting thyroid cancer patients undergoing radioactive iodine therapy. HAPPY has been upgraded with end-to-end functionality and upscaled to support a growing number of patients. This success is further expanded through the introduction of\n“MELODY”\nand\n“LUCKY,”\ntwo new robotic assistants designed to provide even closer care for thyroid cancer patients.\nAt the same time, the experience gained from these prototypes is being applied to patients in Isolation Wards through the development of\n“CORGI.”\nThis medical robot assists in treatment and physical therapy for quarantined patients, such as those with infectious tuberculosis. By integrating Robotics with AI Models, CORGI can analyze patient movements and postures to maximize the effectiveness of physical therapy.\nAssoc. Prof. Jirut Sriratanaban, M.D., Director of King Chulalongkorn Memorial Hospital, Thai Red Cross Society, and Dean of the Faculty of Medicine, Chulalongkorn University, stated: “The Faculty of Medicine at Chulalongkorn University and King Chulalongkorn Memorial Hospital share a vision to integrate digital technologies within our facilities, driving our transformation into a Digital Hospital. Our goal is to elevate service quality while simultaneously supporting our physicians and medical personnel.\nThe successful development of patient-care robotic innovations in collaboration with\nTrue Digital Group\nmarks a significant milestone. It reflects the commitment of both organizations to combine expertise and work closely together to apply technology with tangible results. This partnership has not only enhanced the capabilities of our prototype robots and upscaled their usage but has also led to the development of new medical robots that can serve a wider variety of patients.\nThese robotic innovations do more than just increase patient satisfaction and enhance the quality of care; they significantly alleviate the workload and reduce operational risks for our medical staff within treatment areas. I am confident that this success will serve as a blueprint and a new beginning for further collaboration—not only for services within our hospital but also for connecting hospital care to other locations, such as other hospitals, homes, and communities in the future.”\nMr. Ekaraj Panjavinin,\nChief Digital Officer at True Corporation Plc. and President of True Digital Group, stated, “The strategic collaboration with the Faculty of Medicine, Chulalongkorn University and King Chulalongkorn Memorial Hospital this time has the core essence of using the Digital Intelligence Fabric concept as the primary infrastructure to weave and link digital technologies—from infrastructure levels like 5G and broadband to the levels of software, platforms, and applications—to create a seamlessly connected digital health ecosystem and support sustainable medical innovation. On this foundation, True Digital Group has implemented Physical AI technology, which integrates the potential of Cloud, AI, and Robotics to elevate robots with intelligence, enabling them to perceive, analyze, and respond to their environment accurately. This helps increase operational efficiency, reduce risks, and enhance safety for doctors and medical personnel. True Digital Group is extremely proud to have co-developed innovative robots to assist patients, from initiating the prototype to continuous development, by merging medical expertise with advanced digital technology to create tangible benefits for patient groups who receive close, friendly, and satisfying service, as well as serving as a key driving force for the Digital Hospital strategy and making Digital Healthcare a reality in the Thai public health system.”\nFrom early-stage Physical AI to the “Robots for Thyroid Cancer Treatment with Radioactive Iodine,” upgraded with the latest AI technology.\nMore than 2 years after the launch of\n“HAPPY,”\nthe intelligent robot assisting in thyroid cancer treatment with radioactive iodine—marking Thailand’s first use of robots in nuclear medicine—True Digital Group has recently upscaled by introducing new robots named\n“MELODY”\nand\n“LUCKY.”\nThese robots integrate AI technology to enhance processing intelligence, learn faster, and achieve higher precision. New functions have been added to further increase the safety of medical personnel, including measuring radiation levels from patients before hospital discharge using Image Processing; intelligent robot navigation processing; seamless multi-robot coordination; and automated interaction with patient room areas and double-door systems.\nThe power of Physical AI gives birth to the innovation of “Medical Robots for Healthcare and Physical Therapy.”\nTrue Digital has leveraged its experience and the power of Physical AI, through collaboration with the Department of Rehabilitation Medicine, Faculty of Medicine, Chulalongkorn University and King Chulalongkorn Memorial Hospital, to expand services to tuberculosis patients. They have developed the “Healthcare and Physical Therapy Assistant Robot” named “CORGI,” which acts as a member of the medical team to help care for and serve infected patients in isolation rooms during their medication and treatment periods to prevent the spread of infection.\n“CORGI” features outstanding functions, including: delivering medicine, medical supplies, and food to patients in service areas or patient rooms; telemedicine via a video call system to facilitate communication between doctors, nurses, and patients for close consultation and healthcare guidance throughout the duration of hospital treatment; analyzing patient movement behavior and providing real-time feedback to increase the efficiency of physical rehabilitation accurately; as well as providing physical therapy education, processing postures and the correctness of physical therapy with AI, and displaying results to doctors and physical therapists via tablet devices to evaluate further treatment plans. It can link and send image data and test results in real-time, complete with a cloud-based data storage system. Furthermore, it can work automatically with patient room areas that control special pressure systems and double doors, and it supports the further development of other functions in the future, such as adjusting training patterns according to individual patient recovery plans—whether for stroke patients, the elderly, or patients with post-surgery mobility issues—by extending AI for home use after treatment.\nRelated Business\nDigital Health\nTDG Editor\nRelated Articles\nVIEW ALL\nEmployee Stories\n|\n14 Nov 2025\nTDG Showcase 2025\nREAD\nPR News\n|\n27 Oct 2025\nDigital & AI Research and Innovation Center by True\nREAD\nEmployee Stories\n|\n05 Apr 2023\n5 แบรนด์ยางรถยนต์รักษ์โลก รถรักษ์โลกได้ ยางก็ต้องรักษ์โลกด้วย\nREAD\nPR News\n|\n29 Apr 2024\nทรู ดิจิทัล ร่วมเสริมศักยภาพ ททท. อัปสกิลดิจิทัลผู้ประกอบการธุรกิจท่องเที่ยว พัฒนาหลักสูตร “การบริหารการท่องเที่ยวสำหรับผู้บริหารระดับสูง” รุ่นที่ 5 ปี 2567\nREAD\nOur Business\nFor Consumer\nFor Enterprise\nFor Ecosystem\nTDG Story\nEmployee Stories\nPR News\nOur Customers\nThought Leadership\nAbout Us\nAbout Us\nCorporate Governance\nContact Us\n©2026 All rights reserved. True Digital Group.\nTerms of service\nPrivacy policy"
+  },
+  {
+    "id": "cmujs9wqq000bu77wie28id19",
+    "name": "Dinsaw Mini Home AI Assistance",
+    "requestedUrl": "https://www.chula.ac.th/en/highlight/198924",
+    "finalUrl": "https://www.chula.ac.th/en/highlight/198924",
+    "status": 200,
+    "meta": {
+      "robots": "noindex,nofollow"
+    },
+    "images": [],
+    "text": ""
+  },
+  {
+    "id": "cmujs9wq00001u77wqcj5z9dn",
+    "name": "Dinsaw Robot",
+    "requestedUrl": "https://www.ctasia.com/about-us",
+    "finalUrl": "https://www.ctasia.com/about-us/",
+    "status": 200,
+    "meta": {
+      "": "",
+      "viewport": "width=device-width, initial-scale=1",
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "og:locale": "en_US",
+      "og:type": "article",
+      "og:title": "About Us - www.ctasia.com",
+      "og:description": "Who We Are We are the leader in the customer service solutions for enterprise. We are Thais. We provide innovative software solutions for contact center, incident management and Tele-sales campaign management. All of these solutions allow your agent interact with your customer via Phone call, E-mail, SMS, Sticker chat.In 2009, we introduced CT Asia Robotics, […]",
+      "og:url": "https://www.ctasia.com/about-us/",
+      "og:site_name": "www.ctasia.com",
+      "article:publisher": "https://www.facebook.com/ComputerTelephonyAsia/",
+      "article:modified_time": "2023-09-25T07:24:46+00:00",
+      "og:image": "https://www.ctasia.com/wp-content/uploads/2023/09/Award-Winning.jpg",
+      "og:image:width": "1920",
+      "og:image:height": "981",
+      "og:image:type": "image/jpeg",
+      "twitter:card": "summary_large_image",
+      "twitter:label1": "Est. reading time",
+      "twitter:data1": "2 minutes",
+      "generator": "Elementor 3.16.2; features: e_dom_optimization, e_optimized_assets_loading, e_optimized_css_loading, additional_custom_breakpoints; settings: css_print_method-external, google_font-enabled, font_display-auto",
+      "msapplication-TileImage": "https://www.ctasia.com/wp-content/uploads/2021/08/icon-ctasia.png"
+    },
+    "images": [
+      {
+        "src": "https://www.ctasia.com/wp-content/uploads/2021/08/Callcenter-06-300x66.png",
+        "alt": "",
+        "srcset": "https://www.ctasia.com/wp-content/uploads/2021/08/Callcenter-06-300x66.png 300w, https://www.ctasia.com/wp-content/uploads/2021/08/Callcenter-06-768x170.png 768w, https://www.ctasia.com/wp-content/uploads/2021/08/Callcenter-06.png 787w"
+      },
+      {
+        "src": "https://www.ctasia.com/wp-content/uploads/2023/09/Award-Winning-1024x523.jpg",
+        "alt": "",
+        "srcset": "https://www.ctasia.com/wp-content/uploads/2023/09/Award-Winning-1024x523.jpg 1024w, https://www.ctasia.com/wp-content/uploads/2023/09/Award-Winning-300x153.jpg 300w, https://www.ctasia.com/wp-content/uploads/2023/09/Award-Winning-768x392.jpg 768w, https://www.ctasia.com/wp-content/uploads/2023/09/Award-Winning-1536x785.jpg 1536w, https://www.ctasia.com/wp-content/uploads/2023/09/Award-Winning.jpg 1920w"
+      },
+      {
+        "src": "https://www.ctasia.com/wp-content/uploads/2023/09/Dinsow-Robotics-1024x559.jpg",
+        "alt": "",
+        "srcset": "https://www.ctasia.com/wp-content/uploads/2023/09/Dinsow-Robotics-1024x559.jpg 1024w, https://www.ctasia.com/wp-content/uploads/2023/09/Dinsow-Robotics-300x164.jpg 300w, https://www.ctasia.com/wp-content/uploads/2023/09/Dinsow-Robotics-768x420.jpg 768w, https://www.ctasia.com/wp-content/uploads/2023/09/Dinsow-Robotics-1536x839.jpg 1536w, https://www.ctasia.com/wp-content/uploads/2023/09/Dinsow-Robotics.jpg 1920w"
+      },
+      {
+        "src": "https://www.ctasia.com/wp-content/uploads/2021/08/CTASIA-Logo2.jpg",
+        "alt": ""
+      }
+    ],
+    "text": "About Us - www.ctasia.com\nHome\nAbout Us\nSolutions\nChat Mgt.\nIncident Mgt.\nOutbound Mgt.\nInbound Mgt.\nOmni Channel\nAwards\nOur Customers\nContact Us\nMenu\nHome\nAbout Us\nSolutions\nChat Mgt.\nIncident Mgt.\nOutbound Mgt.\nInbound Mgt.\nOmni Channel\nAwards\nOur Customers\nContact Us\nWho We Are\nWe are the leader in the customer service solutions for enterprise. We are Thais. We provide innovative software solutions for contact center, incident management and Tele-sales campaign management. All of these solutions allow your agent interact with your customer via Phone call, E-mail, SMS, Sticker chat.\nIn 2009, we introduced CT Asia Robotics, the visionary company who commits to develop service robot in the area of restaurant, marketing event and health care service.\nIn 2015, “Dinsow” the elderly care robot, starts taking care of the elderly in Thailand and in Japan.\nOur Service Robot\nIn 2009, we built the first service robot of Thailand as well as the first of ASEAN regoin, named Dinsaw. With the vision that in the near future robots will help the human like us especially in the areas that have shortage of human resources such as health care services.\nIn 2010, we built 10 restaurant service robots for MK, the large restaurant chain in Thailand. In 2014, we built 14 robots for the Robot Restaurant in Lidköping, Sweden in order to take order from the customer and also deliver the food to the table.\nAfter years of partnering with hospitals in Thailand and in Japan, we launched Dinsaw, robot for elderly care service. Dinsaws will deliver full service since 2015 in many countries including Japan and EU\nHome\nAbout  Us\nOur Customers\nSolutions\nContact Us\nRobot & AI Solutions\nCOMPUTER TELEPHONY ASIA CO., LTD.\n1635-1637 Pattanakarn Rd., Suan Luang, Suan Luang, Bangkok THAILAND. 10250\nTel :\n+66 2013 1431-4\nFax :\n+66 2013 1436\nCT Asia\nis a leading best-in-class,innovative Contact Center based in Asia.We also provide seamless integrated multifunctional solution, front-end systems ..\nCopyright © 2021 COMPUTER TELEPHONY ASIA CO., LTD. All rights reserved."
+  },
+  {
+    "id": "cmujs9ws6001ou77wz2r6p0kb",
+    "name": "Exoskeleton Wheelchair Robot",
+    "requestedUrl": "https://www.chula.ac.th/en/highlight/218151",
+    "finalUrl": "https://www.chula.ac.th/en/highlight/218151",
+    "status": 200,
+    "meta": {
+      "robots": "noindex,nofollow"
+    },
+    "images": [],
+    "text": ""
+  },
+  {
+    "id": "cmujs9wrb000tu77wubp1tfzo",
+    "name": "Kaitomm Robot",
+    "requestedUrl": "https://www.obodroid.com/about-us",
+    "error": "<urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>"
+  },
+  {
+    "id": "cmujs9ws2001lu77ws062varw",
+    "name": "Khun Sean Smart Robot",
+    "requestedUrl": "https://sustainability.chula.ac.th/report/3801",
+    "finalUrl": "https://sustainability.chula.ac.th/report/3801/",
+    "status": 200,
+    "meta": {
+      "": "",
+      "viewport": "width=device-width, initial-scale=1, minimum-scale=1",
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "og:locale": "en_US",
+      "og:type": "article",
+      "og:title": "“KHUN SEAN” SMART ROBOT FOR COMPUTATIONAL THINKING – Chulalongkorn University For Sustainable Development",
+      "og:description": "“This study explores the integration of robotics into primary school curricula to promote computational thinking (CT) across disciplines. With technological disruption driving changes in education, developing CT skills has become essential, particularly in preparing them for future challenges in a world increasingly shaped by automation. To identify critical characteristics driving CT development, a two-phase research...",
+      "og:url": "https://sustainability.chula.ac.th/report/3801/",
+      "og:site_name": "Chulalongkorn University For Sustainable Development",
+      "article:publisher": "https://www.facebook.com/ChulalongkornUniversity",
+      "article:modified_time": "2024-11-14T09:42:33+00:00",
+      "og:image": "https://sustainability.chula.ac.th/wp-content/uploads/2024/11/Khunsean-Smartbot-D2.jpg",
+      "og:image:width": "1920",
+      "og:image:height": "1080",
+      "og:image:type": "image/jpeg",
+      "twitter:card": "summary_large_image",
+      "twitter:site": "@ChulalongkornU",
+      "twitter:label1": "Est. reading time",
+      "twitter:data1": "3 minutes",
+      "msapplication-TileImage": "https://sustainability.chula.ac.th/wp-content/uploads/2021/07/cropped-logo-admin-270x270.png",
+      "generator": "WP Rocket 3.23.5.1"
+    },
+    "images": [
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20480%20160'%3E%3C/svg%3E",
+        "alt": "Chulalongkorn University For Sustainable Development"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula-sdg-dark.png",
+        "alt": "Chulalongkorn University For Sustainable Development",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula-sdg-dark.png 480w, https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula-sdg-dark-300x100.png 300w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20480%20160'%3E%3C/svg%3E",
+        "alt": "Chulalongkorn University For Sustainable Development"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula-sdg-dark.png",
+        "alt": "Chulalongkorn University For Sustainable Development",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula-sdg-dark.png 480w, https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula-sdg-dark-300x100.png 300w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201024%20891'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2024/11/khunsean-smartbot-1024x891.jpg",
+        "alt": "",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2024/11/khunsean-smartbot-1024x891.jpg 1024w, https://sustainability.chula.ac.th/wp-content/uploads/2024/11/khunsean-smartbot-300x261.jpg 300w, https://sustainability.chula.ac.th/wp-content/uploads/2024/11/khunsean-smartbot-768x668.jpg 768w, https://sustainability.chula.ac.th/wp-content/uploads/2024/11/khunsean-smartbot.jpg 1134w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20907%20725'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2024/11/Students-Engagement-01.jpg",
+        "alt": "",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2024/11/Students-Engagement-01.jpg 907w, https://sustainability.chula.ac.th/wp-content/uploads/2024/11/Students-Engagement-01-300x240.jpg 300w, https://sustainability.chula.ac.th/wp-content/uploads/2024/11/Students-Engagement-01-768x614.jpg 768w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20908%20681'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2024/11/Students-Engagement-02.jpg",
+        "alt": "",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2024/11/Students-Engagement-02.jpg 908w, https://sustainability.chula.ac.th/wp-content/uploads/2024/11/Students-Engagement-02-300x225.jpg 300w, https://sustainability.chula.ac.th/wp-content/uploads/2024/11/Students-Engagement-02-768x576.jpg 768w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20908%20680'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2024/11/Students-Engagement-03.jpg",
+        "alt": "",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2024/11/Students-Engagement-03.jpg 908w, https://sustainability.chula.ac.th/wp-content/uploads/2024/11/Students-Engagement-03-300x225.jpg 300w, https://sustainability.chula.ac.th/wp-content/uploads/2024/11/Students-Engagement-03-768x575.jpg 768w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E",
+        "alt": "The Global Goals"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/themes/chula_sustainability/assets/images/icon-the-global-goals.png",
+        "alt": "The Global Goals"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-4.jpg",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 9: Industry, Innovation and Infrastructure"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-9.jpg",
+        "alt": "Goal 9: Industry, Innovation and Infrastructure"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-17.jpg",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20533'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2025/04/20240814_s_tK3XmoDsbN-800x533.jpeg",
+        "alt": ""
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 3: Good Health and Well-being"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-3.jpg",
+        "alt": "Goal 3: Good Health and Well-being"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-4.jpg",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 9: Industry, Innovation and Infrastructure"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-9.jpg",
+        "alt": "Goal 9: Industry, Innovation and Infrastructure"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-17.jpg",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20533'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2020/11/MDCU-01-800x533.jpg",
+        "alt": ""
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 3: Good Health and Well-being"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-3.jpg",
+        "alt": "Goal 3: Good Health and Well-being"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-4.jpg",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 5: Gender Equality"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-5.jpg",
+        "alt": "Goal 5: Gender Equality"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20533'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2025/11/ux-indonesia-w00FkE6e8zE-unsplash-800x533.jpg",
+        "alt": "",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2025/11/ux-indonesia-w00FkE6e8zE-unsplash-800x533.jpg 800w, https://sustainability.chula.ac.th/wp-content/uploads/2025/11/ux-indonesia-w00FkE6e8zE-unsplash-300x200.jpg 300w, https://sustainability.chula.ac.th/wp-content/uploads/2025/11/ux-indonesia-w00FkE6e8zE-unsplash-1024x683.jpg 1024w, https://sustainability.chula.ac.th/wp-content/uploads/2025/11/ux-indonesia-w00FkE6e8zE-unsplash-768x512.jpg 768w, https://sustainability.chula.ac.th/wp-content/uploads/2025/11/ux-indonesia-w00FkE6e8zE-unsplash.jpg 1440w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-4.jpg",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 9: Industry, Innovation and Infrastructure"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-9.jpg",
+        "alt": "Goal 9: Industry, Innovation and Infrastructure"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-17.jpg",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20754%20533'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2021/11/QuickMBA1.jpg",
+        "alt": ""
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-4.jpg",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 9: Industry, Innovation and Infrastructure"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-9.jpg",
+        "alt": "Goal 9: Industry, Innovation and Infrastructure"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 10: Reduced Inequalities"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-10.jpg",
+        "alt": "Goal 10: Reduced Inequalities"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-17.jpg",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20166%2060'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula.png",
+        "alt": "",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula.png 332w, https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula-300x108.png 300w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20150%20150'%3E%3C/svg%3E",
+        "alt": "PDPA Icon"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/plugins/designil-pdpa/public/assets/images/cookie.webp",
+        "alt": "PDPA Icon"
+      }
+    ],
+    "text": "“KHUN SEAN” SMART ROBOT FOR COMPUTATIONAL THINKING – Chulalongkorn University For Sustainable Development\nSkip to content\nSearch for:\nSearch\nEN\nTH\nSustainability Agenda\nCase Studies\nRelevant Rules and Regulations\nReports\nSDGs\nSearch\nSearch\nMenu\nToggle Menu\nCase Studies\n“KHUN SEAN” SMART ROBOT FOR COMPUTATIONAL THINKING\nTeaching and Learning\n“This study explores the integration of robotics into primary school curricula to promote computational thinking (CT) across disciplines. With technological disruption driving changes in education, developing CT skills has become essential, particularly in preparing them for future challenges in a world increasingly shaped by automation. To identify critical characteristics driving CT development, a two-phase research approach was used to survey 343 instructors and 597 students, followed by an experimental intervention with 30 fourth-grade students. The results showed that “pedagogy”—well-structured training and robotics—is the biggest element in CT promotion. Students solved problems using CT concepts such as deconstruction, abstraction, algorithmic reasoning, and generalization in five robot-assisted learning activities. The ability to analyze, implement, and transfer knowledge improved significantly, according to statistical analyses. The study found that integrating robotics into several topics accompanied by excellent pedagogy improves students’ CT skills and computational comprehension, preparing them for their future careers.\n”\n[\nhttps://www.youtube.com/watch?v=KUU17xxV3LY\n]\nThe main features and implementation\nThe main features of the innovation primarily focused on integrating robotics into education to promote computational thinking (CT) across disciplines, particularly at the primary school level. Key features of the strategy are interdisciplinary Integration. Computational thinking and robotic education were integrated across different subjects, such as mathematics, English, Science, and Arts. For instance, students used programming robots in tasks like solving math equations, creating vocabulary using movement commands, and drawing art by controlling the robot’s motion. Moreover, hands-on learning with Robots is the key implementation involved using educational robots to facilitate active learning. The students learned to sequence and execute commands through command cards, which developed their problem-solving skills and computational thinking dimensions such as abstraction, algorithmic thinking, and debugging.\nPromoting the use of new technology to facilitate innovative teaching:\nThe research team embraced and supported new technology to facilitate innovative teaching by integrating digital tools and methodologies that enhance both student engagement and learning outcomes. One of the main initiatives involved incorporating robotics and programming into the curriculum, which allowed students to develop computational thinking skills in a hands-on and interactive way. The robot was implemented across various subjects, making learning more interdisciplinary and dynamic.\nCreating an educational environment across the university:\nThe project has enhanced teaching quality by integrating KHUN SEAN into the core curriculum from the early stages of education, allowing pre-service instructors to use it as a fundamental learning tool. We offer comprehensive training programs that equip educators to effectively implement KHUN SEAN in diverse school settings. Additionally, we continuously refine our teaching approaches by incorporating student feedback to ensure our strategies remain relevant and effective.\nRecognizing and rewarding innovative teaching:\nThe international invention innovation competition was organized by Toronto International Invention and Advance Skills (TISIAS), which awarded KHON SEAN a gold medal for its novel design and educational effectiveness. This award has confirmed the effectiveness of KHON SEAN as an educational tool. The reward encourages instructors to adopt innovative pedagogical methods. Moreover, the reward can create a dynamic learning community to exchange best practices and attract more attention from universities, leading to collaborative relationships.\nMaximize the potential of learning experience:\nThe following is an outline of tactics employed to optimize students’ potential:\nIdentify the Problem: Identify the problem and also gaps in personalized support, accessibility, and practical learning opportunities then design a solution.\nImplement the Solution: Engage students with problem-solving tasks, interdisciplinary research, and skill development opportunities such as internships and certifications to improve employability.\nInterdisciplinary Integration: The “Khun Sean” robot connects subjects like math, science, art, and music, making learning more holistic and engaging by tying abstract concepts to practical outcomes.\nInnovative Use of Robotics in Education:  The innovative use of robotics in education transforms traditional teaching methods and enhances student engagement. By integrating robots into the curriculum, educators can provide hands-on learning experiences that foster critical thinking, creativity, and collaboration.\nStudents’ engagement in integrating various content subjects’ activities with the programming robot\nBy\nFaculty of Education, Chulalongkorn University\nRelated SDGs\nGoal 4: Quality Education\nGoal 9: Industry, Innovation and Infrastructure\nGoal 17: Partnerships for the Goals\nShare\nFacebook\nFacebook\nX\nTwitter\nLINE\nLine\nPrevious:\nMetaverse Historicovator for History Learning Media to Promote Self-Directed Learning in The Bani Era.\nNext:\nRobo-Buddy: A Robot Companion for Elementary School Coding\nDiscover More\nOthers\nTeaching and Learning\n‘MDCU MedUMORE’: A Lifelong Learning Platform for Medical Professionals\nContinue reading\nTeaching and Learning\n“MDCU Let’s Talk” a program outside of the classroom encouraging Chula medical students to talk it out\nContinue reading\nTeaching and Learning\ndesignCLASS: Intelligent Supervised Learning Design Platform\nContinue reading\nTeaching and Learning\nCBS Quick MBA from Home & Quick MBA for SMEs\nContinue reading\nDiscover More\nChulalongkorn University\n254 Phayathai Road,\nPathumwan, Bangkok 10330\nThailand\nTel:\n+66 2218 0223\nEmail:\ncts@chula.ac.th\nFacebook\nTwitter\nYoutube\nInstagram\nLine\nHome\nSustainability Agenda\nCase Studies\nRelevant Rules and Regulations\nReports\nSDGs\nWe use cookies to enhance your browsing experience (\nSettings\n)\nSettings\nAccept\nPrivacy Preferences\nYou can choose your cookie settings by enabling/disabling cookies for each category as needed, except for necessary cookies.\nAccept All\nManage Consent Preferences\nNecessary cookies\nAlways Active\nNecessary cookies are essential for the functioning of the website, allowing you to use and browse the site normally. You cannot disable these cookies in our website's system.\nAnalytical Cookies for Enhancing User Experience\nAnalytical Cookies for Enhancing User Experience\nThese cookies are used to collect information about website usage, such as the number of visitors, popular web pages, and browsing behavior, which helps the website owner improve the user experience.\nFunctional Cookies for Remembering User Settings\nFunctional Cookies for Remembering User Settings\nThese cookies help enhance the website's functionality by remembering user settings such as username, language, region, or customizations.\nSave\nPrivacy Preferences\nSearch for:\nSearch\nEN\nTH\nHome\nSustainability Agenda\nCase Studies\nRelevant Rules and Regulations\nReports\nSDGs\nToggle Menu Close\nSearch for:\nSearch"
+  },
+  {
+    "id": "cmujs9wr7000qu77w69i2ul9j",
+    "name": "Mirror Telepresence System",
+    "requestedUrl": "https://csii.chula.ac.th/robots-and-the-covid-strip-test-innovations-by-chulalongkorn-university-to-combat-the-covid-pandemic",
+    "error": "The read operation timed out"
+  },
+  {
+    "id": "cmujs9wru001du77wh1kqxcjn",
+    "name": "Mr SAM outpatient service robot",
+    "requestedUrl": "https://en.vietnamplus.vn/thailand-introduces-robot-assistants-at-hospital-post276507.vnp",
+    "finalUrl": "https://en.vietnamplus.vn/thailand-introduces-robot-assistants-at-hospital-post276507.vnp",
+    "status": 200,
+    "meta": {},
+    "images": [],
+    "text": "�\b\u0000\u0000\u0000\u0000\u0000\u0000���[o*�&x_�\"��J۝\u0004g0x%ޅ1>\u001f����{�\n\"\u0002\b\u0013D�8�qfJ�ꋾ�VK#��H�\u001a�Zu�Ҍ4\u0017=�5\u001a�����~�.��w��~_D\u0010`X6`�^+sm�^� ��;��Ï�힗�wՊ�v����#�\u0011t�h\u0015#�\u0011\u0011d]�m��~S%\u0005\u001c����z[��\"h�c��+��`�\r�\u0011�B�\u001d�plAr��i�4G���v]Ց\u0004C�ň�ڲ��\u001cͤ�L�Q\r�\u0018��U�X3ZB���n\u001a��i\u0019©�5-M҅\u0003\u000f�@�;x��\"\\��P�L�\u0016j����PhK}UPԞn\u000e�\u001b\u001b�-8�`�T|w{���t5\u0003�$G��=��Ll�J�0\u0001�uz�\u0001�\"@��t�#~�\fAm6M�!�Z\u0017ͨ���5Y�U��\u0001J,\u0012�r���Q�\u0003�R챹�e�\u0006\u000b\u0015�#���1*\\c>X��COw���p�\u000el��R\ry8٣���?g�m��꣫���2�P�>쩡);�\u0013�s�A�ےe�N�u�b>\"\u0004�\u0015�r+^�Ĳ٥}h�a@������ќ��,�i�v;�o2�H���'�R���9��tT+���HClT0$�z_S\u0007=�z�́�8��\u00028�*�/Q\u001c\u0010��I\u0015mY��b2�\u001f��\u0000��.�es%Lct\u0001�ڋ�qԺ�#*���\u0013��Qu��6\r�h������D3IQ�@��F]��阋�\u0010�^O���4��C�\u000e����{h1�\u0010H�qm�!Y��\fǶ��Kr�-0\u0018�\b-�w\u0013~\u0010ֽOU\\���ic�U�\u001a�P�\u0014��⠭\u001a�b\u000e��%)����\u0011,U/F�6�Wvq˱C\u0011��V�\bm��\u0015�wUE�b8\u0005t\u001d�\u0016��F\u001c\bOu�8�+��iǵn+ޔp\"L#�\"��+P�h]�s�I��h���Y*�6��o�Mx�X1l\u0011\u0000��#�Ŀ>��/���\u0007�A�e�-l�dH���d;&�]~2G]��#��h�R����\u001d9�,�?�ġzk�&P��W�io\u001ei\u000fC�����\u001e\u001a�&\u0003�`�h���P\n<\n����ڪ�Z*h��`�1�\u0004�Pe\u0010�N�P�7t.ɲ����!�7N���/�\f��\r�\u001c�$���6�m}��\u001a8\n<\n�$\u0006C������C�\u0018o���c\u00076֝D&�n�w�cMIV\u001b���ݦe\f��\\�i(�����֟���[�~���{�]��r��\n<\n�[����s��� ^��3ڽ~����塟���7{z�9��t\u0000�m֬�=���7|��o���\u001b.t������#\u0007��49��\u0014k6d���Tg�\u0018y;j�c0\u001f\u001dqin[�K� w��i4��P\u0014~\u0012\u0014�+iƮjw\u001c��%��\f�\n\f;�M�E�wO\u0019\u0017��WK=m�=���,�56����X�`\u0010'f+�*�F�l��̩S�g��b�_�\u001f����I�n?\u000fh\u00101�CeKHD\u0005BR$\u0011m\tɨ`6\u001e���/��\\6�\t�O�?��ǃD\u0001�t�\u001c�\u0014{Kp,We��H����h%���r���\u0007Ak\n�\u0003�\u0000�\u001b�/����꘲�\u000b�\u0015���\t�/L�\by�x[5\u0006\u0000��ys}mb6\u0018\b1��]�h��\u000e6vM�a��\u000f{�O����픟ڒ�� ��\u000e�U�ry_گ�Ջ^�\u0006��������\u000e\u001e�\\�\u001b%\b���?O�\u001e�X!k#��쩖��ϑH��vz�sxR)�K�b���3x����Z��,�1��wH�ف�1�����-�_\u000f+�����\b5�)Y���\u0004^8�d\u0018�b�j;룹lP������J�^�.���\u001aLʃ*�)�E��u5jF����f\u0019E��®�Q��n��R]����>m����\u000b�_�\u0012�_RMoD#�SO��W��`�\u001c�^�9\u0016t,�\u001b\u001b\u001f\u0014SvI�\u0001N��*�?D��C�\u0010�A�\u001fڜb�C�`\\��\u001f\u0017\u001f�Y��\u0012�\u001f\u0006m\u0003#5Pc�j���\u000f�\u000f�긖����*N�d[�m@#C�KD�F�)1Y,\u0016��\u0019��o��/�ꋶ���|�`�6p,^�Ç�\u0011u\r(����>{\u0000ZT����%8\u0013�?�{D�=�\u0016�~F�\u0015�!���D'n�zG��;�1H\u00048Y�z$\u0006\u00013\u0012\u0015\" ƽ��\u000f\u0013\u0000��%��\u000fNb��c�G�?�\u001f�f�ѝ\u001f��`�\"\u001c�;�\r�Ǣ���[f\u0007*\u001c�\u0002�kk~\u000bB\u0007t8\u001b��^Yz\u0018\u0015���q�S\u001e�#���s�Hy(B��+\u000f�\u001e�\u0012ǐ�\u001ck\u001f8��\fӀ�����R\\]��{#�Z02�B\u0011`8�L.&I���\u0006)Zt�Y�bG0��ȯ�h���\n�`���2�?ţ��\u001a�\u0003�ʡ1�\bs\u0001\u0004�\nӺ��\u0001�:�b���\"�\u001bּ&S�|:��Y�d�j��6�@�kJH��,�\u0012�|v3���\u0017\n��\u000b=��:�\u001f�Zxj�I�դbQ6{ClE;�Y,�τ���`\u0007R9�1�U����,�\u000f��C�\u0000ͬ\\�N^\f�?��_��}u�`o��~֛`wH'ރ:�t-Y=�Z��=3^$�)��/L��v+\u0000JJ�\b��>\b\u0010p\u000b�Qb\u000f�\u0011b�\\��\tiֹr?4\u0005F\u0005�B�$\u0006**t%h�H�Fj204�-]�H�:���??�?���\u0017\u00045ҋ\u0005gtR\u001f���04���\u0005�J\n<\n�=-Zh.3�+X�1\u0000�&��%�\u0001J\"� \u0004����ƍ5\"Mg�M�o4\u0019���=��\u001ezw�L�,���;;\u0010S�g\u0012��mb����m����j�P����j���������>q�[�����B򼰟8Κ���}�q*\u0007;��R⶯�^�sV�sU��҉d����ۺ�M5\u001e�)�V���M�Z�y��w�l��\u0001��������D&��=�Z1�O�l�\u0019#B�\u0003�K|�A[��@���\u0006�z�ý3��\u001b3\b:\u0003�\u0001#�%K\u0016�\f����n�+Y/Ly�����p��w�~\u001b?\u000e�7��*\u001c4��DB��o_�=㭁�H��\u0007��\u000eyTg�\u0019����!Ч2����7>2(N%�>P��C��\u0011߻\u001b�_�\u0006��\t��i�@\u001cS��?X\u0005�{\u0007*�и������,ԓ٭tz+��!���af\u001fZ�T���N\u0003�\u0013�\t�WO&�R\u0019�\u0017\u0002��P�\u0006J�b��\u0016ו\u001f\u001el\u0018Y�!�D���ONdK`�VX[m��v��i�H\u0010�[�Z��1f\u0012?���V3\u000e\u0018� ��%+�\u000b�N��3�/M�\u000b�0�R�X�`�l�$�@sA�\u0019\u0002\u0007��'��j�x�{6]6U\n<\n�\u001a��Qo����������\f��O�+x�?���8�\u0015����볍\b��?��g�\t\u0014򲤗���`C�����\u0000�����NHd��?��B�����?��A�Ǽ'Q8��\u0014������\tb�{��uy\u0002͢�9C����2=\u0019�t��ȵ\u0007��A�����Я$�Kzل�\u001d?%\u0013��P�2Y5A\u0000���٩?U:\u001e��TM�\f���\"��?���'����ψ�LZ,dp�ә\u0002u�A#E,�\"��cvU���A�ѱ]��\u0003�߯w�6���-�C\u00118\u0019|\u00123a�a\f�hP�wȆ\u001b���H�NS�_�(7{g�+��\u0010�NnCe���\u001d�\u001cÇ\u0018\u0017���\u0002��\u001fδKM�ߨ�\u001aQ\f��}.��3\u001d����\u0000󡋝?�'S��\u001d�q\u0003���E�>���J�Փ�ZT(���$\n<\n�������,�V�~\r1؞I�0�}J\u001c;o���\u001aS�y?�m��N:���|\u0014P���\u000f6^\u0001��C��=\u0004��\u000b�\u0015皒��\u001e�?���p��kNaG8���\u0010j���\u0010�E�Y\u0016��h��/[�e\u001bӣ̹�[l�g���\u000e��\"[n�q\u0002�;�j���sEW���\u0015��\u0011��\u0010oЛ@\u001ap�\"l\u0002�\tk\u0017٢E�~��:\u0015���p�+�ѩ�x4��ܡ�����\u0002�A�Q��_\f�\f`�i`��f\u0015�\b>|~\u0006���gx�\u0019-�\n<\n��|9��`��ga���I�\u0019fױ\u0010�\u001e�M:[�(������Y�h�\u0013\f�פ1��=�\u0000,��N�ݗ����f�(_D\u0001�7+�g�/bcf���ۧ\u001ek�\n<\n�\u001d�˞�t\u001c\u0003�d��1��Wkb;�g\u0001=�.�v߰�\u0013����?�=���H!\b�#\\�����7�\u001bٶ�@b�V\u0016��D,���Y\u0004^��\u00180��Iw�Ez{��%�\u0019{�;a�������t�Bׅ\u000b@\f\u0006S:\u0000\u000e�U\u001c��5d�H`\u001e��\"=�Ɯ�+��µ:X�Tj�~f��s�M\tqTl_\u0012��\u0016ް\rV|�\u001c,ړ�\u001f�R�`�}O[��J�\u00027�eo��_h��N\u001d:eol�~�4���&�da\u0001_\u0003Ox�\t����%�5EQ�\u000f�\u000bL34\u0018j�Α'\r2_�\u0007�/�8]d��'��y���\u0011iؐ�\u0011�\u0000[]`\bf\u000f�\t\u0011�\u0001r\u0007B/�>ޘ�\u001d���)�\u000b����\u0003wi`�I �{\u0002\u0001�k�W�q�\fw���?x6sa[H�Ml|0�x\u0004��w�9�;9M�Lb��K�r����`[��s�$\u0001p7�qW�x\u000b��\u000f��p��C>-��\u0017����\u0001�N�!��`�F�`\u0004��\u001f>�̪\u0004}���Xϵ�����K����\u0017����`Ï�w| �\u0005�9\u0004-8\u0019᷵����'�����\u001b\u0013l!YF_����`\u0018��\u001e��G��\u001auS�n�������Y�5��y�h�#aM�ϊC]T�%\u0010πf��fH���8�\u000b�p��cn\n<\n\u000f=�Ӂ�_���B0J�w\u0012�p��`0fO�\t8c�C-��4�\u001b�=�\u0007\u0014jV��p��wR��z�]�#u4��\t5��!�\u0018�1���G_\u0011'\u0018�J�b\u001e�n�3y)o.)x��ۃ\u0007�g�n�U�gm��m{�߱ѽ\u0002rn�kџ�]4fc_,,-���.�o�m\u0007~L냨\u0012��:90\u000e~���H���3�\u0000���іӍA/l\u0011�\u001b���Oc�]ͭ5z\u000f�\u0000.71P͢B�x�#{g\bZA\n�u{��\t��\u001f�;�%��+�!��E���Z@a�~���^\\�A�Z[��\u0010�,\u0012�4|!6i��?�'Ѩ�MZ�Ϥ�h���\u000ez}\u000657�dx�:;*\n<\n����(9������F}�3��Y��hhdѵ�����9����g�2{�T�d������_E�\n+�f\u0010�e#�R��r�M��݈��8��������*$�\u001d\u00160d�O�\u0001���Q9�IV�`�#\u001eW��Af˨F���1�x��\u00071��\u000b�Z����.\u0011����\u0011�\u0000\u0007����7\\\u0007����5�F\"�\u0004�\u001c\u0018�AL=\u000e�Xp*>\u00183�F�\u001a\u001b��\u0016Ή�\u001b?�}���\tW�?�\u0005@^�ơRDS�5�պTtb0�7UU�_�h\r�y=����/\u001bA\u0003��n����\u0012nh�!\u0002�J��؈\u0006 ��'ַh�\u0005�F̼�tb]�\u0019�LH]��oG>`�\"�\u0000�º\u0016�@���'һ��F6����w��觚�vvj���/�X�hp@�Ô\n/����>���\u0005o��\u0016\u0016�\u0017�Z�R���O�\bx2�e��\u0003�̸\u00143�҈#8\u0013��v��oL\\�{��\rS\u0019�\u0011�mf\",�8\u0014�/�Dm+\u00124��5E:������c�q�\r�\u0001�P�#\"�!��aG\u0012IqOa��H��i����\u001d�����\n\b4\u0004&\u000f6�\u0017\u0010�38�O6��3�xȌM��Z�\\�@$�Nݥ�k\u0013�\u001b��������D�}��\u00066�Þx��7#\u0003�F�\u0010frh�-�\u0019���\u000fÆ?�N�\u0013���/\b�L�.�2�n{��\t/�\u001f�\u0012���>d>;RH�4�X#L\u001dR�PL��k]��?�?�vr�*\u001e�\f\"\n=r��d\u0003a���^㬓�=�����*F�T�/z��Ɔ��\u0013#��{��ԴfMiϒ�?�gI��nb6�}\u0005o��\u001b2\u0018�X��ݓ���p�{�3��W�zn������������՞�k��c�������O�����?��������������~�.%Ҡ[�_Yf\u0003\u0014\u0007�҂;��\u0015�J\"�22K]��\u0007���%9O��@`q\u0002mS\u0007�(F�yj\t\u0002�ݿ�?��N\f\f�7����N�Q�\u000et&-��\u0019�QxH�Gl���\u0010���Bk3��B�\u001b��P\u0018}��\u0007��i�픿����'���ŭ�M�>\u0016�\f��&��\u0000�?\"�쩷�����Ǘ�N(�k=��P�q��8\n<\n�!�1��t\n<\n������\\a\t\u0018��op@�I@\u000f-v\u0000ޖz&\u0005�a�m���C��_I2�\u001f��\u0005\u001f��\u0012_�\u0012�\u0001�a\u0019\u0016��\u0017�ƻ\u001d��{�릥&�,���\u0016�\t�>\u0015?a}�\n<\n\u0007\u000b���\\6�\n<\n'��lZ�\\��\u0014� �6\u000e���!�IT8�\f\u0017.�B\u0012!���\u0012�\u000b\u0018��钊�9�{�d�\u0001\u0003\t;���F��Qޒ�Z3�\u001f�7,�\u001a˯�\u001adD\u0012�ۿ\u0016�\r\u001e�\n�ND-���1ѕG[�\u0001\n<\n\u000e�>O�\u0012\u001ci��=#5��.��p�\u0019�\u000b�\u0019xMvB����FB!ds�!P��_B\u0000��D���gd��\"�\u001dAY�Y\"o\u0007���g�\u0010�\u0012_-�o�za� ?R\u0017d����Ȟ\u0017��3�}�8�ͳp\u0006�\u0016�'S0�:w�\u0006��?�}\n�w\u0001\u0012P\u0007�^�\u0012|�֪�\u0000)��p\u0014#�\u0015\b���㽽�5�]�t�V��\u0013\u001eᏂ��\r\"����\u000f���G���}\n`V��ؚ��\u000b�\u0017\u0017G\u0019�\"�쭷w�\u000e$]�1��2{�G�\"���Q���Ʊ\u001d|���Ao\u001b\u0016G\u000b���w�/�cv�\u0000謄`EH���?�ݿ\u0007)�\u0015Ѫ�\u0002�����D��>�0#���.,�У�\u0010lHf�(�)�'.\u001e��\u001c\"��[%�qH\u001e��+�j��v�\u0018��I\u0006\u0012zi\u0002��\u001c�\u0007\u001fN����L��_0�,ۚ\u001f�\t52r��[�O&c\u0004\u0010\u0012\b\u0005 \u0010�\u0018�\u0010l\t*�&�f�`�X�(���\u000eO�SK��N�����\u0018%|C�=)\u0013�K��N)Z6�N\bo��w�\u000e�w���'��� +\u000f2�5\u0011��3�Y�b�)c�k��\u0012�ȵ�!h�*�;\u001d�z��3!\n\u0001\u0016\u0004f\u00046�=������\u0001\"��\u001aR㙆�d�\r\u0007\u001a\bx\u001c�\n<\n�\u0010��7��b\u0002$\u0005�s%�8\u001bAl\u0016~�1���\rˎ�G�T��A\u001b)��B�f\u0004�Q��e6c\u0002���p��y\u001d\r\u0003�!\n�\u0019�\u001aEǶcͦ�v.r��\u001b\u0016\u0015��\b3�f��h.\u001a�����\u0006=�����a���G����O},Ӟ����w����lG�\b����\u001b�\u0016�\\/}����?�\f��ݿ�����X�_\u0003�8�d�\u0010�(� 6T3H�l���C�\u000f\b�\u001a2\"\"�\u001f6\u0017�Q�\u0018C\b��=S�J�_�\u0001�\u0007Б��-�_\u001f��A\u001f;�\\\f]M\u001e�����p&(�\"{���\u000e->�1x�\u0000�_\u0018\u0000�y`Z\u001dr\u0007�W�B��#�3���\u0017���%�c��Ly�1CL`1�>�\t�$\n���P\u000e���kɘ+�6P5\u00105\u001e��q���\n_\"-ƈ3^�\u00075���!�\u0011���{\u0003%T�@E�X\b������\u0013\f'�KSH#�$\u0002�\r@�\u0005\u0016��3\\u/�=����G�L�#�\u0012�:����xW�����8ѕ���\u0004��l�ɦ\u001eҹT:?6\u001b�\u0013೿\u000b\u0001\u000f\u0002��\u0014ҹtn���gt\u0012|^�#O�E�$\u0013c}xJF��}Z\u0006>%\u0003dk5�\u000b�q�\r}[�+�h\u0015a�F�O�25�˱���\f�O'�����d\u0012�C�\u0011\u001c�x��9ֻ��A�zh?\u000b������C\b�|�e�:��\u001aS��;0L@�F� DmH?'���/!�/@\u0013�\u0017�,2}\u0013��I���.\u0013_�\t~c��oI��o�O��\n<\n\u0015�\\\u0019g\u001e�0j\u0002+��r���3h\u001d������\u001c�'7{����z��}�ҋ�g��*p���ߤK�e�#�^�Sn��4ix\u001a�}�\f�!P(MX^\t\u0018�X\"�j��߄ʈ�y��.��8�qt6\u001b��۩`�K�S��x�a>!�.�\u0004\u0015�$\bUv�_j��l\u0011`r'yE�Б�Kޖ��kl�1�\u0010N&8�J�[:�(9ٷ���\u00010�s�\u001a�sHjc����S\u001f�\u001a��\u0000}\u001bmt��F\nf0�\u0012\u001d�u\u0010�(\u000eHPu�\f\u001aѬH@b�TF�Tz*� F�!���\u0002o,��40�\u0016�Ǭ#\u0015\u001c��g��$�o���xKk~�\n���J��y��A\u001a�i\\l�͞Ѷ6kF:+}��;�v/\u0006��|z�3o�O�����b�����L���u�.ݗ�\u00059�;M4\u000f\u0006�^�%����(9��-Lþ���\u001c�\u00172t\u0000\u0003M�\"��_��\u00048n�#3?RG���V\u0016R��}nRj�a0�cH�0�ڨ�BHݟ\u0014C�\n<\n\u0013\t�\n���1r��òN���t,\u00034=�i\b\u0015�cY�A��8�XRȏ\u000bq��\u0004�p��\u0001UA&!t�6\u0014\u001c���\fbY�\u0013u�!���\u0010����\u000e%�w\u0017$a*\"�d�\u001a��;m��\u0011U�3\b�\u0010��'�\u0007�pg+�=�����}`$/�:�4�$pC'A�\u000eZ\\��⽙j�I+�K\t\u0004�\f���7�37�`\u001e�fY���\u00009\\\r��l�r�[�\u0000\u000e��n�a�l\u001dp\fd�\u001c�g��s�A�c\u0015�g�ǙV\n<\n���,Ӌ�x��\u0013�d�IP5[(\u0005g6E\u0005^r�+H��\u001a�\u0001�\u000b�.J�1\u001f\u0003�oꔟړ���ƈ��\u000f\u0011�g@���A\u0014\u0018D:�\f\"(/��\u0019@�\t~�*��-%��w��{��\n<\n�\u001f����A�N��ziX�\\\\fZ�M���9�}RoJ�N�t��.\u0007���B*އj\u0007z|o�!\u0012�tpP�Ρ�\\�`搙;�vY�)\u001d�Hi]��\u001b��/��\u001e#\u0005�)%rĥCbE�s8C�i���\u0012�\u0017xqs�ۗ�C�i��QC�1�\u0004�����0�����Wǽ�q����ǘ+��Ghw\u0011>�\u000bì����QH�+�t��-����LOne�^*�qά��d�\u0004նM'��\u0004��s\u0002k��\u0016ҧ�!4-��\u0014�e�A������+�\b��\u0006ϴ���̼\u0018\u000f�g�N\u0007K�P\u0015(ҟ�W�Ow�7\u0004��\u0007��\u001bjpP�\u001c���s�:6��O'�u.��h7�\\\t\u0007bN�\u0002j\u0006V��M�\u0013DakHꎠ�yӅ4\u0015���B�i�mCbd�T\u0007���\u0007\n�\u0000��{X�do�b������\u0004\u0016ū��'��)��يTv%l��9G�ֶ����\u000e�aՂ坕ˢ\u0005��������3��2@�\u0007B+�!0v�Zq�`�\u0015�5R�1^�s���\u0002ݰ��\u0001\u000f\u0016t��أ~\u0004�f�\u001d��\u0011���\u001a8������rxЮ�\u0013�����ZA���\\&:'\u0015u��n�^n��\u000e��~Wz\u001e>W�d�|qwm\u0017�\u0003�I�(dZ��U��IV�r��j��98����V�+�)+s���t��Q�|���\u001c)\u0017\u001dT�{\n6��\u0010���3\u0010�����F6ou��od\u0001�a��iWH���q��\u001c+��8\u0017�����2�>�~/�s\u00111\u000b��p[\n*��\u0010����\f\u0019\u0012Bb\u0016k�����\u0019\\�j��>O6\u0001�\"i�)f�&�$\u0003Q�G,�H�\r1�\r1\b\u0012���J�{\u0012�D��!b�q�c�oP����˅:;$\f,#�$�Ye�ZTZ\u0019�S��k�\r�O�\u0011���\u0015 �\u001b\\�H�\u0010y+�4\f�;р�0�\"H>h���3n�$�Cb܎9��C�\b�\u001bȬ\u0014�\u000e�:�F�n\u0004ލ��!�g��W&�T�����돶V\u0015��]�.{k]�U�RJ�9*\\v��r��>T��q�W��@\\Xj\u0018�R��:\u000f\u0018V�#��W\u0014�Ivp\u0018���\u0003���#��Ɉ���\"�\u001d0�ɣ�e\u0013I��g\u0004b;�N*\rְ�\u0003R��R�\u0017�p\u0007Ջԁ��\u0014\u0015�\u0003\u001c�X[��`P�\u0000V�t%�ۥ��]�ĥF���p\u0003�'����\u001bN6\u0016�o|D$\u0011z��(CpU�`�\u0003\u001fC\u0005sњE��Df+�zp�\u0019J�t!���ǹ\u001b�dQ�$˦E\u0004����c\u0003nR\u0007�5�j9\nK��A�?�\f\u0004ϲ�\u0014\f�\u0001��H.wʾ���\r������F�/*$��\u0011\u0015\u0006�5\u0014:@�\u0006̀�O�'S��\u0006˷��\u0018\u0005��\\\u0019\u001c\"�@�H�\u0000�M�&5�l�@٩4%�\u0000\u0018\u0019�#�K�n\n@У=m��\u0000�a᨜L����O/�Xe7W�X\u0011���Z\u0016�(G�٢�\u0013�$��=�.���63t�2��Hf��R���}$��\u0010�EaS�0�1�q͇��\u0000l��!q�\u0007��\u0018��\u0006-'�\u0016\u0018l�������X���N/��S/��������)YϏ�����\u0016n/�a�R�{zz>�YT��N�X��ʵ��8�����\u001epQ�u���R��ھ\u000f���\u0002�=|n�\u001f�r\u000b0�ͼ����5�\u0010�\"��W�[�c\u000b��\n<\n\u0012�Tz+\r�Jn\u0016籙O&�\u001f+�\u0018���ɢ��h�\u0014�>��=\n<\n�S`�d\u00066a\u0017�(� Bȑ\u0012�\"�*\u0001ٺ�N���T�u��r\t's�܍�m*Oc�Џ\u0014\u0002F~��h&]��g�]\u0000�\u0000F \u001b�n�\u000fD�!\u0013�ܸPH\u0015�\u0002n����\u0005��$Kz���h\u0012N�#bJ�\t�\u0005!;\u0016c� _�g\"Ɍ��2����+���W��א�\u0007��*9C�c�x\u000e�w&c�)�\u0016�1���\u0000wC\u001c\u001b\u0002��\u0003\u0000�R*�J\u000f=\"�\u0004_�K�����݁/�M\u001c\u0015�`\u0001�B?��/&��\u0014\u001b�o�\rD\f���`:`4g屆,�\u0017�����[���5�c̝��`�c,N�usB�`K�\r\u0016�u\u0003e�׍0�\u0006Ql�\u001b\u001e~�u���X7_\u0019�s|����Ï���I��w�o�\u0017�r��!�j[^x\b��8�w\u001c�7+8\n<\n���,\n<\n�war\u0016��W����r\n<\n4�\b���b�w�~\u000b�AIؖ�R��l\u0010��(�K�\r�&��Aup\u0006T�\u0007��\u0010��\\�\u0010�@�oHb\bvȤt��mp6\u0000f&MF�j\u0019Y�\u0011\n\u0000���'2� ] TV2���\u0003Y��M�G�\u0017�tB7�ԟ���8����\u0011H.\u00007=��\"�I��٦H/\u001e\n�c�R����]��s��f,F\u001f,�\u0004� ՘\u0011�\u0017\u001b�׬����\u0015g�/d�d?>\u0000�/^\u0010�Ԁ�1��&ye�?�3�5|+����`HX�R��u�\u001a�\b]�Hg�\fe��T��@p\u0013C�#\u001c\tCj��\u0018�3⥃�p���`!��4҈1cY�+�{���\\�g�&��\n<\n�_����fi\u000fe��������~�ڿ�����4O�.jY�]����7��\u0003�^���5�l�ky\u0010�������1\u0007�ld��\u0007�R\u0003�(�\u000f{�Yٶ7��e�`�\u000e�]\u000f��|��/�������W�ի�\n�~�\n�ƞp)�$\r\u001a\u0005h���D\u0010/R��+#��� ��\n\u000fFŃP�\u001dxD��\nd�5\u001d\u0007�\u0011��&K=\t���\u0019���r#7\u0018\u001b�'RN�E��GA���\u00174�N,Ô$V���sʐ��*��$�\u001b\u0012�\u0010\u0014\u0011E�\u001fǤb�Tr��nx>\u0011\b0uY\u0018n��$�5�~�\u0000*J�\u0003*�H.�cƋ\u00000��\u0013`��^Nn\u001f�˘LU�W�\n����}���\\�Rهܳ��}�\n<\n�n*�̓�\u000b{W?��d��n��8�3�����Ø��M��/�\u0006#\u0005A�9�j����\u001bt���T��N�q��\u001e�t(�;\n\b��B�\u001e�2\u000e\u0018}DA�!s���T�\fyHB\u000b�CO`�\u0002?Gª� /y&�!��R#��\u001f��3H\u001c�/� }�(ۿ�\u000b����$�H��Ԭ�ɩ�f��O\u001eş\"���Պ�I�n���a�����\u0019$F�41J��d,\u001b��1'��G\u0002���1�1>b3\u001fEvg�\u0004\u001e\u0005�Â#����P;(� \u0019Q���i\"��S�5uMZ��XQi\u0004�L6T���]��}�-hg�&x�6�6)�\u0003?��%���}ޢ�;�=�K�ߣ��SE{h�x�/�/��-8*\u001c\u0017�:\u0017{϶q�s}\\)�z{��u�v�\n[�h\u0017�I�;C�b�]1�d��Y��\u000e���H����r��-\u001b����Z'6,\u0017\u0019�` *$))Jn\u00056�����An��f>��Nڈa�E�\u0018r�\u0003_xU^!>\u001a�;rw�n6+\u0015>\u001fC�m��AQ��R�R��G���2\n<\n�g����:��[�\n�Tr+���x�ʧ�̠�*�r�P�EU��sa�5\u0014|\f�\u001d(��\u000f�&OF܇\u0015������7��\u0018�Zր�pH�*��+��\\�\b?�Z\"T���\u0014�K\u0004�2����uʯ��3N����\u0019�����0\u00158�4L$gÿ�!�r� �\u001eqŢL���]�\b\u001fV+`�3�1c���Q��A\u0014\u0018D�K\u0010)͉\u00071*0�\u0014�M�\u0014 �2�����w��G���k���Y��*[�\u001d�������ۧDz�u-�v���z��kg��V�II\u0015�\"f�L%S\u0018\u000eo\u001erg;��q��u��\u00039�\u001c���NNn�G7��N���P���\t穩+��AsX=��z�n����\u001a����n��#>6N\u000e\u0012�wco�҇N\u0005\n<\n��G_�l\u0004}���,�YIݞ\u000b\u0005�\u0004V\u001c?ʒ)�x��\u0002 \u0012��\u0010����C�sm �_�F]cLx\u001av�R�M�׿�e\\�#W~�gpĞ���\u0011�/\n@j\u000f?�\u0002�\u000f��S}H\u000bI�45hAu��.��\u0019.I\u0006��j\u00187�c���;�S�v�H\u00190���Ad���ڎӳ���\n\u001e�eAVV�ώOU\n|CA�*�ׄ�V.�pfu\u0019��\u000b�G��f\u0017\u0012�\u0012[�M�7#�S\nY.��`�â\u00105YT\u0014�\u0013��tb#\u0004\u0001�O\u000be�='\u0003J\u001a��֚\u0001k\n<\n�\u000b�;g\u0005-H2\"R�b~��\u001b\u001a���={\u0001��R4S;�י�\u0002�Exb\u0000��\n�\np�)��\u001bQU���$�c\u001byZ,%?��+��t0�p�`Φ\bD��тץͫ.���]����Yx\u001fN\u000f*O�\u0015\nRL�\tQ'�I�!܅5�*xP\u0005\u0006��\r�x�x���b\u001be�r�\u001c\u000e\u0005\r��w�\u001f�7�����`�.���~\r0\u001dt{\u0010��\u0013GV6�9��9�\u001c�[�\u0011s|�-\u0016��TW\u001bJ}��Q�\n#��p-�\tbIF�=\n����m�U��{(̷��\u0006f|;Z_��Z9�É�\"|\u000f�HG�#D��@��V�\u0013i\u0018R�Y��!�\u0002�&˰@\u0001=F�`\u0014��e�-��x�\u0015\u000e��*qI�\u0013z`���p�\u0019m�\n\u0019����c\u00047�@\u000e����k R\bL\u0001�D�\u0004Q,��藂Y�'\u0006}2\"T@��\u00160)\u00180�\u0017�P3\u0018��\u0006�|\u001b�\u001a*\b�\u001cJ��\u0006\n�)U5�Z���ʁS(�E��\u0003�\u00064\f�ĬL�oHB�\\M\u001a�\u0007��\u001a��\u0006�LVIDQ�\u0014��\u001d;�]����7|\u000e8\u0001��R��9i�ќ�7x͹_\u0007�6K�J��+c���G=�^�HT\u000e�?ڨGw^zޓw\u001f/��wɣ�ԁԳo��W��N����\u0003Zp\u0000�2=�v\u001b$j`ǁ�*n&ܚxQ ʹ�\u001c�w��B\u0005 ���jB\r��\u000f\u001a�\u001f����}v���JJ�-8�wa;\u0016��״�+'�\u001cA.B�?\u001b\u000e|#�\\�f�P�43+mC*�Mg�lC�fS�Ei��7����\u000e�:)�R�Ҕ�*(\u001a\n�R�j�\u0011\u0010cT�� \u00075\u0015��*b�u��q(6@��\u0017\u0005!�\b\u001b�?�ݿg�f�\u00163\"�\u0010I�\u001cP��r\f*��(~�0*�\u0006l\u000f���I��.��vH{\u0002���\u0011\u000b��\f�(3\u0002�\tj\u0019\u000b��\u0016BMP�c\tW�La5f����\u001a\"�'ü�j#\u0006�툤ޡ�\\�ӥX��I� \"L(m�{H\u000e�% 樶�ж\b�N\tA1�.��\u0018/\u001a�\u0011�1\u0001��'H��\\\u000bAOPi�z\"�*̵�\u0010,\u0014�DJ����W�/L\u0017o\u000f>Z�M�r���\n<\n����C�Z>{n6���^��5Ν^�y{j\u001b�W��S�~�`o߹=��������亝��]>}��o=X��~i��\\���I�x�~z��\u0014�����ʞuL}paԎ�����pQ�h��Q�*��*�G�A�\"s�H�v6�j�i��N�_\n<\n��d�\u0010���.���=Eq��0:;m2\\�cdr#�n\"7\u001d��;����\u0014�x\u0001\u0015RqrP�\u0018\t�\u000e̥gr��;r{�p�Gip�\n�d>�ˬ�w��\u0019KoƲ|Ƿ-X~\u000b\u0002��Ǯ,��JA���Ur(�|�6�\n<\n�\u001e#*Ri\b��JY(\r�DR֢eI�6OY�m�|��@�x֢\u001b.\\Cv;�4�.d^SDz}\u001c\u001c\rL\u0002��\u0010�U\u0002Ά�\u001c\u0014��4\be\b�C�X�a�0 \u0010:\n<\n�j�P����s��a۹��|&�o��\u001a��\r��U�P�{�-��`\nH�r�2�\t��j\nZ��8P!7�4)��3$�% +$�ҡ\u0010\u0005�(�Sa᥇p�@>(��B\u0015���}\n<\n����X^�P�C��$l��\u000e\u00183�;\u0000S�:��\u0003\u001e\f�T'~\u0007_��]��N���ɾ�ف�9\n<\n=�W��t�k�@�\\p\u0000���E�\u001d\t\u0012!�|�\u0015��f��(%˵K�p\u0001\u0017ta�r\u0003�=K�JA\u0014�P�8K��\u0017��4�+ \u0012x�:�H5�f�\u001d�A�\u000f\\WC8�\u001d\u0013�T�T>�\u00126��\u000e��\u0000^\nP\u0012M\u001fن��rĂ\u000b�.\u0006�\u0005��v��;C�g�\u0018%Y�E�z�Ż\u0011�E��D�R_ff�gf���\t�L�dQ&�\u0013NҀx�\u000e�~\u0017�\u001a,V��!,��ը��\u0018\tVT\u00191h@yL\u0017\u0003���U\r�\t\u001f;��*�;P���H�%37-2PP\u0006ef��X�O�Zx���2f��jRI�5�\u0001c#>��A՝`���\u000e�~\u0002��u\r8L�\u0015\u0001F\u0013�T\u001a�l\"|+������\u001b�p�\u0013��?D��n�b�l'��d��1;��x�+Z�QW���\"3��\u0015s�����:l��\u0015�g�+����2�g�b�s�8�Jv����\u001e�O�u�b�=�~��g��|�8��b˭BH��\u0018\"�\fw#�\u0018)F�\t:q�(]u\u0017~�U\u0015\u001e�\u0006y\u001e��\u0018���O��\u001fΐ���J�y�\n<\n\u00056��G��j�\u001b�[�w�j�\u001b·cQڈ��C�d`\u0011\u000e����M}G�� \u000b�N������$S)�8\u001d�々I�\u0017ea�i�Y\u0001��S�\u0018^�\t\u001e!N�aĐ�.H���@4�\u0015\u0003���,*�����j��\u0001J\u001d��\u0000��|!�G\u0006y�{n\u0011���&I�\u000f�ZC�1�t�ڲ�\u0011��y\u0000�6EE\u0005%�R(\u000b�L�\r4=mD�C��V5K '�p�О� �(RF�\n<\nΔ�,�\n<\n׸�9�P~.�T-\u0019P�a�r�O��\u0010^Ū��\u0016��+$��\u0001.\tj *�I)M�M\u0002oӀ�\u001d�'�j\u0005[�*r�\n}�J���\\����;�7�\u000bW3�r�f�\\\u0001��\u0010��-�w\u001cؓ\u000e�\u0013�r�S��y����\u000b\u000bO�]X��{��wr�\f\u0002C��0\b_(�\\��,� �N6�Ar�\u0018�$���P:P�E\u0019�CG��\u001c��\u0010� \u001d@0gC�'�\u0002c\u0018��\u0001�\u001b^�]\u0014ՀX�p5��O\u0007\"+B8U\u0014�D�+�fhTG1\u001f�с�H���iH���\u000f�`�C�tm2���\u0015\r�Wh��ղ�a�\u0012h\u0017���=G���p��w��\f{j1¿\u0004j:�^&2�\\��;�����I^��\u0011^�\u0013\u0011�h���=�f\u0017#�D��΁�S�\u0001�r\"X�\u0018���X\u0011C�l�\u0000 Q[��8�\u001d�\b��(�)��;\b\u0002\r}��҉��\"2U\u000b�ezGS�\u0011���\u001f��\u0007i�F?(ҍڸ�)�%�g�f\u000f��u u\u001a�\u0001�L�\u0004�_�I2�\u0016�0�L�\u0018y\u0001b4�`\u0004/:J-�\u0011���V%�\u001c]ʤ\b��\u0000g�9Ԉ�a\u0003������\u001a擈�lTY�~\b\u0010��9:6�m��b$N�\u0010\u001c���[N�\u0010�'\u0010\u001f#Y���\u001f�\u0012ͽ�ƿ�\u0011Q_tV�-{�ɫ�\u0014#>|v��8,���\b{�@�TC6��أ�{���Q��\u000e�R����\\�Փ\t�$��A�\u001d��O�O;�2�T \\Qmv\u0016\u001c,\u0013d\u0005�8rT�\u0005px�w�p\u00123�'S�^�V)\u0010�\u0018(\n\u0014\u000e@���j�\n�>(Lt�Vc��R�t\u0006޾����)���Fm���&��ښ��\u001aI\u0003ێo���Q�\u001e ���P��\u001eb\u000f�\n�s�zR�c�G�\u0004\u000e\u000f�v\u000ed\u0016\u000e���*\u0003I�R\u0019H�@B��Ab]�h���M'7Y~�E�*az\t�\u001b\u0002�\\�2\u001da�,\r�jV��,ΩDj\u0013�L��&D�  ~\u0018�=9��\u001e[��\u000fP�\u0001B��\u00012��\u0000\n%\nnG*�\u0011@,��mW�����eTG\n<\n\u0014\u0011%�\b�-\")0*lS�`O��\u0002p�\b�5�\u001e����pj�j\n�$\u0005\u0014��L�'@��I\u0018��b\u0007�\u0001��Q\u0007ܹ\u0013\u001dx5��\u001e\u0004�\u0007X�I�\u001eh3 ヨ�\u000fV����r;ҋG+��C�I��1;b\u0013��X[�D��\f�/h��\u0011\u001bC��l�_{t\n<\n��>��\u0012�1��\t\f\u001c�\u000b��Ͱ\f��jcw(+\u0018��B/�r֪��h\u0018�2�+,ˑ0��%�@4�Ҭ�X)x�,�)�&��N�xP��p�5?��H�`���E\u0010/���Obz����`\"޽�-���o\n��VK\u0005�\u0002��hP�\n�\u0003�8���P���챘�f&�\u00187e]\u0006\u0000\u0011\u000e�\u0000��\u000e\u0007��YQ�/���!\"�\u0004I\u001cI\u0016u�u)�8�_u�yH|9��\u0011Er�-�P3�Қ\u001fHD�e��\t}�|Wo�.J;%�_� �S�\u001c�J��\t{@�+�tX�����X�Y8K.F�mgQ\u0002/�)/��z�]�\u000f3�\u0003���\u0018���A�]h\u000fS\u0017r^m\u000e������ժ��G*꽴�mg�\u000f���m6�1n򙸄T��#\n\u000f-�\u0007���1�\u001e�}3�{����q��?f�[�d,�\u0006#+ֲ�fa�����z��\u001f��aO}\u001c��\u001f���7 �D��\u0007[�cY�\u0013�\u0014\u000b��@\rGB�\u001c\u0012֗�2�Œ�\u0004�\u0016Kۆ��G��\u0012�SX+Xd\u0002��>3,��'ҍ�rb2!�����V\n\u0001O�r�d\u0012�,�i�N\u0006U)X\u0013�E��QH\u0002|\u0013��\"b�\u0016��q\u001fz\u0017su�\u0005\u0003\u001f�)��;�&��`�\u0017�#r\\���\b]\u001atQ��\"\u0011�����B�\u0011\rFEj��\u0018!_ �S\u0018�\\�̆P��e3x\u0015b_�����ŉ߉oDD�\u0012�\t�AR\u0001�1�#\bСN�~�]�\u0017��_&�quW7�/�����㠟���������\\�\n<\n&��D�Q.�\u000e���@\u001c\u001cmV����i:w�H��U!�=J��\u0005���c�Q��7�ǻ�� ]\bJʵ�FD�8H���#���Aݮ\u001a\u0006����������h�\u000e�wLi��8�i���\u0006���[$\u0003x+���اy����\u0018�g)`\u0018��`���\u0015\u0010�����IH���\u0007t\u000e�����[��\fS!�r�Ib\tBl\u0017k�8ە^�������:=S��\u0010���?�l�R��:\u0018is��G,��)؃Ex�\u0002;����\u001a�j\u0007���\u0014nP⺨�k����!J�I��꾌I�#\u0003����?�A��5/�>i���U��lj\\�x�:\u0012\u000e��t��Pb=\t\u0015�'a�zbN_p��=\tAO\n<\n8�'\u0016�=�:}�\n<\n���ՕT�>:�Nj�r��湋\\\tw��ѹs39�� f�����y����\n<\n}Ȧ���I�|�׿;>r��fk��\u001e��'M�|�bG̟>w{ϥ��S%�߼j����d�Y5���\u0015��C��t,����k?��CI�Xz6]����.�Ċ+*TcL�i\u0004fC�rï���.���\n�=\u0007U��Z��[�\u001d޶�P5>����0�U���\\��\\���\u0015��yy�_���]\u001e�q�\u001dh۪�l�g�g��̡���Y��Gt\u0001�G\u001cw��y���wU�\u0005�\u0007^\u000e��Y�\u0013J\no�K��\u0019���v7����m�/\u000f-�á�0ey\u0016U$�D\u00047RܲJ�d�T�\u0016|\u0018�\t�v�L�\n\u000f�y�d���?_��j�7����ڙ��yǾ�\u0014Ž�c�Q�)������0�w�F�s���1\u0012\u001f�纝92\u0013��[I3s��~g���x����a����^=��)Y1}ޙ�'4ڒ�\u0007kL�rWBzc�b�&�&��ty�c\u0014�\u0005w\r�#���\u000f\r�\u0018�QBd�5e�cSa`����\b�\u0006����&N�RF�o���j����N����i��!�\u001eiՄ��:�N��'����{cÅE�oWh�+4���m�\u0017\\�o�j�����*_�Z�w\n8����v&y�l�/�0\u001f��!�}��񥈃�\u0001u7\u0005��a��\u0007�\u0005B� ���\u0001�:\n�2��yjʝa���Q�wu�2}~�\u001d�\u001d��˃���y�\n<\n�^g�Ûg�q\\qZ��da��M�n���;|\u0002s.�����ӫ�����9�g'�������͹��r��sf�}\n'�wl��M�&\u0017��������t��\u0017�\u0001>��˟�X�kuk�\u0016v;\u000f�]�u�\u0014�����O-̦(�\r�}�_�c\u001a�\u0002\u000b\u0003\u0013�c�]�a\rW�����OW��L�V�U�޼����>���a+��y��̿W��L��w�w�|?uX�\u0007'�UiQq���M$^�r6�\u0005��%��=Qmu6e�)}��u�?�����돏�kW}>�4N*�\"Zy�D\u0010����2a��\"M\u0015\u001aB�7��)��\u0005�M�)i\u000fc%�y�\u0017^�tAi\u0003\u0003���;�� �{���k#T}�s�?\b�rx\b��Y���\u001b��NA�\u0011\u0002\u0012|\u0011�|\n%^\u001fv�\n\r�\u0018�m�Տ��B��)Z\u000eվ�fT8�bB�B.�:.����O�Y.CKBi\u000bhޮ�\u0006��\\z�#,\u0014�5_��\u000efz��B\u0002P�FGN�*y�@[\u001aٞ��˓� �\u0000WG2\n[8o\nW6RT���l\u001c�l;�v�z0��Z-��f6\u0019\r���Fv�ȶ��\rM����\"\u0004\u0006!��Ǚ͐u�$럦�@M�X\n<\n�\n���pV��p4D��5��k2�$��\r�K\n\u0012�8�\r�e�\u001c��\u0006\u0000e�#2\u0016��\u0010n\u0012wu����\tF�\u001c�\u0019\u0013���L|�*���?�R�t\\5�\u0007q�\n�%�T\u0010,���\"�)������(7\u00062�\u0004��˼΋̞��mt�몾%����\b�̆�.d��d:S�\n{�Ӕ\u001f����\"o���\b�W���a\u000fW�o\u0003i0ئ\n�\u0015ٞ�\u0012��\u000f����\u0010\\WT2��\u000fĒއn?.�Y)ƪ����\u001a�Ȇ\u0005\u0001A2��צ�r�Yf[k@tW\u0004�m�|D�\u0000��ȏ\u000e(�\u0006J\u001a��>~�Z\u0005lE�\"\u001bR_k��{�u\u0006\u001d�pO0�\u0003$�lӿ�\u001d�nm��+�1�e�\bE+Wy\u001e\u000f\\\u001e��2��ʧ*D�(}[1rN�\u0001#���l�8�Z?H��kG^`�8��!�7�5���p���j��a�ڋ�\u000faOJ�7\u0015���\u0003\\\u0001\u000134+\\a���\u001b�@�1Ǘ\u000f�����A:\u0014���|�X���6�\u0013��/z\n<\n���|\u0004l\u0013\u0005\b��h:5�\u0000(�\bw4��jP�G�\u001aA���=�l����/�:U'��F�:)�ǂ(��/(Y���2��2h\u0006j5���Z�\"UoĪy����dq�\u0013�~��㺳��@VG\u0019�G�\u000f�\r�l��,�\u0011�c��>�\u0003�\r��e`9���O���9U\u001a��\u001bz\u001a�\u000e�2�׮e��!�m\u0004~�{\u0012��?-\u0000ց\u0000\u0019:�u��\u0015�?ah���q&�54�n����Y�x\u0017�\u0001I8\u0014M\u001a����\ne�,���xO#��ǐ����@{;��~���jK�1\u0002\t��=�$��\u0013h��w���:\u0007���\ng󚻃^�tBH�J_�*��sC��\u0014��\u0004�\u001b��PW/ҕC\f�\u0014�3X\u00100\"�li=ʫAea��\u0004��\u0016Ez�HN\u001aC��8�v!X���C�\u0016��쒈����\u001e�&?�9�O\u0002f\u00070\u0016��H\u0015�A'��\u0001�\u001cz\u0006�d,\u0011�l�\u001d�?��f\u0007��M\u0000n*�v�o\u00183*&�\u0005\rF��\u001er|E��\u001b7{�xlšA\t�\u0003�n�ľ�`��\u001e�9�Cv֪���Ȑ�\n<\n\u0006a�nǀ�:�\u000e\u0016\u001d�5���zZ�m�\u001c�\b\u001b�h\u0001����6���d�k\u000e�I�\u001f�e�Q�K8���\u0010f���\u000b�����AY�,\u001d�\f(c� ��\\J�!\u000fi\u000bL�\u000f/~  ��T9\u0000R00�\u0003@(�̪��\u001e]�\u001a�T��Mk}���\u000fQ� 9�4¬���\u0007a_uj��\u0013���ǋD5|TQ�\u00158t�\u001b�:!�\u0000�\u001eQeJB�Ͷ���)�N\u0010{J�O��D�b�\u0019\u0012O�\fE��B�*\u0014\n\u001f���gU�B\u0016�'U��\u000b|m\t���|@�\u001c��n\t���\u0007�\b��\u0014�/�\u0012r\tzHd���٣ќ�>\u0017=4#\u0010��\u0012:�\u001e�W��Y��yӴ�Y{��\u0005�\nO9"
+  },
+  {
+    "id": "cmujs9wq70002u77w94fsf6bd",
+    "name": "NAO",
+    "requestedUrl": null,
+    "error": "No source URL"
+  },
+  {
+    "id": "cmujs9wr8000ru77wosumdha0",
+    "name": "Ninja Robot",
+    "requestedUrl": "https://www.nationthailand.com/tech/30385613",
+    "finalUrl": "https://www.nationthailand.com/tech/30385613",
+    "status": 200,
+    "meta": {
+      "": "IE=edge; chrome=1",
+      "viewport": "minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover",
+      "twitter:card": "summary_large_image",
+      "twitter:site": "@Thenationth",
+      "twitter:creator": "@Thenationth",
+      "application-name": "nationthailand",
+      "theme-color": "#1F299A",
+      "mobile-web-app-capable": "yes",
+      "msapplication-TileColor": "#000000",
+      "msapplication-TileImage": "https://media.nationthailand.com/images/3.0/logo-white.png",
+      "format-detection": "telephone=yes",
+      "google": "nositelinkssearchbox",
+      "apple-mobile-web-app-title": "nationthailand",
+      "apple-mobile-web-app-capable": "yes",
+      "apple-mobile-web-app-status-bar-style": "default",
+      "fb:admins": "",
+      "fb:pages": "307513345840",
+      "robots": "index,follow",
+      "description": "Chulalongkorn University’s Faculty of Engineering launched “CU-RoboCovid” on Wednesday (April 8) to help doctors and nurses who are in the frontline of the battle against Covid-19.",
+      "og:title": "New robot from Chula to help in battle against Covid-19",
+      "og:description": "Chulalongkorn University’s Faculty of Engineering launched “CU-RoboCovid” on Wednesday (April 8) to help doctors and nurses who are in the frontline of the battle against Covid-19.",
+      "og:url": "https://www.nationthailand.com/tech/30385613",
+      "og:type": "article",
+      "article:published_time": "2020-04-08T14:55:00+07:00",
+      "article:modified_time": "2021-04-22T11:12:30+07:00",
+      "article:author": "https://www.facebook.com/TheNationThailand/",
+      "article:section": "Tech",
+      "article:tag": "robot",
+      "og:image": "https://media.nationthailand.com/images/news/2020/04/08/30385613/800_9dab6d6a4057d5b.jpg?v=1586335302",
+      "og:image:alt": "New robot from Chula to help in battle against Covid-19",
+      "og:image:width": "700",
+      "og:image:height": "395",
+      "og:locale": "en",
+      "og:site_name": "nationthailand",
+      "keywords": "social,Tech,Chula,robot",
+      "twitter:url": "https://www.nationthailand.com/",
+      "twitter:title": "New robot from Chula to help in battle against Covid-19",
+      "twitter:description": "Chulalongkorn University’s Faculty of Engineering launched “CU-RoboCovid” on Wednesday (April 8) to help doctors and nurses who are in the frontline of the battle against Covid-19.",
+      "twitter:image": "https://media.nationthailand.com/images/news/2020/04/08/30385613/800_9dab6d6a4057d5b.jpg?v=1586335302",
+      "next-head-count": "64"
+    },
+    "images": [
+      {
+        "src": "https://media.nationthailand.com/images/3.0/ico-news-dark.svg",
+        "alt": "no-article"
+      },
+      {
+        "src": "https://media.nationthailand.com/images/news/2020/04/08/30385613/800_9dab6d6a4057d5b.jpg?v=1586335302?x-image-process=style/md-webp",
+        "alt": "New robot from Chula to help in battle against Covid-19"
+      },
+      {
+        "src": "https://media.nationthailand.com/images/translates/EN.png",
+        "alt": "EN"
+      },
+      {
+        "src": "https://media.nationthailand.com/images/translates/CN.png",
+        "alt": "CN"
+      },
+      {
+        "src": "https://media.nationthailand.com/uploads/images/2020/04/08/EOSR3415.jpg?x-image-process=style/lg-webp",
+        "alt": "New robot from Chula to help in battle against Covid-19"
+      },
+      {
+        "src": "https://media.nationthailand.com/uploads/images/2020/04/08/EOSR3669.jpg?x-image-process=style/lg-webp",
+        "alt": "New robot from Chula to help in battle against Covid-19"
+      },
+      {
+        "src": "https://media.nationthailand.com/images/3.0/logo-header-white.svg",
+        "alt": "nationthailand"
+      }
+    ],
+    "text": "New robot from Chula to help in battle against Covid-19\nTech\nNew robot from Chula to help in battle against Covid-19\nWEDNESDAY, APRIL 08, 2020\nสลับเป็นเสียงผู้ชาย\nPlay\nLoading...\nChulalongkorn University’s Faculty of Engineering launched “CU-RoboCovid” on Wednesday (April 8) to help doctors and nurses who are in the frontline of the battle against Covid-19.\nThe new robot was created to help doctors reduce their risk of infection, ease their workload and boost the efficiency of caretakers.\nThe robot was developed in cooperation with Mi Workspace, HG Robotics and Obodroid.\nThe group had previously created the “Pinto” and “Ninja” robots to help in the battle against the virus.\nThe Pinto robot is used to deliver food or medical supplies, while Ninja is connected to monitors that can send information about the patient’s blood pressure, pulse, temperature etc directly to the doctor.\nThe developers aim to provide 103 Pinto robots to medical personnel to mark the Chulalongkorn University Alumni Association’s 103rd anniversary this year. Presently, 20 such robots are working at Chulalongkorn, Siriraj and Vachira Phuket hospitals.\nRelated\nTourism sector advised to embrace digital technology\nSeptember 08, 2022\nApple's new satellite service for iPhone 14 'a big deal'\nSeptember 08, 2022\nStudy reveals 5 Key Trends for continued surge in time spent on mobile devices\nSeptember 07, 2022\nTAGS\nsocial\nTech\nChula\nrobot\nMOST VIEWED\n1.\nJapan Foreign Minister urges Russia to free detained reporter\n2.\nJapan government  remains cautious on declaring end to deflation\n3.\nRussian-Thai Investment Forum Closes with New Business Pact and $4.5bn Project Potential\n4.\nBangkok and central Thailand face heavy rain as thundershowers continue\n5.\nRussian and Thai Business Leaders Call for Pivot to Joint Ventures and Tech Partnerships\n©\n2026\nAll rights reserved.,\nThe Nation\nPrivacy Policy"
+  },
+  {
+    "id": "cmujs9wr2000lu77wfc0hn5rg",
+    "name": "Pinto Robot",
+    "requestedUrl": "https://www.chula.ac.th/en/news/29278",
+    "finalUrl": "https://www.chula.ac.th/en/news/29278",
+    "status": 200,
+    "meta": {
+      "robots": "noindex,nofollow"
+    },
+    "images": [],
+    "text": ""
+  },
+  {
+    "id": "cmujs9wrk0013u77wiobg1et2",
+    "name": "Radioactive Iodine Therapy Medical Assistant Robot",
+    "requestedUrl": "https://www.true.th/blog/en/first-time-in-thailand-introducing-a-medical-assistant-robot-that-supports-nuclear-medicine-king-chulalongkorn-memorial-hospital-in-collaboration-with-true-digital-group-brought-a-state-of-the-art-t",
+    "finalUrl": "https://www.true.th/blog/en/first-time-in-thailand-introducing-a-medical-assistant-robot-that-supports-nuclear-medicine-king-chulalongkorn-memorial-hospital-in-collaboration-with-true-digital-group-brought-a-state-of-the-art-t",
+    "status": 200,
+    "meta": {
+      "": "",
+      "viewport": "width=device-width, initial-scale=1",
+      "description": " ",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "og:locale": "en_US",
+      "og:type": "article",
+      "og:title": "FIRST TIME IN THAILAND, INTRODUCING A MEDICAL ASSISTANT ROBOT THAT SUPPORTS NUCLEAR MEDICINE KING CHULALONGKORN MEMORIAL HOSPITAL IN COLLABORATION WITH TRUE DIGITAL GROUP, BROUGHT A STATE-OF-THE-ART TECHNOLOGY TO ELEVATE MEDICAL SERVICE IN THAILAND, UNVEILING “INTELLIGENCE ROBOT THAT HELPS IN THYROID CANCER TREATMENT WITH RADIOACTIVE IODINE THERAPY” - True Blog",
+      "og:description": " ",
+      "og:url": "https://www.true.th/blog/en/first-time-in-thailand-introducing-a-medical-assistant-robot-that-supports-nuclear-medicine-king-chulalongkorn-memorial-hospital-in-collaboration-with-true-digital-group-brought-a-state-of-the-art-t/",
+      "og:site_name": "True Blog",
+      "article:tag": "TrueDigitalGroup",
+      "article:section": "Blog",
+      "og:updated_time": "2023-10-30T09:24:39+07:00",
+      "og:image": "https://www.true.th/blog/wp-content/uploads/2023/10/209-1.jpg",
+      "og:image:secure_url": "https://www.true.th/blog/wp-content/uploads/2023/10/209-1.jpg",
+      "og:image:width": "1800",
+      "og:image:height": "1200",
+      "og:image:alt": "FIRST TIME IN THAILAND, INTRODUCING A MEDICAL ASSISTANT ROBOT THAT SUPPORTS NUCLEAR MEDICINE KING CHULALONGKORN MEMORIAL HOSPITAL IN COLLABORATION WITH TRUE DIGITAL GROUP, BROUGHT A STATE-OF-THE-ART TECHNOLOGY TO ELEVATE MEDICAL SERVICE IN THAILAND, UNVEILING “INTELLIGENCE ROBOT THAT HELPS IN THYROID CANCER TREATMENT WITH RADIOACTIVE IODINE THERAPY”",
+      "og:image:type": "image/jpeg",
+      "article:published_time": "2023-10-27T17:14:04+07:00",
+      "article:modified_time": "2023-10-30T09:24:39+07:00",
+      "twitter:card": "summary_large_image",
+      "twitter:title": "FIRST TIME IN THAILAND, INTRODUCING A MEDICAL ASSISTANT ROBOT THAT SUPPORTS NUCLEAR MEDICINE KING CHULALONGKORN MEMORIAL HOSPITAL IN COLLABORATION WITH TRUE DIGITAL GROUP, BROUGHT A STATE-OF-THE-ART TECHNOLOGY TO ELEVATE MEDICAL SERVICE IN THAILAND, UNVEILING “INTELLIGENCE ROBOT THAT HELPS IN THYROID CANCER TREATMENT WITH RADIOACTIVE IODINE THERAPY” - True Blog",
+      "twitter:description": " ",
+      "twitter:image": "https://www.true.th/blog/wp-content/uploads/2023/10/209-1.jpg",
+      "twitter:label1": "Written by",
+      "twitter:data1": "PR True",
+      "twitter:label2": "Time to read",
+      "twitter:data2": "5 minutes",
+      "cdp-version": "1.5.7",
+      "generator": "WP Rocket 3.20.5",
+      "msapplication-TileImage": "https://www.true.th/blog/wp-content/uploads/2025/03/cropped-cropped-logo-270x270.png"
+    },
+    "images": [
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20620%20209'%3E%3C/svg%3E",
+        "alt": "logo-trueblog"
+      },
+      {
+        "src": "https://www.true.th/blog/wp-content/themes/trueblog/assets/images/head-section-desktop.png",
+        "alt": "logo-trueblog"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20684%20380'%3E%3C/svg%3E",
+        "alt": "logo-truebloglogo-trueblog"
+      },
+      {
+        "src": "https://www.true.th/blog/wp-content/themes/trueblog/assets/images/head-section-mobile.png",
+        "alt": "logo-truebloglogo-trueblog"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2080%2080'%3E%3C/svg%3E",
+        "alt": "shortcut-home"
+      },
+      {
+        "src": "https://www.true.th/blog/wp-content/themes/trueblog/assets/images/ico-main-page.png",
+        "alt": "shortcut-home"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2080%2080'%3E%3C/svg%3E",
+        "alt": "shortcut-blog"
+      },
+      {
+        "src": "https://www.true.th/blog/wp-content/themes/trueblog/assets/images/ico-blog.png",
+        "alt": "shortcut-blog"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2080%2080'%3E%3C/svg%3E",
+        "alt": "shortcut-releases"
+      },
+      {
+        "src": "https://www.true.th/blog/wp-content/themes/trueblog/assets/images/ico-releases.png",
+        "alt": "shortcut-releases"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2080%2080'%3E%3C/svg%3E",
+        "alt": "shortcut-data-playground"
+      },
+      {
+        "src": "https://www.true.th/blog/wp-content/themes/trueblog/assets/images/ico-data-playground.png",
+        "alt": "shortcut-data-playground"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://www.true.th/blog/wp-content/uploads/2023/10/209-1.jpg",
+        "alt": ""
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2048%2048'%3E%3C/svg%3E",
+        "alt": "PR True"
+      },
+      {
+        "src": "https://secure.gravatar.com/avatar/a85f7b05de3eb4a3cbff5548cb51acaa05cbfb0a69b1b682077110c3775c8492?s=96&d=mm&r=g",
+        "alt": "PR True"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%202560%201707'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://trueblog.info/blog/wp-content/uploads/2023/10/209-2-scaled.jpg",
+        "alt": "",
+        "srcset": "https://www.true.th/blog/wp-content/uploads/2023/10/209-2-scaled.jpg 2560w, https://www.true.th/blog/wp-content/uploads/2023/10/209-2-300x200.jpg 300w, https://www.true.th/blog/wp-content/uploads/2023/10/209-2-1024x683.jpg 1024w, https://www.true.th/blog/wp-content/uploads/2023/10/209-2-768x512.jpg 768w, https://www.true.th/blog/wp-content/uploads/2023/10/209-2-1536x1024.jpg 1536w, https://www.true.th/blog/wp-content/uploads/2023/10/209-2-2048x1365.jpg 2048w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%202560%201707'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://trueblog.info/blog/wp-content/uploads/2023/10/209-3-scaled.jpg",
+        "alt": "",
+        "srcset": "https://www.true.th/blog/wp-content/uploads/2023/10/209-3-scaled.jpg 2560w, https://www.true.th/blog/wp-content/uploads/2023/10/209-3-300x200.jpg 300w, https://www.true.th/blog/wp-content/uploads/2023/10/209-3-1024x683.jpg 1024w, https://www.true.th/blog/wp-content/uploads/2023/10/209-3-768x512.jpg 768w, https://www.true.th/blog/wp-content/uploads/2023/10/209-3-1536x1024.jpg 1536w, https://www.true.th/blog/wp-content/uploads/2023/10/209-3-2048x1365.jpg 2048w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%202560%201707'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://trueblog.info/blog/wp-content/uploads/2023/10/209-4-scaled.jpg",
+        "alt": "",
+        "srcset": "https://www.true.th/blog/wp-content/uploads/2023/10/209-4-scaled.jpg 2560w, https://www.true.th/blog/wp-content/uploads/2023/10/209-4-300x200.jpg 300w, https://www.true.th/blog/wp-content/uploads/2023/10/209-4-1024x683.jpg 1024w, https://www.true.th/blog/wp-content/uploads/2023/10/209-4-768x512.jpg 768w, https://www.true.th/blog/wp-content/uploads/2023/10/209-4-1536x1024.jpg 1536w, https://www.true.th/blog/wp-content/uploads/2023/10/209-4-2048x1365.jpg 2048w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201800%201200'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://trueblog.info/blog/wp-content/uploads/2023/10/209-5.jpg",
+        "alt": "",
+        "srcset": "https://www.true.th/blog/wp-content/uploads/2023/10/209-5.jpg 1800w, https://www.true.th/blog/wp-content/uploads/2023/10/209-5-300x200.jpg 300w, https://www.true.th/blog/wp-content/uploads/2023/10/209-5-1024x683.jpg 1024w, https://www.true.th/blog/wp-content/uploads/2023/10/209-5-768x512.jpg 768w, https://www.true.th/blog/wp-content/uploads/2023/10/209-5-1536x1024.jpg 1536w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%202560%201707'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://trueblog.info/blog/wp-content/uploads/2023/10/209-6-scaled.jpg",
+        "alt": "",
+        "srcset": "https://www.true.th/blog/wp-content/uploads/2023/10/209-6-scaled.jpg 2560w, https://www.true.th/blog/wp-content/uploads/2023/10/209-6-300x200.jpg 300w, https://www.true.th/blog/wp-content/uploads/2023/10/209-6-1024x683.jpg 1024w, https://www.true.th/blog/wp-content/uploads/2023/10/209-6-768x512.jpg 768w, https://www.true.th/blog/wp-content/uploads/2023/10/209-6-1536x1024.jpg 1536w, https://www.true.th/blog/wp-content/uploads/2023/10/209-6-2048x1365.jpg 2048w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201800%201200'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://trueblog.info/blog/wp-content/uploads/2023/10/209-7.jpg",
+        "alt": "",
+        "srcset": "https://www.true.th/blog/wp-content/uploads/2023/10/209-7.jpg 1800w, https://www.true.th/blog/wp-content/uploads/2023/10/209-7-300x200.jpg 300w, https://www.true.th/blog/wp-content/uploads/2023/10/209-7-1024x683.jpg 1024w, https://www.true.th/blog/wp-content/uploads/2023/10/209-7-768x512.jpg 768w, https://www.true.th/blog/wp-content/uploads/2023/10/209-7-1536x1024.jpg 1536w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201200%201500'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://trueblog.info/blog/wp-content/uploads/2023/10/209-8.jpg",
+        "alt": "",
+        "srcset": "https://www.true.th/blog/wp-content/uploads/2023/10/209-8.jpg 1200w, https://www.true.th/blog/wp-content/uploads/2023/10/209-8-240x300.jpg 240w, https://www.true.th/blog/wp-content/uploads/2023/10/209-8-819x1024.jpg 819w, https://www.true.th/blog/wp-content/uploads/2023/10/209-8-768x960.jpg 768w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://www.true.th/blog/wp-content/uploads/2025/10/249-1_True-Big-Techs-AI-scaled.jpg",
+        "alt": ""
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2048%2048'%3E%3C/svg%3E",
+        "alt": "Chanokpim Suriyajun"
+      },
+      {
+        "src": "https://secure.gravatar.com/avatar/4376442e97088c212407dc4f79e4f97c2179cbb754dad73dc70c3c6d160485d9?s=96&d=mm&r=g",
+        "alt": "Chanokpim Suriyajun"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://www.true.th/blog/wp-content/uploads/2025/04/093_1-ทรู-ดิจิทัล-กรุ๊ป-ผนึก-SandStar-พัฒนา-True-Virgo-AI-เทคโนโลยีสุดล้ำเปลี่ยนโลกค้าปลีกยุคใหม่_24042025.jpg",
+        "alt": ""
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2048%2048'%3E%3C/svg%3E",
+        "alt": "Nawinda Pitaksang"
+      },
+      {
+        "src": "https://secure.gravatar.com/avatar/38b6bb341343c0104ebb1fd0132e573ea36be08b1f7591ff4070c30a7f69bab5?s=96&d=mm&r=g",
+        "alt": "Nawinda Pitaksang"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://www.true.th/blog/wp-content/uploads/2025/03/IMG_1234-scaled-1.jpg",
+        "alt": ""
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2048%2048'%3E%3C/svg%3E",
+        "alt": "True Blog Team"
+      },
+      {
+        "src": "https://secure.gravatar.com/avatar/09ce4bad220763db03bedaef2d0f675dea27f54b224f90103bc7d9e8cf43f1c9?s=96&d=mm&r=g",
+        "alt": "True Blog Team"
+      }
+    ],
+    "text": "FIRST TIME IN THAILAND, INTRODUCING A MEDICAL ASSISTANT ROBOT THAT SUPPORTS NUCLEAR MEDICINE KING CHULALONGKORN MEMORIAL HOSPITAL IN COLLABORATION WITH TRUE DIGITAL GROUP, BROUGHT A STATE-OF-THE-ART TECHNOLOGY TO ELEVATE MEDICAL SERVICE IN THAILAND, UNVEILING “INTELLIGENCE ROBOT THAT HELPS IN THYROID CANCER TREATMENT WITH RADIOACTIVE IODINE THERAPY” - True Blog\nEN\nไทย\nHome\nBlog\nReleases\nData Playground\nMain page\nViewpoint\nCulture & Transformation\nTrends & Vibes\nThe People\nESG Matters\nAbout Data Playground\nDynamic Cities\nReset\nBlog\nTrue\nFIRST TIME IN THAILAND, INTRODUCING A MEDICAL ASSISTANT ROBOT THAT SUPPORTS NUCLEAR MEDICINE KING CHULALONGKORN MEMORIAL HOSPITAL IN COLLABORATION WITH TRUE DIGITAL GROUP, BROUGHT A STATE-OF-THE-ART TECHNOLOGY TO ELEVATE MEDICAL SERVICE IN THAILAND, UNVEILING “INTELLIGENCE ROBOT THAT HELPS IN THYROID CANCER TREATMENT WITH RADIOACTIVE IODINE THERAPY”\n27 October 2023\nPR True\nIncrease safety and minimize health risk among medical personnel in directly exposed to the radiation from treating patients\nReplace human in dangerous circumstances to provide services with outstanding functions for patients by transporting radioactive iodine, food, medicine & medical supplies, telemedicine, measuring vital sign, and inspecting and measuring radioactive contamination in the service area\nCommand and control robot with a tablet, operating on a 5G network, communicating real-time diagnosis results and storing the data on Cloud\nCombine Human-Tech Technology under Humanize concept with graphics and color on the screen with a soothing friendly voice for users\nBangkok October 26, 2023 –\nKing Chulalongkorn Memorial Hospital, the Thai Red Cross Society, in collaboration with True Digital Group, brought digital technology to elevate the medical service to the next level by developing innovation that supports thyroid cancer treatment in Thailand, embarks on pioneering research and development, aiming to revolutionize the field of nuclear medicine. This innovation involves the adaptation of robots to support healthcare professionals in the mission to treat thyroid cancer patients through the use of radioactive iodine. The innovative approach promises to significantly enhance the efficiency of patient care, marking a significant milestone in the country’s healthcare landscape. Most importantly, this will also help doctors and healthcare professionals to minimize the risk of being directly exposed to the radiation while treating the patients. Therefore, it minimizes health risks and the potential for long-term radiation-related symptoms, safeguarding the well-being of healthcare providers and ensuring a safer treatment environment.  The “Intelligence robot”  was functionally developed based on the medical service requirements including transporting radioactive iodine, food, medicine & medical supplies, telemedicine, measuring vital sign, and inspecting and measuring radioactive contamination in the service area after the patients finished the treatment. The robot was also designed with a combination of human and technology (Human-Tech Technology) with friendly design, a soothing voice with human-like touch & interaction. The innovation provides benefits and values in various dimensions in the medical and Thai healthcare industry. Furthermore, the robot’s adaptability extends to various services, fostering the rapid growth and broader application of robot and digital technologies in the medical field. This underlines True’s ambition as the leading Telecom-Tech company in creating innovative digital technology that benefit the people of Thailand, society, and the country.\nAssoc. Prof. Chanchai Sittipunt, M.D., Director of King Chulalongkorn Memorial Hospital, Thai Red Cross, and Dean of the Faculty of Medicine, Chulalongkorn University\n, said that King Chulalongkorn Memorial Hospital, the Thai Red Cross Society, and the Faculty of Medicine, Chulalongkorn University are extremely delighted to have True Digital Group joining with robot development team of Nuclear Medicine, Department of Radiology ,King Chulalongkorn Memorial Hospital to develop  robot and enhance innovation that provides conveniences and serve patients in nuclear medicine. It is a great step to increase service efficiency and elevate the medical service with state-of-the-art technology for maximum patient benefits. At the same time, medical personnel could minimize the risk in directly exposed to radiation while treating the patients, increasing safety for doctors, nurses, and medical personnel to closely and continuously care for patients.\nOn this occasion, we would like to thank various supporters for co-developing this advanced technology, “Intelligence robot that helps facilitating radioactive iodine therapy for thyroid cancer treatment”. We believe that this technology will support the progress of the medical industry and elevate the public health service in Thailand.\nHowever, King Chulalongkorn Memorial Hospital, the Thai Red Cross Society and the Faculty of Medicine, Chulalongkorn University, along with the robot development team of Nuclear Medicine, Department of Radiology, and every related agencies and entities continue to develop treatments, research and create medical innovations to have wider coverage with up-to-date services. This will help increase work efficiency and reduce risk for medical personnel and hope it will help foster physical and mental health for the public with maximum benefit from the treatment.\nMr. Ekaraj Panjavinin, Chief Digital Officer, True Corporation Plc,\nsaid that True Digital determines to develop digital innovation to elevate the lifestyles of all Thais and increase capacity efficiency in various industrial sectors, and strengthen the digital economy as well as promote      the Thai society to grow with stability and sustainability, reinforcing True’s position as the leading telecom-tech company. This innovative development of a “Intelligence robot that helps facilitating radioactive iodine therapy for thyroid cancer treatment” under the cooperation with King Chulalongkorn Memorial Hospital, the Thai Red Cross Society is another source of pride for True, as it leverages their extensive experience in research, development, and innovation.”                                                   By integrating digital expertise and True’s completed digital ecosystem, with insightful knowledge shared by Medical professionals from renowned Thai medical schools, we aim to elevate medical services to a new level, fostering unprecedented innovations in state-of-the-art healthcare.            This marks the first time in Thailand of developing a robot that aids nuclear medicine and healthcare professionals by enhancing patient care and boosting safety. It reduces the risk of direct radiation exposure for medical teams treating thyroid cancer patients, lowering the chances of long-term health issues related to radiation exposure. This also helps healthcare professionals take care of more patients with higher efficiency. True Digital will move forward to propel the capabilities of the robot as well as expand its application to various service areas, fostering the rapid growth and broader application of robot and digital technologies in the medical field, creating a digital lifestyle that brings benefit to the people of Thailand, economy, and the society.\nThe launch of the “Intelligence robot that helps facilitating radioactive iodine therapy for thyroid cancer treatment”\nThe intelligence robot was designed with human aspect or Human-Tech Technology with friendly character and humanized technology, featuring human touch and reaction that will create smiles and satisfaction among patients. The robot is commanded and controlled through a tablet and connected via a 5G network to serve real-time communication with high stability and data privacy. Its outstanding features consisted of;\nTransporting\nmedicine, medical supplies, and food to patients in the area or in the patients’ rooms.\nTelemedicine\nvia video call connecting doctors, nurses, technologists and patients to closely provide medical consultation during the treatment period in the hospital.\nMeasuring Vital Sign\nfor patients during their thyroid cancer treatment with real-time medical report and data storage on Cloud.\nInspecting radioactive contamination\nin the service area or patient’s room after finishing the therapy, and showing results in a Heat Map format classified level of radioactive contamination by colors in each area to increase safety for physician and medical staff.\nTrueDigitalGroup\nShare on\nRelated Content\nView All\nReleases\nBetterTogether\nTrue Corporation, Together with the World’s Giant Tech Leaders Highlight the Future of AI in Thailand at CP Innovation Expo 2025\n06 October 2025\nChanokpim Suriyajun\nReleases\nTrue Virgo AI, a Cutting-Edge Technology for Retail Industry Revolution True Digital Group Joins Forces with SandStar to Develop an AI Platform, Enabling Data-Driven Businesses\n24 April 2025\nNawinda Pitaksang\nBlog\nCulture & Transformation\nThe People\nA Simpler, More Flexible TrueX: Apirut Vanchaam’s Vision for Smarter Lives\n04 March 2025\nTrue Blog Team"
+  },
+  {
+    "id": "cmujs9wrz001ju77wavk6lwwi",
+    "name": "Robo-Buddy",
+    "requestedUrl": "https://sustainability.chula.ac.th/report/3802",
+    "finalUrl": "https://sustainability.chula.ac.th/report/3802/",
+    "status": 200,
+    "meta": {
+      "": "",
+      "viewport": "width=device-width, initial-scale=1, minimum-scale=1",
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "og:locale": "en_US",
+      "og:type": "article",
+      "og:title": "Robo-Buddy: A Robot Companion for Elementary School Coding – Chulalongkorn University For Sustainable Development",
+      "og:description": "“Robo-Buddy is an innovative educational tool designed to introduce elementary school students to fundamental coding concepts. This small-scale robot, equipped with RFID technology, interprets commands from specially designed cards, translating abstract programming principles into tangible, real-world actions. Through a series of engaging activities, students arrange command cards to navigate Robo-Buddy through custom-built maps, encountering obstacles...",
+      "og:url": "https://sustainability.chula.ac.th/report/3802/",
+      "og:site_name": "Chulalongkorn University For Sustainable Development",
+      "article:publisher": "https://www.facebook.com/ChulalongkornUniversity",
+      "article:modified_time": "2024-11-14T09:58:01+00:00",
+      "og:image": "https://sustainability.chula.ac.th/wp-content/uploads/2024/11/A-Robot-Companion-for-Elementary-School-Coding.jpg",
+      "og:image:width": "1280",
+      "og:image:height": "610",
+      "og:image:type": "image/jpeg",
+      "twitter:card": "summary_large_image",
+      "twitter:site": "@ChulalongkornU",
+      "twitter:label1": "Est. reading time",
+      "twitter:data1": "3 minutes",
+      "msapplication-TileImage": "https://sustainability.chula.ac.th/wp-content/uploads/2021/07/cropped-logo-admin-270x270.png",
+      "generator": "WP Rocket 3.23.5.1"
+    },
+    "images": [
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula-sdg-dark.png",
+        "alt": "Chulalongkorn University For Sustainable Development",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula-sdg-dark.png 480w, https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula-sdg-dark-300x100.png 300w"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula-sdg-dark.png",
+        "alt": "Chulalongkorn University For Sustainable Development",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula-sdg-dark.png 480w, https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula-sdg-dark-300x100.png 300w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20907%20371'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2024/11/Robo-Buddy-01.jpg",
+        "alt": "",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2024/11/Robo-Buddy-01.jpg 907w, https://sustainability.chula.ac.th/wp-content/uploads/2024/11/Robo-Buddy-01-300x123.jpg 300w, https://sustainability.chula.ac.th/wp-content/uploads/2024/11/Robo-Buddy-01-768x314.jpg 768w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20454%20483'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2024/11/Robo-Buddy-02.jpg",
+        "alt": "",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2024/11/Robo-Buddy-02.jpg 454w, https://sustainability.chula.ac.th/wp-content/uploads/2024/11/Robo-Buddy-02-282x300.jpg 282w"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/themes/chula_sustainability/assets/images/icon-the-global-goals.png",
+        "alt": "The Global Goals"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-4.jpg",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-9.jpg",
+        "alt": "Goal 9: Industry, Innovation and Infrastructure"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-17.jpg",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20510'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2022/10/APRU-SGD-Education-For-Global-Citizenship-800x510.jpg",
+        "alt": ""
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 3: Good Health and Well-being"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-3.jpg",
+        "alt": "Goal 3: Good Health and Well-being"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-4.jpg",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 11: Sustainable Cities and Communities"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-11.jpg",
+        "alt": "Goal 11: Sustainable Cities and Communities"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-17.jpg",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20754%20533'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2021/11/QuickMBA1.jpg",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-4.jpg",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-9.jpg",
+        "alt": "Goal 9: Industry, Innovation and Infrastructure"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 10: Reduced Inequalities"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-10.jpg",
+        "alt": "Goal 10: Reduced Inequalities"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-17.jpg",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20533'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2025/11/toa-heftiba-JMt4UcDHYDI-unsplash-800x533.jpg",
+        "alt": ""
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 1: No Poverty"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-1.jpg",
+        "alt": "Goal 1: No Poverty"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 2: Zero hunger"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-2.jpg",
+        "alt": "Goal 2: Zero hunger"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 3: Good Health and Well-being"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-3.jpg",
+        "alt": "Goal 3: Good Health and Well-being"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-4.jpg",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 6: Clean Water and Sanitation"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-6.jpg",
+        "alt": "Goal 6: Clean Water and Sanitation"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 7: Affordable and Clean Energy"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-7.jpg",
+        "alt": "Goal 7: Affordable and Clean Energy"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 8: Decent Work and Economic Growth"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-8.jpg",
+        "alt": "Goal 8: Decent Work and Economic Growth"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-9.jpg",
+        "alt": "Goal 9: Industry, Innovation and Infrastructure"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 10: Reduced Inequalities"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-10.jpg",
+        "alt": "Goal 10: Reduced Inequalities"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 11: Sustainable Cities and Communities"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-11.jpg",
+        "alt": "Goal 11: Sustainable Cities and Communities"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 12: Responsible Consumption and Production"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-12.jpg",
+        "alt": "Goal 12: Responsible Consumption and Production"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 13: Climate Action"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-13.jpg",
+        "alt": "Goal 13: Climate Action"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 15: Life on Land"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-15.jpg",
+        "alt": "Goal 15: Life on Land"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-17.jpg",
+        "alt": "Goal 17: Partnerships for the Goals"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20533'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/12/07-chula-rural-changes-lives-01-800x533.jpg",
+        "alt": ""
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 1: No Poverty"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-1.jpg",
+        "alt": "Goal 1: No Poverty"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-4.jpg",
+        "alt": "Goal 4: Quality Education"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 10: Reduced Inequalities"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-10.jpg",
+        "alt": "Goal 10: Reduced Inequalities"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 11: Sustainable Cities and Communities"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-11.jpg",
+        "alt": "Goal 11: Sustainable Cities and Communities"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20120%20120'%3E%3C/svg%3E",
+        "alt": "Goal 16: Peace, Justice and Strong Institutions"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2019/11/goal-no-icon-16.jpg",
+        "alt": "Goal 16: Peace, Justice and Strong Institutions"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20166%2060'%3E%3C/svg%3E",
+        "alt": ""
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula.png",
+        "alt": "",
+        "srcset": "https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula.png 332w, https://sustainability.chula.ac.th/wp-content/uploads/2021/07/logo-chula-300x108.png 300w"
+      },
+      {
+        "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20150%20150'%3E%3C/svg%3E",
+        "alt": "PDPA Icon"
+      },
+      {
+        "src": "https://sustainability.chula.ac.th/wp-content/plugins/designil-pdpa/public/assets/images/cookie.webp",
+        "alt": "PDPA Icon"
+      }
+    ],
+    "text": "Robo-Buddy: A Robot Companion for Elementary School Coding – Chulalongkorn University For Sustainable Development\nSkip to content\nSearch for:\nSearch\nEN\nTH\nSustainability Agenda\nCase Studies\nRelevant Rules and Regulations\nReports\nSDGs\nSearch\nSearch\nMenu\nToggle Menu\nCase Studies\nRobo-Buddy: A Robot Companion for Elementary School Coding\nTeaching and Learning\n“\nRobo-Buddy is an innovative educational tool designed to introduce elementary school students to fundamental coding concepts. This small-scale robot, equipped with RFID technology, interprets commands from specially designed cards, translating abstract programming principles into tangible, real-world actions. Through a series of engaging activities, students arrange command cards to navigate Robo-Buddy through custom-built maps, encountering obstacles and reaching specified targets. This hands-on approach fosters computational thinking, problem-solving skills, and basic programming logic. The immediate visual and auditory feedback provided by Robo-Buddy’s movements, lights, and sounds reinforces learning outcomes and maintains student engagement. By bridging the gap between physical interaction and digital concepts, Robo-Buddy offers an accessible and enjoyable entry point into the world of coding, preparing young learners for the increasingly digital future while cultivating critical thinking and collaborative skills essential for 21st-century education.”\n[\nhttps://www.youtube.com/watch?v=M6dA_XtSSmU\n]\nAt our institution, we have developed a groundbreaking teaching and learning strategy centered around Robo-Buddy, an innovative robot companion designed to introduce elementary school students to coding concepts. This strategy aligns with our core values of fostering technological literacy, promoting hands-on learning, and nurturing problem-solving skills from an early age.\nMain Features and Implementation\nOur strategy revolves around integrating Robo-Buddy into elementary school curricula. Key features include:\nTangible Programming: Students use RFID-equipped command cards to program Robo-Buddy, bridging the gap between physical interaction and digital concepts.\nVisual Feedback: Robo-Buddy’s movements, lights, and sounds provide immediate visual and auditory feedback, reinforcing learning outcomes.\nProblem-Solving Activities: Customizable map layouts challenge students to navigate Robo-Buddy through obstacles, promoting critical thinking and computational skills.\nImplementation involved collaboration with elementary schools, teacher training programs, and the development of age-appropriate learning materials.\nEmbracing New Technology\nRobo-Buddy exemplifies our commitment to leveraging technology in education. By combining robotics, RFID technology, and simple programming concepts, we’ve created an accessible platform for young learners to engage with coding principles. This approach demystifies complex technological concepts, making them tangible and engaging for elementary students.\nCreating an Environment Valuing Teaching Excellence\nOur institution has fostered teaching excellence through Robo-Buddy by:\nIncorporating Robo-Buddy into our core curriculum from the earliest stages of education, with pre-service teachers implementing it as a key learning tool.\nOffering comprehensive training programs that empower educators to effectively utilize Robo-Buddy across diverse classroom environments.\nContinuously refining our Robo-Buddy-based teaching methodologies through the integration of student feedback, ensuring our strategies remain relevant and effective.\nRecognizing and Rewarding Innovation\nRobo-Buddy’s innovative design and educational efficacy have been recognized with a gold medal at an international invention competition. This accolade has:\nValidated Robo-Buddy’s effectiveness as a teaching tool\nInspired educators to incorporate creative teaching strategies\nFostered a vibrant learning community for sharing best practices\nAttracted interest from other institutions, leading to collaborative partnerships\nReinforced our commitment to innovative teaching methods and educational technology research\nThis recognition has cultivated a culture of continuous improvement and knowledge sharing among our educators.\nEnhancing Learning Experiences\nRobo-Buddy enhances learning experiences by:\nProviding a hands-on, interactive approach to coding that caters to different learning styles.\nEncouraging collaborative problem-solving as students work in groups to program Robo-Buddy.\nOffering scalable challenges that allow students to progress at their own pace, from basic sequencing to more complex algorithmic thinking.\nFor graduate students in education and computer science, we’ve created opportunities to contribute to Robo-Buddy’s development, fostering a cycle of innovation and mentorship.\nStrategic Alignment\nOur Robo-Buddy initiative aligns seamlessly with our university’s overall strategic plan by:\nAdvancing our commitment to STEM education and digital literacy.\nStrengthening partnerships with local schools and educational institutions.\nPositioning our university as a leader in innovative teaching methodologies.\nSupporting our goal of nurturing a new generation of technologically adept and creative problem-solvers.\nBy\nFaculty of Education, Chulalongkorn University\nRelated SDGs\nGoal 4: Quality Education\nGoal 9: Industry, Innovation and Infrastructure\nGoal 17: Partnerships for the Goals\nShare\nFacebook\nFacebook\nX\nTwitter\nLINE\nLine\nPrevious:\n“KHUN SEAN” SMART ROBOT FOR COMPUTATIONAL THINKING\nNext:\nNational Food Waste Management Campaign of Local Administrative Organization in Thailand, an innovative contribution to Waste-to-Carbon Initiative\nDiscover More\nOthers\nTeaching and Learning\nChula to Launch & Lead “APRU SDG Education for Global Citizenship”\nContinue reading\nTeaching and Learning\nCBS Quick MBA from Home & Quick MBA for SMEs\nContinue reading\nTeaching and Learning\nChulalongkorn University Opens Lifelong Learning Opportunities for a Sustainable Society\nContinue reading\nTeaching and Learning\nChula Rural Changes Lives\nAccess to higher education opportunities for poor young people benefits scholars, families and society\nOriginal article\nChula Rural Center\nChulalongkorn University Academic Testing Center\nContinue reading\nDiscover More\nChulalongkorn University\n254 Phayathai Road,\nPathumwan, Bangkok 10330\nThailand\nTel:\n+66 2218 0223\nEmail:\ncts@chula.ac.th\nFacebook\nTwitter\nYoutube\nInstagram\nLine\nHome\nSustainability Agenda\nCase Studies\nRelevant Rules and Regulations\nReports\nSDGs\nWe use cookies to enhance your browsing experience (\nSettings\n)\nSettings\nAccept\nPrivacy Preferences\nYou can choose your cookie settings by enabling/disabling cookies for each category as needed, except for necessary cookies.\nAccept All\nManage Consent Preferences\nNecessary cookies\nAlways Active\nNecessary cookies are essential for the functioning of the website, allowing you to use and browse the site normally. You cannot disable these cookies in our website's system.\nAnalytical Cookies for Enhancing User Experience\nAnalytical Cookies for Enhancing User Experience\nThese cookies are used to collect information about website usage, such as the number of visitors, popular web pages, and browsing behavior, which helps the website owner improve the user experience.\nFunctional Cookies for Remembering User Settings\nFunctional Cookies for Remembering User Settings\nThese cookies help enhance the website's functionality by remembering user settings such as username, language, region, or customizations.\nSave\nPrivacy Preferences\nSearch for:\nSearch\nEN\nTH\nHome\nSustainability Agenda\nCase Studies\nRelevant Rules and Regulations\nReports\nSDGs\nToggle Menu Close\nSearch for:\nSearch"
+  },
+  {
+    "id": "cmujs9wrc000uu77wqz2ny7ho",
+    "name": "SR1 Security Robot",
+    "requestedUrl": "https://www.obodroid.com/about-us",
+    "error": "<urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>"
+  }
+]

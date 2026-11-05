@@ -1,0 +1,95 @@
+[
+  {
+    "name": "AI Police Cyborg 1.0",
+    "source": "https://aws.amazon.com/th/blogs/thailand/aws-thai-ai-police-cyborg/",
+    "image": "https://d2908q01vomqb2.cloudfront.net/59129aacfb6cebbe2c52f30ef3424209f7252e82/2025/07/15/Picture2-4-1.png",
+    "file": "C:\\Users\\oknan\\HumanoidTH\\output\\robot-source-audit\\images\\953c98da744e.png",
+    "mime": "image/png",
+    "bytes": 556764,
+    "sha256": "945ae26e3fc78982f280b9cf3f40dba22c4cf0ae6a0adf07b0e1504c7d6434f1"
+  },
+  {
+    "name": "Bumi humanoid robot",
+    "source": "https://www.noetixrobotics.com/en/news/events/962",
+    "image": "https://image.noetixrobotics.com/pc/home_bumi_banner.jpg",
+    "file": "C:\\Users\\oknan\\HumanoidTH\\output\\robot-source-audit\\images\\e007de921c82.jpg",
+    "mime": "image/jpeg",
+    "bytes": 1588684,
+    "sha256": "d5a97b6f4c338884c6903dc74e7454c526cfb59ae4b613600a702a3e19efcd07"
+  },
+  {
+    "name": "Chula Rehabilitation Robots for Stroke Patients",
+    "source": "https://sustainability.chula.ac.th/report/2683/",
+    "image": "https://sustainability.chula.ac.th/wp-content/uploads/2022/04/im_051164_763.jpeg",
+    "file": "C:\\Users\\oknan\\HumanoidTH\\output\\robot-source-audit\\images\\adf35180d559.jpg",
+    "mime": "image/jpeg",
+    "bytes": 437720,
+    "sha256": "e8940ea4a2f7ef77dc02e610999f82101ec3f6966e135bd181a16cad3f2f26ab"
+  },
+  {
+    "name": "CORGI Healthcare and Physical Therapy Assistant Robot",
+    "source": "https://www.truedigital.com/en/tdg-story/ทรู-ดิจิทัล-ผนึกกำลัง-รพ",
+    "image": "https://tdg-assets.sgp1.cdn.digitaloceanspaces.com/wp-content/uploads/2026/02/019_3-640x427.jpg",
+    "file": "C:\\Users\\oknan\\HumanoidTH\\output\\robot-source-audit\\images\\25fc80e22e96.jpg",
+    "mime": "image/jpeg",
+    "bytes": 54592,
+    "sha256": "bb3bd50a5e19a48053b07b3c57d51ee95703d3e54ab254477f526fe4fc8cf70d"
+  },
+  {
+    "name": "Dinsaw Robot",
+    "source": "https://www.ctasia.com/about-us/",
+    "image": "https://www.ctasia.com/wp-content/uploads/2023/09/Dinsow-Robotics-1024x559.jpg",
+    "file": "C:\\Users\\oknan\\HumanoidTH\\output\\robot-source-audit\\images\\36496646e5dd.jpg",
+    "mime": "image/jpeg",
+    "bytes": 85820,
+    "sha256": "5cd6b25690a02f2bdf0e499e72509af35cf64f324fea355fc30f0e42fa37fff3"
+  },
+  {
+    "name": "Kaitomm Robot",
+    "source": "https://www.obodroid.com/product/personal-assistant/",
+    "image": "https://www.obodroid.com/wp-content/uploads/2022/03/2019.jpg",
+    "error": "<urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>"
+  },
+  {
+    "name": "Khun Sean Smart Robot",
+    "source": "https://sustainability.chula.ac.th/report/3801/",
+    "image": "https://sustainability.chula.ac.th/wp-content/uploads/2024/11/khunsean-smartbot-1024x891.jpg",
+    "file": "C:\\Users\\oknan\\HumanoidTH\\output\\robot-source-audit\\images\\6c7ccbbc6afc.jpg",
+    "mime": "image/jpeg",
+    "bytes": 49906,
+    "sha256": "49f0550f5d9aef5577b1fc2f6521c9df69a6dfea33c03785bf34ae6cbd49591b"
+  },
+  {
+    "name": "NAO",
+    "source": "https://maxtronics.com/en/nao6/",
+    "image": "https://maxtronics.com/wp-content/uploads/nao-print-24-1-1024x726.png",
+    "file": "C:\\Users\\oknan\\HumanoidTH\\output\\robot-source-audit\\images\\04656125719d.png",
+    "mime": "image/png",
+    "bytes": 307903,
+    "sha256": "6b6ec5a0652ed31d6b00de237c25f0034fa8eae3be96308946b1e9ea87ee7ee6"
+  },
+  {
+    "name": "Radioactive Iodine Therapy Medical Assistant Robot",
+    "source": "https://www.true.th/blog/en/first-time-in-thailand-introducing-a-medical-assistant-robot-that-supports-nuclear-medicine-king-chulalongkorn-memorial-hospital-in-collaboration-with-true-digital-group-brought-a-state-of-the-art-t",
+    "image": "https://www.true.th/blog/wp-content/uploads/2023/10/209-1.jpg",
+    "file": "C:\\Users\\oknan\\HumanoidTH\\output\\robot-source-audit\\images\\81cce2f11660.jpg",
+    "mime": "image/jpeg",
+    "bytes": 272018,
+    "sha256": "f7bbef69cf25d36805df7dad5608a5d560281b161f9d75dbbc66bcd444833f94"
+  },
+  {
+    "name": "Robo-Buddy",
+    "source": "https://sustainability.chula.ac.th/report/3802/",
+    "image": "https://sustainability.chula.ac.th/wp-content/uploads/2024/11/Robo-Buddy-02.jpg",
+    "file": "C:\\Users\\oknan\\HumanoidTH\\output\\robot-source-audit\\images\\12bbbd9cfd83.jpg",
+    "mime": "image/jpeg",
+    "bytes": 25165,
+    "sha256": "03b553056b26ccdb6847751347cc054c43db2e5e51516de160383dcfb06ee7fd"
+  },
+  {
+    "name": "SR1 Security Robot",
+    "source": "https://www.obodroid.com/product/security/",
+    "image": "https://www.obodroid.com/wp-content/uploads/2022/03/2018.jpg",
+    "error": "<urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>"
+  }
+]

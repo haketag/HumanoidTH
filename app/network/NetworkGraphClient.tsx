@@ -342,6 +342,7 @@ export default function NetworkGraphClient({ lang = "en" }: { lang?: "en" | "th"
   const cyRef = useRef<Core | null>(null);
   const labelModeRef = useRef<LabelMode>("important");
   const selectedNodeIdRef = useRef<string | null>(null);
+  const graphRequestRef = useRef<AbortController | null>(null);
   const [graph, setGraph] = useState<NetworkGraph | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -414,24 +415,23 @@ export default function NetworkGraphClient({ lang = "en" }: { lang?: "en" | "th"
     }
   }, [animationsEnabled, densityMode, detailsCollapsed, filtersCollapsed, labelMode]);
 
-  const fetchGraph = useCallback(async (limit = maxNodes, source = sourceMode) => {
+  const fetchGraph = useCallback(async (limit: number, source: "auto" | "file" | "database" | "hybrid") => {
+    graphRequestRef.current?.abort();
+    const controller = new AbortController();
+    graphRequestRef.current = controller;
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`/api/network/graph?source=${source}&limitNodes=${limit}&limitEdges=${Math.max(800, limit * 3)}`, { cache: "no-store" });
+      const response = await fetch(`/api/network/graph?source=${source}&limitNodes=${limit}&limitEdges=${Math.max(800, limit * 3)}`, { cache: "no-store", signal: controller.signal });
       if (!response.ok) throw new Error(`Graph API returned ${response.status}`);
       const payload = await response.json() as NetworkGraph & { error?: string };
       if (payload.error) throw new Error(payload.error);
-      setGraph(payload);
+      if (!controller.signal.aborted) setGraph(payload);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unable to fetch graph");
+      if (!controller.signal.aborted) setError(err instanceof Error ? err.message : "Unable to fetch graph");
     } finally {
-      setLoading(false);
+      if (graphRequestRef.current === controller) setLoading(false);
     }
-  }, [maxNodes, sourceMode]);
-
-  useEffect(() => {
-    fetchGraph(240, sourceMode);
   }, []);
 
   useEffect(() => {
@@ -442,8 +442,9 @@ export default function NetworkGraphClient({ lang = "en" }: { lang?: "en" | "th"
   }, [labelMode, selectedNodeId]);
 
   useEffect(() => {
-    fetchGraph(maxNodes, sourceMode);
-  }, [sourceMode]);
+    void fetchGraph(maxNodes, sourceMode);
+    return () => graphRequestRef.current?.abort();
+  }, [fetchGraph, maxNodes, sourceMode]);
 
   const options = useMemo(() => {
     const empty = { nodeTypes: [], relations: [], clusters: [], robotTypes: [], organizations: [], platforms: [], countries: [], years: [] as string[] };
@@ -689,7 +690,6 @@ export default function NetworkGraphClient({ lang = "en" }: { lang?: "en" | "th"
   const loadMore = () => {
     const next = Math.min(maxNodes + 300, 1000);
     setMaxNodes(next);
-    fetchGraph(next, sourceMode);
   };
 
   const sourceLabel = {

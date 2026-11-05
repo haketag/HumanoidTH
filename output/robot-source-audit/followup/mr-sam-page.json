@@ -1,0 +1,252 @@
+{
+  "id": "MrSAM",
+  "name": "Mr SAM outpatient service robot",
+  "requestedUrl": "https://www.md.chula.ac.th/%E0%B8%AB%E0%B8%B8%E0%B9%88%E0%B8%99%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B9%8C-mr-sam/",
+  "finalUrl": "https://www.md.chula.ac.th/%E0%B8%AB%E0%B8%B8%E0%B9%88%E0%B8%99%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B9%8C-mr-sam/",
+  "status": 200,
+  "meta": {
+    "": "",
+    "viewport": "initial-scale = 1.0",
+    "generator": "EventON 2.6.6"
+  },
+  "images": [
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/sitepress-multilingual-cms/res/flags/th.png",
+      "alt": "th"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/sitepress-multilingual-cms/res/flags/en.png",
+      "alt": "en"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2021/03/chula-logo-re.png",
+      "alt": ""
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4120-750x330.jpg",
+      "alt": ""
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/masterslider/public/assets/css/blank.gif",
+      "data-src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4120-1400x988.jpg",
+      "alt": "IMG_4120"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4120-1400x988-140x80.jpg",
+      "alt": "IMG_4120"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/masterslider/public/assets/css/blank.gif",
+      "data-src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4127-1400x933.jpg",
+      "alt": "IMG_4127"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4127-1400x933-140x80.jpg",
+      "alt": "IMG_4127"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/masterslider/public/assets/css/blank.gif",
+      "data-src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4128-1400x933.jpg",
+      "alt": "IMG_4128"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4128-1400x933-140x80.jpg",
+      "alt": "IMG_4128"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/masterslider/public/assets/css/blank.gif",
+      "data-src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4129-1400x1005.jpg",
+      "alt": "IMG_4129"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4129-1400x1005-140x80.jpg",
+      "alt": "IMG_4129"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/masterslider/public/assets/css/blank.gif",
+      "data-src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4161-1400x953.jpg",
+      "alt": "IMG_4161"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4161-1400x953-140x80.jpg",
+      "alt": "IMG_4161"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/masterslider/public/assets/css/blank.gif",
+      "data-src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4169-1400x933.jpg",
+      "alt": "IMG_4169"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4169-1400x933-140x80.jpg",
+      "alt": "IMG_4169"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/masterslider/public/assets/css/blank.gif",
+      "data-src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4189-1400x921.jpg",
+      "alt": "IMG_4189"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4189-1400x921-140x80.jpg",
+      "alt": "IMG_4189"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/masterslider/public/assets/css/blank.gif",
+      "data-src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4209-1400x933.jpg",
+      "alt": "IMG_4209"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4209-1400x933-140x80.jpg",
+      "alt": "IMG_4209"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/masterslider/public/assets/css/blank.gif",
+      "data-src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4255-1400x890.jpg",
+      "alt": "IMG_4255"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4255-1400x890-140x80.jpg",
+      "alt": "IMG_4255"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/masterslider/public/assets/css/blank.gif",
+      "data-src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4279-1400x902.jpg",
+      "alt": "IMG_4279"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4279-1400x902-140x80.jpg",
+      "alt": "IMG_4279"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/masterslider/public/assets/css/blank.gif",
+      "data-src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4305-1400x931.jpg",
+      "alt": "IMG_4305"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4305-1400x931-140x80.jpg",
+      "alt": "IMG_4305"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/masterslider/public/assets/css/blank.gif",
+      "data-src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4329-1400x933.jpg",
+      "alt": "IMG_4329"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4329-1400x933-140x80.jpg",
+      "alt": "IMG_4329"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/masterslider/public/assets/css/blank.gif",
+      "data-src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4372-1400x933.jpg",
+      "alt": "IMG_4372"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4372-1400x933-140x80.jpg",
+      "alt": "IMG_4372"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/masterslider/public/assets/css/blank.gif",
+      "data-src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4380-1400x933.jpg",
+      "alt": "IMG_4380"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4380-1400x933-140x80.jpg",
+      "alt": "IMG_4380"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/masterslider/public/assets/css/blank.gif",
+      "data-src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4409-1400x918.jpg",
+      "alt": "IMG_4409"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4409-1400x918-140x80.jpg",
+      "alt": "IMG_4409"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/masterslider/public/assets/css/blank.gif",
+      "data-src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4412-1400x935.jpg",
+      "alt": "IMG_4412"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4412-1400x935-140x80.jpg",
+      "alt": "IMG_4412"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/masterslider/public/assets/css/blank.gif",
+      "data-src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4434-copy-1400x933.jpg",
+      "alt": "IMG_4434 copy"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4434-copy-1400x933-140x80.jpg",
+      "alt": "IMG_4434 copy"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/masterslider/public/assets/css/blank.gif",
+      "data-src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4500-1400x936.jpg",
+      "alt": "IMG_4500"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4500-1400x936-140x80.jpg",
+      "alt": "IMG_4500"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/masterslider/public/assets/css/blank.gif",
+      "data-src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4510-1400x933.jpg",
+      "alt": "IMG_4510"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4510-1400x933-140x80.jpg",
+      "alt": "IMG_4510"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/plugins/masterslider/public/assets/css/blank.gif",
+      "data-src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4600-1400x971.jpg",
+      "alt": "IMG_4600"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/uploads/2024/01/IMG_4600-1400x971-140x80.jpg",
+      "alt": "IMG_4600"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/themes/clevercourse-v2-03/images/social-share/digg.png",
+      "alt": "digg-share"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/themes/clevercourse-v2-03/images/social-share/facebook.png",
+      "alt": "facebook-share"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/themes/clevercourse-v2-03/images/social-share/google-plus.png",
+      "alt": "google-share"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/themes/clevercourse-v2-03/images/social-share/linkedin.png",
+      "alt": "linked-share"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/themes/clevercourse-v2-03/images/social-share/my-space.png",
+      "alt": "my-space-share"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/themes/clevercourse-v2-03/images/social-share/pinterest.png",
+      "alt": "pinterest-share"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/themes/clevercourse-v2-03/images/social-share/reddit.png",
+      "alt": "reddit-share"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/themes/clevercourse-v2-03/images/social-share/stumble-upon.png",
+      "alt": "stumble-upon-share"
+    },
+    {
+      "src": "https://www.md.chula.ac.th/wp-content/themes/clevercourse-v2-03/images/social-share/twitter.png",
+      "alt": "twitter-share"
+    },
+    {
+      "src": "https://secure.gravatar.com/avatar/67a10a149953370a109dc1e89776a1b7?s=90&d=mm&r=g",
+      "alt": "",
+      "srcset": "https://secure.gravatar.com/avatar/67a10a149953370a109dc1e89776a1b7?s=180&d=mm&r=g 2x"
+    }
+  ],
+  "text": "Faculty of Medicine at Chulalongkorn University   » รพ.จุฬาลงกรณ์ เปิดปฏิบัติการ “หุ่นยนต์ให้บริการผู้ป่วยนอก” ประยุกต์ฟังก์ชันการใช้งาน อำนวยความสะดวกกับประชาชน\n+66 2256 4183, +66 2256 4462\nprmdcu@gmail.com\nHelp Desk\nไทย\nEnglish\nOpen Menu\nผู้สนใจสมัครเรียน\nนิสิตปัจจุบัน\nอาจารย์และบุคลากร\nบุคคลทั่วไป\nผู้สนใจสมัครเรียน\nนิสิตปัจจุบัน\nอาจารย์และบุคลากร\nบุคคลทั่วไป\nMDCU\n18\nม.ค.\n2024\nรพ.จุฬาลงกรณ์ เปิดปฏิบัติการ “หุ่นยนต์ให้บริการผู้ป่วยนอก” ประยุกต์ฟังก์ชันการใช้งาน อำนวยความสะดวกกับประชาชน\n/\nTags\n#mdcu\n,\nchula\n,\nchulalongkorn\n,\nmedicine\n,\nคณะแพทยศาสตร์จุฬาลงกรณ์มหาวิทยาลัย\n,\nคณะแพทยศาสตร์จุฬาฯ\n,\nคณะแพทย์จุฬาฯ\n,\nหุ่นยนต์ Mr.SAM\n,\nหุ่นยนต์ให้บริการผู้ป่วยนอก\n,\nแพทย์จุฬาฯ\nวันพุธที่ 17 มกราคม พ.ศ. 2567: 08.30 น.: ห้องประชุม 302 ชั้น 3 โซนเอ อาคารรัตนวิทยาพัฒน์ โรงพยาบาลจุฬาลงกรณ์ สภากาชาดไทย\nรศ.ดร.ชัชชาติ สิทธิพันธุ์\nผู้ว่าราชการกรุงเทพมหานคร\nและ\nรศ.นพ.ฉันชาย สิทธิพันธุ์\nผู้อำนวยการโรงพยาบาลจุฬาลงกรณ์ สภากาชาดไทย\nร่วมเปิดปฏิบัติการ\n“หุ่นยนต์ให้บริการผู้ป่วยนอก”\nประยุกต์ฟังก์ชันการใช้งาน อำนวยความสะดวกกับประชาชน โดย ฝ่ายผู้ป่วยสัมพันธ์ โรงพยาบาลจุฬาลงกรณ์ สภากาชาดไทย ได้จัดงานเปิดตัว\nหุ่นยนต์ Mr.SAM\nเพื่อช่วยเพิ่มประสิทธิภาพการให้บริการแก่ประชาชนผู้มารับบริการภายในโรงพยาบาล โดยภายในงานมีการเสวนาเรื่อง “เทคโนโลยีกับการบริการทางการแพทย์” โดย\nรศ.ดร.นพ.ม.ล.กรเกียรติ์ สนิทวงศ์\nรองผู้อำนวยการโรงพยาบาลจุฬาลงกรณ์ สภากาชาดไทย ฝ่ายบริการ\nพร้อมด้วย\nอ.พญ.สุทธ์ศรี กอแก้ววิเชียร\nอนุกรรมการเครือข่าย เขตสุขภาพที่ 13\nและ\nคุณจิมมี่-จิตรพล โพธิวิหค\nนักแสดงในสังกัด GMMTV\nรศ.นพ.ฉันชาย สิทธิพันธุ์\nกล่าวว่า โรงพยาบาลจุฬาลงกรณ์ สภากาชาดไทย มีความยินดีอย่างยิ่ง ที่ได้ร่วมกันพัฒนาเทคโนโลยี ต่อยอดนวัตกรรมโดยนำหุ่นยนต์มาใช้อำนวยความสะดวกและให้บริการผู้ป่วยนอก ช่วยเพิ่มประสิทธิภาพการบริการ และยกระดับการให้บริการทางการแพทย์ให้ก้าวล้ำทันสมัย มีมาตรฐานสอดคล้องกับวิสัยทัศน์และพันธกิจของโรงพยาบาล เพื่อประโยชน์สูงสุดต่อผู้มารับบริการ รวมถึงเป็นการลดขั้นตอนการบริการต่างๆ เพื่อให้มีความสะดวกและรวดเร็วขึ้น ทำให้บุคลากรทางการแพทย์ได้มีเวลาดูแลผู้ป่วยที่เร่งด่วนได้อย่างต่อเนื่องใกล้ชิด การนี้ โรงพยาบาลจุฬาลงกรณ์ สภากาชาดไทย ยึดมั่นช่วยกันพัฒนานวัตกรรมในด้านต่างๆ ทางการแพทย์ มุ่งหวังให้ประชาชนมีสุขภาพที่ดีทั้งทางด้านร่างกายและจิตใจ และได้รับประโยชน์สูงสุดในด้านการรักษาต่อไป\nทางด้าน\nรศ.ดร.นพ.ม.ล.กรเกียรติ์ สนิทวงศ์\nให้ข้อมูลเพิ่มเติมว่า ในปัจจุบันวิวัฒนาการและความก้าวหน้าทางเทคโนโลยีที่เกี่ยวข้องกับวิทยาการหุ่นยนต์ เข้ามามีบทบาทในชีวิตมนุษย์และมีความสำคัญมากขึ้นหลายด้าน จะเห็นได้ชัดเจนในช่วงที่มีการแพร่ระบาดของโรคโควิด 19 (COVID-19) โดยเฉพาะทางด้านการแพทย์และสาธารณสุข พบว่าเทคโนโลยีเหล่านี้ได้ช่วยอำนวยความสะดวก ลดความเสี่ยง สร้างความปลอดภัย ให้กับบุคลากรทางการแพทย์ ป้องการแพร่ระบาดของเชื้อโรค และช่วยเพิ่มประสิทธิภาพของการให้บริการประชาชนได้มากยิ่งขึ้น\nดังนั้น ทางฝ่ายผู้ป่วยสัมพันธ์ได้จัดงานเปิดปฏิบัติการ “หุ่นยนต์ให้บริการผู้ป่วยนอก” เพื่อประชาสัมพันธ์การบริการผ่านนวัตกรรมหุ่นยนต์ในส่วนงานของ OPD โรงพยาบาลจุฬาลงกรณ์ และให้ความรู้เรื่องระบบบริการทางการแพทย์กับนวัตกรรมทางเทคโนโลยี ให้กับบุคลากรหน่วยงานต่างๆ ภายในโรงพยาบาลจุฬาลงกรณ์ สภากาชาดไทย รวมไปถึงประชาชนทั่วไปได้รับทราบ ที่ผ่านมาได้จัดกิจกรรมการประกวดการตั้งชื่อหุ่นยนต์ขึ้น และมีผู้สนใจส่งรายชื่อเข้ามาประกวดเป็นจำนวนมาก และผ่านการคัดเลือกจากคณะกรรมการเป็นที่เรียบร้อยแล้ว โดยหุ่นยนต์ดินสอที่ให้บริการผู้ป่วยนอกนี้มีชื่อว่า Mr.SAM\nนับเป็นโอกาสอันดี ที่ได้รับเกียรติจากท่านผู้ว่าราชการกรุงเทพมหานคร และแขกผู้มีเกียรติทุกท่านที่มาร่วมงาน รวมถึงคุณจิมมี่-จิตรพล โพธิวิหค นักแสดงในสังกัด GMMTV ที่มาร่วมนั่งเสวนาในครั้งนี้ เพื่อให้ประชาชนได้รู้จักกับ “หุ่นยนต์ให้บริการผู้ป่วยนอก Mr.SAM” นวัตกรรมที่จะทำให้ผู้มารับบริการของโรงพยาบาล ได้รับประโยชน์จากการใช้งานผ่านหุ่นยนต์ได้ด้วยตนเอง เป็นการลดขั้นตอนการรอเข้ารับบริการและพบเจอเจ้าหน้าที่\nอ.พญ.พรจิรา ศุภราศรี ผู้ช่วยผู้อำนวยการโรงพยาบาลจุฬาลงกรณ์ ด้านบริการผู้ป่วยนอก และ หัวหน้าฝ่ายผู้ป่วยสัมพันธ์ ได้เล็งเห็นว่าเทคโนโลยีกับการบริการทางการแพทย์เป็นเรื่องที่สำคัญอย่างมากในยุคปัจจุบัน ดังนั้น ฝ่ายผู้ป่วยสัมพันธ์จึงได้นำ “หุ่นยนต์ให้บริการผู้ป่วยนอก Mr.SAM” จำนวน 5 ตัว มาใช้ในการให้บริการและพร้อมเตรียมพัฒนาระบบซอฟต์แวร์เพื่อเพิ่มประสิทธิภาพของตัวหุ่นยนต์ต่อไปในอนาคต\nเบื้องต้น “\nหุ่นยนต์ให้บริการผู้ป่วยนอก Mr.SAM\n” มีฟังก์ชันที่เป็นประโยชน์ต่อผู้มารับบริการ ดังนี้ …\nทำหน้าที่ลงทะเบียนสร้างเลขประจำตัวผู้ป่วย (HN.) ใหม่พร้อมถ่ายรูปเพื่อยืนยันตัวตน กับ “หุ่นยนต์ให้บริการผู้ป่วยนอก Mr.SAM” ได้ด้วยตนเองเลย โดยไม่ต้องพบเจอกับเจ้าหน้าที่ สามารถทำได้ด้วยตนเองเบ็ดเสร็จ ตามขั้นตอนที่หุ่นยนต์แจ้ง ทำให้สะดวกและรวดเร็ว ลดขั้นตอนในการรอคิวเพื่อลงทะเบียนผู้ป่วยใหม่ ทั้งนี้ จะมีเจ้าหน้าที่คอยแนะนำบริการ การใช้งานหุ่นยนต์ ไม่เพียงเท่านั้น “หุ่นยนต์ให้บริการผู้ป่วยนอก Mr.SAM” ยังสามารถเคลื่อนย้ายให้บริการลงทะเบียนนอกสถานที่โรงพยาบาลได้ด้วยเช่นกัน\n“หุ่นยนต์ให้บริการผู้ป่วยนอก Mr.SAM” จะช่วยแนะนำบริการและให้ข้อมูลต่างๆ กับผู้มารับบริการภายในโรงพยาบาลจุฬาลงกรณ์ หากไม่เข้าใจขั้นตอนการบริการหรือไม่ทราบเส้นทาง สามารถค้นหาข้อมูลกับ“หุ่นยนต์ให้บริการผู้ป่วยนอก Mr.SAM” ได้เลย อาทิ สอบถามเส้นทาง, ห้องน้ำ, สถานที่ต่างๆ ภายในโรงพยาบาล เป็นต้น\n“หุ่นยนต์ให้บริการผู้ป่วยนอก Mr.SAM” จะช่วยคัดกรองอาการผู้ที่มารับบริการครั้งแรกหรือมาผิดนัดพบแพทย์ ซึ่งเดิมผู้มารับบริการจะต้องพบพยาบาลเพื่อทำการซักประวัติ และคัดกรองอาการเบื้องต้นก่อนส่งขึ้นชั้นตรวจทุกราย ซึ่งในบางช่วงเวลาหรือบางวันมีปริมาณผู้ป่วยจำนวนมาก ทำให้ผู้รับบริการต้องใช้เวลารอคอยรับบริการนาน จากเหตุนี้ ฝ่ายผู้ป่วยสัมพันธ์ โรงพยาบาลจุฬาลงกรณ์จะดำเนินการพัฒนาโปรแกรมในหุ่นยนต์ให้มีประสิทธิภาพมากยิ่งขึ้น เพื่อลดขั้นตอนบริการให้กับผู้มาใช้บริการภายในโรงพยาบาลได้สำเร็จฉับไว ในอนาคตจะเริ่มทดลองใช้งานให้หุ่นยนต์ช่วยคัดกรองอาการและ triage อาการเร่งด่วนฉุกเฉินได้ จะช่วยลดระยะเวลาการรอคอยของผู้ป่วยในเคสที่ไม่ซับซ้อนจะสามารถส่งขึ้นพบแพทย์ได้เลย ทำให้การบริการรวดเร็วขึ้น\nIMG_4120\nIMG_4127\nIMG_4128\nIMG_4129\nIMG_4161\nIMG_4169\nIMG_4189\nIMG_4209\nIMG_4255\nIMG_4279\nIMG_4305\nIMG_4329\nIMG_4372\nIMG_4380\nIMG_4409\nIMG_4412\nIMG_4434 copy\nIMG_4500\nIMG_4510\nIMG_4600\nกลับไปหน้าข่าวประชาสัมพันธ์\nMDCU AT HOME 2023: MOVIE NIGHT (9)\nMDCU Teaching Academy EP.18 Neuroscience of Empathy\nAbout Post Author\nprmdcu\nเกี่ยวกับเรา\nประวัติและวิสัยทัศน์\nคณะผู้บริหาร\nคณาจารย์\nฝ่ายวิจัย\nผลงานและรางวัล\nฝ่ายวิรัชกิจ\nโรงพยาบาลจุฬาลงกรณ์ สภากาชาดไทย\nสภากาชาดไทย\nข้อมูลและสถิติ\nโรงพยาบาลโรงเรียนแพทย์คุณธรรม / Code of Conduct\nมูลนิธิคณะแพทยศาสตร์ จุฬาลงกรณ์\nข่าวประชาสัมพันธ์\nEvent Calendar\nอินทราเน็ต / ลิ้งค์\nE-Learning\nHelp Desk\nติดต่อเรา\nหลักสูตร\nปริญญาบัณฑิต\nหลักสูตรแพทยศาสตรบัณฑิต\nหลักสูตรแพทยศาสตรบัณฑิต (หลักสูตรนานาชาติ)\nหลักสูตรแพทยศาสตร์ จุฬาฯ (หลักสูตร 2 ปริญญา)\nบัณฑิตศึกษา\nหลักสูตรวิทยาศาสตรมหาบัณฑิต\nหลักสูตรวิทยาศาสตรดุษฎีบัณฑิต\nInternational Joint Ph.D. Programs\nหลักสูตรแพทย์ประจำบ้าน\nหลักสูตรการฝึกอบรมผู้เชี่ยวชาญเฉพาะทาง\nหลักสูตรประกาศนียบัตรบัณฑิตชั้นสูง / ประกาศนียบัตรบัณฑิตทางวิทยาศาสตร์การแพทย์คลินิก\nInternational Training Programs, Electives &  Short  Courses\nภาควิชา\nหน่วยงานภายใน\nไลฟ์สไตล์\nหอพัก\nร้านอาหารและคาเฟ่\nสิ่งอำนวยความสะดวกทางการกีฬา\nสวนสาธารณะ\nรอบรั้วคณะแพทยศาสตร์\n10 MDCU Tips\nหอประวัติคณะแพทยศาสตร์ จุฬาฯ\nห้องเรื่อง ในหลวงอานันทฯ\nบริการ\nวิจัย\nการประชุมวิชาการ\nศูนย์นวัตกรรมทางการแพทย์ CMIC\nหอสมุดคณะแพทยศาสตร์\nศูนย์ความเป็นเลิศด้านภูมิคุ้มกันบำบัดมะเร็ง\nศูนย์ชีววิทยาเชิงระบบ\nศูนย์ห้องปฏิบัติการทางการแพทย์\nMDCU Learning & Innovation\nสื่อสิ่งพิมพ์\nAsian Biomedicine Journal\nจุฬาลงกรณ์เวชสาร\nวารสาร ฬ.จุฬา\nดาวน์โหลด\nข้อมูลการสมัครเรียน\nสมัครงาน\nหนังสือแนะนำคณะแพทย์\nChula Research Magazine\nแผนที่\nประกาศต่างๆ\nหนังสือรายงานประจำปี\nCopyright © 2016- All Right Reserved\nFaculty of Medicine at Chulalongkorn University\nX"
+}

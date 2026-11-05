@@ -29,6 +29,12 @@ export type SeedRecord = {
   notes: string | null;
 };
 
+export function keepReviewedRobot(meta: unknown) {
+  if(!meta || typeof meta!=='object' || Array.isArray(meta)) return false;
+  const record=meta as Record<string,unknown>;
+  return !!(record.companySubmission || record.sourceReview);
+}
+
 function parsePublishedAt(value: string | null) {
   if (!value) return null;
   const parsed = new Date(value);
@@ -176,7 +182,11 @@ export async function seedAtlasData(prisma: PrismaClient, datasetPath = resolve(
 
     if (record.category === "robot_model") {
       const officialUrl = canonicalizeUrl(record.url);
-      await prisma.robotModel.upsert({
+      await prisma.$transaction(async tx => {
+      const current = await tx.$queryRaw<{sourceMeta:unknown}[]>`SELECT "sourceMeta" FROM "RobotModel" WHERE "canonicalName"=${record.canonical_name ?? record.title} FOR UPDATE`;
+      // Background seed sync must not overwrite admin-approved or source-reviewed revisions.
+      if(keepReviewedRobot(current[0]?.sourceMeta)) return;
+      await tx.robotModel.upsert({
         where: { canonicalName: record.canonical_name ?? record.title },
         create: {
           canonicalName: record.canonical_name ?? record.title,
@@ -213,6 +223,7 @@ export async function seedAtlasData(prisma: PrismaClient, datasetPath = resolve(
           } as Prisma.InputJsonValue,
           firstSeenYear: record.published_at ? new Date(record.published_at).getFullYear() : null
         }
+      });
       });
       continue;
     }

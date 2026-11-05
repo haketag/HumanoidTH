@@ -1,0 +1,31 @@
+{
+  "id": "cmujs9wru001du77wh1kqxcjn",
+  "canonicalName": "Mr SAM outpatient service robot",
+  "manufacturer": "King Chulalongkorn Memorial Hospital / Thai Red Cross Society",
+  "developerOrg": "King Chulalongkorn Memorial Hospital / Thai Red Cross Society",
+  "countryOfOrigin": "Thailand",
+  "robotType": "hospital_administrative_service_robot",
+  "embodimentLevel": "mobile_service_robot",
+  "primaryUseCase": "Secondary source; original source appears related to Thai PBS/Thai Red Cross coverage.",
+  "thailandStatus": "observed_in_thailand",
+  "statusConfidence": 0.78,
+  "officialUrl": "https://en.vietnamplus.vn/thailand-introduces-robot-assistants-at-hospital-post276507.vnp",
+  "description": "Hospital service robot deployed for outpatient administrative processes, including patient registration and appointment support.",
+  "sourceMeta": {
+    "title": "Mr SAM",
+    "category": "robot_model",
+    "sourceReview": {
+      "kind": "secondary_news_only",
+      "notes": "Secondary report found; it describes planned March 2024 rollout, not a completed deployment at publication. Photo attributed to Bangkok Post, so no primary-source photo selected.",
+      "scope": "Source attribution and reported functions only; not independent capability or clinical validation.",
+      "status": "partial",
+      "checkedAt": "2026-10-31T18:45:49.197Z",
+      "sourceUrl": "https://en.vietnamplus.vn/thailand-introduces-robot-assistants-at-hospital-post276507.vnp"
+    },
+    "sourcePlatform": "news"
+  },
+  "firstSeenYear": 2024,
+  "lastVerifiedAt": null,
+  "createdAt": "2026-09-27T05:17:09.162Z",
+  "updatedAt": "2026-10-31T11:45:49.197Z"
+}

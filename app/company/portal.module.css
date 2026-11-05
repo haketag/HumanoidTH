@@ -1,0 +1,19 @@
+.portal {max-width:1120px;margin:auto;color:#1e3044;font-family:var(--font-thai-stack)}
+:global(html[data-theme="dark"]) .portal {color:var(--text-primary)}
+:global(html[data-theme="dark"]) :is(.portal header,.card) {border-color:var(--border)}
+:global(html[data-theme="dark"]) :is(.card,.portal input,.portal textarea,.portal select,.portal .secondary) {background:var(--surface);color:var(--text-primary);border-color:var(--border)}
+:global(html[data-theme="dark"]) :is(.eyebrow,.note) {color:var(--text-secondary)}
+:global(html[data-theme="dark"]) :is(.portal a,.portal .secondary) {color:#a8cdf0}
+:global(html[data-theme="dark"]) :is(.badge,.evidence,.portal pre) {background:var(--surface-muted);color:var(--text-primary)}
+:global(html[data-theme="dark"]) .error {background:#321e1c;color:#ffd1c9}
+:global(html[data-theme="dark"]) .success {background:#1c3022;color:#d6efdc}
+.portal header {display:flex;justify-content:space-between;align-items:flex-start;gap:24px;border-bottom:1px solid #dce2e9;padding-bottom:22px;margin-bottom:24px}
+.portal h1 {font-size:30px;margin:4px 0 10px}.portal h2 {margin:28px 0 14px;font-size:22px}.portal h3 {font-size:18px}.portal p {line-height:1.8}.eyebrow {font-size:13px;color:#58708a;margin:0}
+.links {display:flex;flex-wrap:wrap;gap:14px;align-items:center}.portal a {color:#245c90;text-decoration:underline;text-underline-offset:3px}
+.card {background:white;border:1px solid #dce2e9;border-radius:8px;padding:24px;margin:18px 0}.card h2:first-child {margin-top:0}
+.form {display:grid;gap:16px;max-width:800px;margin:18px 0}.portal label {display:grid;gap:7px;font-size:14px;font-weight:500}.portal input,.portal textarea,.portal select {width:100%;min-height:44px;border:1px solid #bdc9d6;border-radius:5px;background:white;padding:10px;color:#1e3044}.portal textarea {resize:vertical}
+.portal button {background:#265f91;color:white;border:1px solid #265f91;border-radius:5px;min-height:44px;padding:10px 18px;cursor:pointer;justify-self:start}.portal button:disabled {opacity:.55;cursor:wait}.portal .secondary {color:#265f91;background:white}
+.portal :focus-visible {outline:3px solid #7ea4cb;outline-offset:3px}.portal .check {display:flex;align-items:flex-start;gap:10px}.check input {width:20px;min-height:20px;flex-shrink:0;margin-top:4px}
+.badge {display:inline-block;background:#eef3f8;color:#325875;border-radius:4px;padding:4px 10px;font-size:12px;font-weight:500}.note {font-size:12px;color:#5a6878}.error,.success {border-left:3px solid;padding:14px 18px;white-space:pre-wrap}.error {background:#fff1ef;border-color:#ad4036}.success {background:#edf5f0;border-color:#447558}.evidence {white-space:pre-wrap;padding:14px;background:#f3f6f9}
+.portal pre {white-space:pre-wrap;overflow-wrap:anywhere;background:#f4f6f8;padding:16px;font-size:12px;max-height:420px;overflow:auto}.columns,.compare {display:grid;grid-template-columns:1fr 1fr;gap:18px}.compare>div {min-width:0}.portal summary {cursor:pointer;min-height:44px;padding:10px 0}.portal small {overflow-wrap:anywhere}
+@media(max-width:650px){.portal header{flex-direction:column}.columns,.compare{grid-template-columns:1fr}.card{padding:18px}.portal h1{font-size:26px}.links{gap:12px}}

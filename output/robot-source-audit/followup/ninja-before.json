@@ -1,0 +1,31 @@
+{
+  "id": "cmujs9wr8000ru77wosumdha0",
+  "canonicalName": "Ninja Robot",
+  "manufacturer": "Chulalongkorn University / CU-RoboCOVID partners",
+  "developerOrg": "Chulalongkorn University / CU-RoboCOVID partners",
+  "countryOfOrigin": "Thailand",
+  "robotType": "medical_telepresence_robot",
+  "embodimentLevel": "mobile_non_humanoid_robot",
+  "primaryUseCase": "Secondary source; verify against Chula or project source if possible.",
+  "thailandStatus": "observed_in_thailand",
+  "statusConfidence": 0.78,
+  "officialUrl": "https://www.nationthailand.com/tech/30385613",
+  "description": "Hospital support robot used during COVID-19 to connect monitors and send patient data such as blood pressure, pulse, and temperature to doctors.",
+  "sourceMeta": {
+    "title": "Ninja Robot",
+    "category": "robot_model",
+    "sourceReview": {
+      "kind": "university_news_access_limited",
+      "notes": "Indexed Chula report describes telepresence and vital-sign monitoring. Stage source fails TLS validation. Original article at Nation remains in the database; no generic CU-RoboCOVID image substituted.",
+      "scope": "Source attribution and reported functions only; not independent capability or clinical validation.",
+      "status": "partial",
+      "checkedAt": "2026-10-31T18:45:49.197Z",
+      "sourceUrl": "https://web-stage.ccc.chula.ac.th/en/news/33484/"
+    },
+    "sourcePlatform": "news"
+  },
+  "firstSeenYear": 2020,
+  "lastVerifiedAt": null,
+  "createdAt": "2026-09-27T05:17:09.141Z",
+  "updatedAt": "2026-10-31T11:45:49.197Z"
+}

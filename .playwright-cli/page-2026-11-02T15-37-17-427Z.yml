@@ -1,0 +1,68 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - img "Thailand Humanoid Atlas" [ref=e8]
+    - generic [ref=e9]:
+      - paragraph [ref=e10]: Thailand Humanoid
+      - heading "Ecosystem Atlas" [level=1] [ref=e11]
+    - generic [ref=e14]:
+      - generic [ref=e15]: CONNECTING
+      - generic [ref=e16]: 0%
+  - generic [ref=e17]:
+    - complementary [ref=e18]:
+      - img "Thailand Humanoid Atlas" [ref=e20]
+      - navigation "Primary" [ref=e22]:
+        - link "Company Portal" [ref=e23] [cursor=pointer]:
+          - /url: /company
+        - link "Companies" [ref=e29] [cursor=pointer]:
+          - /url: /companies
+        - link "Favorites" [ref=e36] [cursor=pointer]:
+          - /url: /favorites
+        - link "Humanoid Match" [ref=e40] [cursor=pointer]:
+          - /url: /match
+        - link "Overview" [ref=e45] [cursor=pointer]:
+          - /url: /
+        - link "Dashboard" [ref=e50] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Data Pulls" [ref=e57] [cursor=pointer]:
+          - /url: /data-pulls
+        - link "Map" [ref=e62] [cursor=pointer]:
+          - /url: /map
+        - link "Network" [ref=e68] [cursor=pointer]:
+          - /url: /network
+        - link "Perspectives" [ref=e75] [cursor=pointer]:
+          - /url: /perspectives
+        - link "Robots" [ref=e80] [cursor=pointer]:
+          - /url: /robots
+        - link "Inventory" [ref=e85] [cursor=pointer]:
+          - /url: /inventory
+        - link "Contributors" [ref=e91] [cursor=pointer]:
+          - /url: /contributions
+        - link "Analytics" [ref=e97] [cursor=pointer]:
+          - /url: /analytics
+        - link "Database" [ref=e101] [cursor=pointer]:
+          - /url: /database
+        - link "Submit" [ref=e107] [cursor=pointer]:
+          - /url: /submit-data
+        - link "Admin" [ref=e112] [cursor=pointer]:
+          - /url: /admin
+        - link "Profile" [ref=e117] [cursor=pointer]:
+          - /url: /profile
+      - generic [ref=e124]:
+        - button "English" [ref=e125] [cursor=pointer]:
+          - generic [ref=e126]: 🇬🇧
+          - generic [ref=e127]: EN
+        - button "ภาษาไทย" [ref=e128] [cursor=pointer]:
+          - generic [ref=e129]: 🇹🇭
+          - generic [ref=e130]: TH
+    - main [ref=e131]:
+      - generic [ref=e132]:
+        - generic [ref=e133]:
+          - generic [ref=e134]:
+            - paragraph [ref=e135]: HumanoidTH / Company Portal
+            - heading "ร่วมเพิ่มข้อมูลในนามบริษัท" [level=1] [ref=e136]
+            - paragraph [ref=e137]: ส่งข้อมูลที่ตรวจสอบที่มาได้ ผู้ดูแลตรวจสิทธิ์และอนุมัติก่อนเผยแพร่
+          - link "บริษัทที่เผยแพร่แล้ว" [ref=e139] [cursor=pointer]:
+            - /url: /companies
+        - status [ref=e140]: กำลังโหลดข้อมูล…
+    - button "Run data pull" [ref=e141] [cursor=pointer]
+  - alert [ref=e147]

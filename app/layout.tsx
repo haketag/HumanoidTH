@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { IBM_Plex_Sans_Thai, Inter } from "next/font/google";
@@ -6,10 +7,11 @@ import LanguageSelector from "./components/LanguageSelector";
 import MobileHeader from "./components/MobileHeader";
 import MobileTabNav from "./components/MobileTabNav";
 import DataPullFab from "./components/DataPullFab";
-import FirstTimeLoader from "./components/FirstTimeLoader";
 import { getTranslation } from "@/lib/translations";
 import { defaultSeoDescription, getSiteUrl, siteName } from "@/lib/seo";
 import "./globals.css";
+import { FavoritesProvider } from './components/FavoritesProvider';
+import ThemeToggle, { ThemeProvider } from './components/ThemeToggle';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -97,6 +99,7 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const cookieStore = await cookies();
+  const theme = cookieStore.get('theme')?.value === 'dark' ? 'dark' : 'light';
   const lang = (cookieStore.get("lang")?.value || "en") as "en" | "th";
   const t = getTranslation(lang);
   const siteUrl = getSiteUrl();
@@ -129,30 +132,35 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   };
 
   return (
-    <html lang={lang} className={`${inter.variable} ${ibmPlexSansThai.variable}`}>
+    <html lang={lang} data-theme={theme} className={`${inter.variable} ${ibmPlexSansThai.variable}`}>
       <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
-        <FirstTimeLoader />
+        <ThemeProvider initialTheme={theme}>
+        <FavoritesProvider>
         <div className="app-shell">
-          <MobileHeader />
+          <MobileHeader lang={lang} />
           <aside className="sidebar">
-            <div className="brand-logo-container">
-              <img src="/logo.png" alt="Thailand Humanoid Atlas" className="brand-logo" />
-            </div>
-            <div style={{ flex: 1, overflowY: "auto", paddingRight: "4px" }}>
+            <Link href="/" className="brand-logo-container">
+              <img src="/logo.png" alt="" className="brand-logo" />
+              <span>HumanoidTH</span>
+            </Link>
+            <div className="sidebar-scroll">
               <SidebarNav currentLang={lang} />
             </div>
-            <div style={{ paddingTop: "14px", borderTop: "1px solid #14352a", marginTop: "auto" }}>
+            <div className="sidebar-settings">
+              <ThemeToggle lang={lang}/>
               <LanguageSelector currentLang={lang} />
             </div>
           </aside>
-          <main className="main motion-page">{children}</main>
+          <main className="main">{children}</main>
           <DataPullFab />
           <MobileTabNav currentLang={lang} />
         </div>
+        </FavoritesProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

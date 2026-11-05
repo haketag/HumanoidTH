@@ -1,0 +1,66 @@
+{
+  "checkedAt": "2026-10-31T18:56:22.000Z",
+  "imagesAdded": 5,
+  "researchPapersAdded": 1,
+  "selected": [
+    {
+      "name": "Dinsaw Mini Home AI Assistance",
+      "candidate": "Dinsaw Mini Home AI Assistance",
+      "credit": "CT Asia Robotics / Dinsaw",
+      "caption": "Dinsaw Mini Home AI — manufacturer product artwork.",
+      "notes": "Manufacturer product page and labelled product image found. Home AI is distinguished from IPD and Pro4. Manufacturer care claims are not clinical validation.",
+      "file": "C:\\Users\\oknan\\HumanoidTH\\output\\robot-source-audit\\followup\\813c420059ba.jpg",
+      "sha256": "64588f0605b8a0fb1c57ed031aec5e059c147ef60f2148df58dbccf50166d356",
+      "source": "https://www.dinsaw.com/dinsaw-mini-home-ai/",
+      "original": "https://www.dinsaw.com/wp-content/uploads/2023/09/Cover-Product_Dinsaw-mini-Home-AI.jpg",
+      "url": "/images/robots/sourced/followup-813c420059ba.jpg"
+    },
+    {
+      "name": "Exoskeleton Wheelchair Robot",
+      "candidate": "Exoskeleton paper figure 3",
+      "credit": "Ronnapee Chaichaowarat, Sarunpat Prakthong and Siri Thitipankul / Robotics 2023, 12(1), 16, Figure 3",
+      "caption": "2023 alpha prototype in standing and wheelchair configurations — Figure 3, DOI: 10.3390/robotics12010016. Unmodified image.",
+      "notes": "Original 2023 journal paper and 2025 ISE university project page checked. Image depicts the 2023 alpha prototype, not a certified clinical product or an assumed later hardware revision.",
+      "rights": "CC BY 4.0 — https://creativecommons.org/licenses/by/4.0/; original image unchanged.",
+      "file": "C:\\Users\\oknan\\HumanoidTH\\output\\robot-source-audit\\followup\\a4ad5e6dd7ed.png",
+      "sha256": "0ca4930482173c1c029e7ac8a966a1695eeb83af8e9f19959810a4fb0ed0e866",
+      "source": "https://www.mdpi.com/2218-6581/12/1/16",
+      "original": "https://pub.mdpi-res.com/robotics/robotics-12-00016/article_deploy/html/images/robotics-12-00016-g003.png",
+      "url": "/images/robots/sourced/followup-a4ad5e6dd7ed.png"
+    },
+    {
+      "name": "SR1 Security Robot",
+      "candidate": "SR1 Security Robot",
+      "credit": "MQDC / Obodroid",
+      "caption": "SR1 handover at Whizdom Station Ratchada-Thapra, reported by project operator MQDC in March 2022.",
+      "notes": "Operator MQDC explicitly identifies SR1 and publishes the handover photograph. Original Obodroid image download remains unavailable; this is a project-operator source, not independent performance validation.",
+      "file": "C:\\Users\\oknan\\HumanoidTH\\output\\robot-source-audit\\followup\\054e78f76d88.jpg",
+      "sha256": "9e175f6efb922a1adb60267c4eef593e6a2d40c00c6c228d31a6a4929e02a9e7",
+      "source": "https://mqdc.com/news/354-robot-helpers-start-work-at-whizdom-station-ratchada-thapra",
+      "original": "https://mqdc.com/storage/uploads/mqdc_backend/originals/303b0f90-890f-4019-9e05-99250d15e341.jpg",
+      "url": "/images/robots/sourced/followup-054e78f76d88.jpg"
+    },
+    {
+      "name": "Pinto Robot",
+      "file": "C:\\Users\\oknan\\HumanoidTH\\output\\robot-source-audit\\followup\\page-109-0-Im0.jpg",
+      "source": "https://www.dop.go.th/download/statistics/th1635826412-975_0.pdf#page=109",
+      "credit": "Chulalongkorn University image reproduced in Situation of the Thai Older Persons 2020 / Department of Older Persons, printed p.107",
+      "caption": "Pinto — image embedded in the official report, section 4.7.2 (PDF page 109).",
+      "notes": "Official government report explicitly labels Pinto in section 4.7.2. The adjacent embedded image was verified by its PDF placement. This is an official report reproducing a university image, not a journal research paper.",
+      "sha256": "e0fbc473d082b8cd3a3cb8a053e9a03e3149a49924b4f5fd867bfdde5064bf66",
+      "original": "https://www.dop.go.th/download/statistics/th1635826412-975_0.pdf#page=109",
+      "url": "/images/robots/sourced/followup-page-109-0-Im0.jpg"
+    },
+    {
+      "name": "Mirror Telepresence System",
+      "file": "C:\\Users\\oknan\\HumanoidTH\\output\\robot-source-audit\\followup\\page-109-3-Im3.jpg",
+      "source": "https://www.dop.go.th/download/statistics/th1635826412-975_0.pdf#page=109",
+      "credit": "Chulalongkorn University image reproduced in Situation of the Thai Older Persons 2020 / Department of Older Persons, printed p.107",
+      "caption": "Mirror — image embedded in the official report, section 4.7.3 (PDF page 109).",
+      "notes": "Official government report explicitly labels Mirror in section 4.7.3. The adjacent embedded image was verified by its PDF placement. This is an official report reproducing a university image, not a journal research paper.",
+      "sha256": "1912a5590f66ef054a85ae21bff757ffe4a22069b2ed2a0740690661a9f97606",
+      "original": "https://www.dop.go.th/download/statistics/th1635826412-975_0.pdf#page=109",
+      "url": "/images/robots/sourced/followup-page-109-3-Im3.jpg"
+    }
+  ]
+}

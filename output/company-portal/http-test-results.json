@@ -1,0 +1,216 @@
+{
+  "isolatedDatabase": true,
+  "checks": 52,
+  "results": [
+    {
+      "action": "draft",
+      "status": 401
+    },
+    {
+      "action": "login",
+      "status": 413
+    },
+    {
+      "action": "review",
+      "status": 401
+    },
+    {
+      "action": "register",
+      "status": 200
+    },
+    {
+      "action": "register",
+      "status": 200
+    },
+    {
+      "action": "/api/company?view=review",
+      "status": 403
+    },
+    {
+      "action": "login",
+      "status": 200
+    },
+    {
+      "action": "access",
+      "status": 200
+    },
+    {
+      "action": "draft",
+      "status": 403
+    },
+    {
+      "action": "/api/company?view=review",
+      "status": 200
+    },
+    {
+      "action": "review",
+      "status": 403
+    },
+    {
+      "action": "review",
+      "status": 200
+    },
+    {
+      "action": "draft",
+      "status": 403
+    },
+    {
+      "action": "draft",
+      "status": 200
+    },
+    {
+      "action": "/companies/80cc2710-6a8e-4e16-9feb-a9a3dcdda2e1",
+      "status": 200
+    },
+    {
+      "action": "/api/company?view=company&id=80cc2710-6a8e-4e16-9feb-a9a3dcdda2e1",
+      "status": 404
+    },
+    {
+      "action": "/api/company?view=companies",
+      "status": 200
+    },
+    {
+      "action": "submit",
+      "status": 200
+    },
+    {
+      "action": "review",
+      "status": 200
+    },
+    {
+      "action": "save",
+      "status": 200
+    },
+    {
+      "action": "submit",
+      "status": 200
+    },
+    {
+      "action": "review",
+      "status": 200
+    },
+    {
+      "action": "/companies/80cc2710-6a8e-4e16-9feb-a9a3dcdda2e1",
+      "status": 200
+    },
+    {
+      "action": "/api/company?view=company&id=80cc2710-6a8e-4e16-9feb-a9a3dcdda2e1",
+      "status": 200
+    },
+    {
+      "action": "draft",
+      "status": 200
+    },
+    {
+      "action": "submit",
+      "status": 200
+    },
+    {
+      "action": "/companies/80cc2710-6a8e-4e16-9feb-a9a3dcdda2e1",
+      "status": 200
+    },
+    {
+      "action": "review",
+      "status": 200
+    },
+    {
+      "action": "draft",
+      "status": 200
+    },
+    {
+      "action": "/robots",
+      "status": 200
+    },
+    {
+      "action": "submit",
+      "status": 200
+    },
+    {
+      "action": "review",
+      "status": 200
+    },
+    {
+      "action": "review",
+      "status": 409
+    },
+    {
+      "action": "/robots",
+      "status": 200
+    },
+    {
+      "action": "/robots/4e7c210d-496f-45ec-ac25-a912b70af1ce",
+      "status": 200
+    },
+    {
+      "action": "save",
+      "status": 409
+    },
+    {
+      "action": "draft",
+      "status": 422
+    },
+    {
+      "action": "draft",
+      "status": 422
+    },
+    {
+      "action": "draft",
+      "status": 200
+    },
+    {
+      "action": "submit",
+      "status": 200
+    },
+    {
+      "action": "review",
+      "status": 200
+    },
+    {
+      "action": "/contributions",
+      "status": 200
+    },
+    {
+      "action": "logout",
+      "status": 200
+    },
+    {
+      "action": "/api/company",
+      "status": 401
+    },
+    {
+      "action": "/company",
+      "status": 200
+    },
+    {
+      "action": "/company-review",
+      "status": 200
+    },
+    {
+      "action": "/companies",
+      "status": 200
+    },
+    {
+      "action": "/profile",
+      "status": 200
+    },
+    {
+      "action": "/submit-data",
+      "status": 200
+    },
+    {
+      "action": "/match",
+      "status": 200
+    },
+    {
+      "action": "/favorites",
+      "status": 200
+    },
+    {
+      "action": "/database?table=submissions",
+      "status": 200
+    }
+  ],
+  "concurrentRows": 1,
+  "allPassed": true
+}
