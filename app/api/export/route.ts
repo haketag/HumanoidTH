@@ -6,6 +6,8 @@ export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const table = searchParams.get("table") || "sources";
+  const allowedTables = new Set(["sources", "robots", "contributions", "submissions", "perspective_annotations", "pull_jobs"]);
+  if (!allowedTables.has(table)) return NextResponse.json({ error: "Invalid export table" }, { status: 400 });
 
   let data: any[] = [];
 
@@ -45,6 +47,8 @@ export async function GET(req: NextRequest) {
   const escapeCSVValue = (val: any) => {
     if (val === null || val === undefined) return "";
     let str = typeof val === "object" ? JSON.stringify(val) : String(val);
+    // Spreadsheet applications can execute formulas embedded in untrusted text fields.
+    if (typeof val === "string" && /^[\s\u0000-\u001f]*[=+\-@]/.test(str)) str = `'${str}`;
     // Escape double quotes by doubling them
     str = str.replace(/"/g, '""');
     // Wrap in double quotes if it contains commas, quotes, or newlines

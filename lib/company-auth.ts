@@ -3,6 +3,7 @@ import { promisify } from 'node:util';
 import { cookies } from 'next/headers';
 import { prisma } from './prisma';
 import { Prisma } from '../generated/prisma';
+import { createAdminSessionToken } from './admin-session';
 import { credentials } from './company-validation';
 
 const scrypt = promisify(scryptCallback);
@@ -53,7 +54,8 @@ export async function authenticate(input: unknown, register: boolean) {
   const old = jar.get(companyCookie)?.value;
   if (old) await prisma.$executeRaw`DELETE FROM "CompanySession" WHERE "tokenHash"=${tokenHash(old)}`;
   jar.set(companyCookie, token, { httpOnly:true, secure:process.env.NODE_ENV==='production', sameSite:'lax', path:'/', expires });
-  if(user.isAdmin) jar.set('admin_session','true',{httpOnly:true,secure:process.env.NODE_ENV==='production',sameSite:'lax',path:'/',expires});
+  const adminToken = user.isAdmin ? await createAdminSessionToken(process.env.ADMIN_SESSION_SECRET) : null;
+  if (adminToken) jar.set('admin_session', adminToken, {httpOnly:true,secure:process.env.NODE_ENV==='production',sameSite:'lax',path:'/',expires});
   else jar.delete('admin_session');
   return {id:user.id,email:user.email,name:user.name,isAdmin:user.isAdmin};
 }

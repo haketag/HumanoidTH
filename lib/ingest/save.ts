@@ -29,7 +29,7 @@ export async function saveSources(records: NormalizedSource[]) {
 
     let geminiResult: any = null;
 
-    if (process.env.GEMINI_API_KEY) {
+    if (process.env.GEMINI_API_KEY && process.env.GEMINI_MODEL) {
       try {
         geminiResult = await classifyWithGemini(record.title, record.excerpt ?? "");
         relevance = {
@@ -45,7 +45,7 @@ export async function saveSources(records: NormalizedSource[]) {
             targetEntity: geminiResult.targetEntity,
             evidenceExcerpt: geminiResult.evidenceExcerpt,
             confidence: geminiResult.confidence,
-            method: "gemini-1.5-flash"
+            method: `gemini:${process.env.GEMINI_MODEL}`
           };
         }
       } catch (error) {
@@ -60,6 +60,16 @@ export async function saveSources(records: NormalizedSource[]) {
       if (relevance.relevanceStatus === "ACCEPTED") {
         annotation = { ...extractPerspective(record.title, record.excerpt), method: "rules_with_evidence" };
       }
+    }
+
+    // Keep the record for provenance, but do not surface a retracted work as accepted evidence.
+    if (record.sourceType === "OPENALEX" && record.rawMeta?.isRetracted === true) {
+      relevance = {
+        relevanceStatus: "REJECTED",
+        relevanceReason: "OpenAlex marks this work as retracted",
+        relevanceConfidence: 1
+      };
+      annotation = null;
     }
 
     const source = await prisma.sourceRecord.upsert({

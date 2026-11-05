@@ -93,6 +93,7 @@ export default async function RobotsPage() {
               <p><span className="badge">{robot.robotType}</span> <span className="badge">{robot.thailandStatus}</span></p>
               <p><strong>{robot.manufacturer ?? robot.developerOrg ?? "Unknown developer"}</strong><br />{robot.primaryUseCase ?? "Use case unclassified"}</p>
               {robot.officialUrl && <a href={robot.officialUrl} target="_blank" rel="noopener noreferrer">Source</a>}
+              <div style={{ marginTop: 10 }}><Link className="button" href={`/research-assistant?q=${encodeURIComponent(`What evidence and limitations are available for ${robot.canonicalName}?`)}`}>Ask Research Assistant</Link></div>
             </article>
           );
         })}

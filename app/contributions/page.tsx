@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
+import Link from "next/link";
 import { getTranslation } from "@/lib/translations";
 
 export const dynamic = "force-dynamic";
@@ -39,9 +40,20 @@ export const metadata: Metadata = {
   q?: string;
 }>;
 
+const reviewStatusOptions = [
+  ["QUEUED", "Queued"],
+  ["FETCHING", "Fetching"],
+  ["ANALYZED", "Analyzed"],
+  ["NEEDS_REVIEW", "Needs review"],
+  ["APPROVED", "Approved"],
+  ["REJECTED", "Rejected"],
+  ["FAILED", "Failed"]
+] as const;
+
 export default async function ContributionsPage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams;
   const { type, org, robot, status, q } = params;
+  const statusIsValid = !status || reviewStatusOptions.some(([value]) => value === status);
 
   const cookieStore = await cookies();
   const lang = (cookieStore.get("lang")?.value || "en") as "en" | "th";
@@ -52,7 +64,7 @@ export default async function ContributionsPage({ searchParams }: { searchParams
   if (type) where.contributionType = type;
   if (org) where.organization = org;
   if (robot) where.relatedRobotModelId = robot;
-  if (status) where.verificationStatus = status;
+  if (statusIsValid && status) where.verificationStatus = status;
   if (q) {
     where.OR = [
       { title: { contains: q, mode: "insensitive" } },
@@ -64,6 +76,7 @@ export default async function ContributionsPage({ searchParams }: { searchParams
   let dbItems: any[] = [];
   let dbRobots: any[] = [];
   let dbOrganizations: any[] = [];
+  let queryFailed = false;
 
   try {
     const [resItems, resRobots, resOrgs] = await Promise.all([
@@ -84,6 +97,7 @@ export default async function ContributionsPage({ searchParams }: { searchParams
     dbRobots = resRobots;
     dbOrganizations = resOrgs;
   } catch (error) {
+    queryFailed = true;
     console.error("Failed to query contributions in contributions page:", error);
   }
 
@@ -179,12 +193,10 @@ export default async function ContributionsPage({ searchParams }: { searchParams
         </label>
 
         <label style={{ fontSize: "12px", display: "flex", flexDirection: "column", gap: "4px" }}>
-          Verification Status
+          Review Status
           <select name="status" defaultValue={status || ""}>
             <option value="">All Statuses</option>
-            <option value="VERIFIED">Verified</option>
-            <option value="UNVERIFIED">Unverified</option>
-            <option value="FLAGGED">Flagged</option>
+            {reviewStatusOptions.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
           </select>
         </label>
 
@@ -195,6 +207,9 @@ export default async function ContributionsPage({ searchParams }: { searchParams
 
         <button type="submit" className="primary submit-btn" style={{ minHeight: "36px" }}>Apply</button>
       </form>
+
+      {!statusIsValid && <p role="alert" className="notice">Unknown review status filter. Choose a status from the list.</p>}
+      {queryFailed && <p role="alert" className="notice">Could not load contributions. Please retry after checking the database connection.</p>}
 
       {/* Contributions Table */}
       <div className="table-wrap">
@@ -218,6 +233,8 @@ export default async function ContributionsPage({ searchParams }: { searchParams
                   <strong>{item.title}</strong>
                   <br />
                   <span className="muted" style={{ fontSize: "12px" }}>By {item.contributorName}</span>
+                  <br />
+                  <Link href={`/research-assistant?q=${encodeURIComponent(`What evidence and limitations are reported for ${item.title}?`)}`} style={{ fontSize: 12 }}>{lang === "th" ? "ถามผู้ช่วยจากรายการนี้" : "Ask assistant about this record"}</Link>
                 </td>
                 <td>
                   <span className="badge type-badge">

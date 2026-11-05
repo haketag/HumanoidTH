@@ -4,8 +4,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+
 }
 
 enum SourceType {
@@ -203,6 +204,41 @@ model SubmittedData {
 
   @@index([status])
   @@index([submissionType])
+}
+
+model LivingLabPlan {
+  id                 String                   @id @default(cuid())
+  ownerTokenHash     String
+  title              String
+  objective          String                   @default("")
+  steps              String                   @default("")
+  question           String
+  role               String                   @default("general")
+  participantGroup   String                   @default("")
+  participantCount   String                   @default("")
+  siteContext        String                   @default("")
+  activityGoal       String                   @default("")
+  sessionLength      String                   @default("")
+  staffing           String                   @default("")
+  readinessNotes     String                   @default("")
+  evidence           Json                     @default("[]")
+  evidenceSnapshotAt DateTime                 @default(now())
+  revisions          LivingLabPlanRevision[]
+  createdAt          DateTime                 @default(now())
+  updatedAt          DateTime                 @updatedAt
+
+  @@index([ownerTokenHash, updatedAt])
+}
+
+model LivingLabPlanRevision {
+  id         String       @id @default(cuid())
+  planId     String
+  plan       LivingLabPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  snapshot   Json
+  feedback   String       @default("")
+  createdAt  DateTime     @default(now())
+
+  @@index([planId, createdAt])
 }
 
 model PipelineRun {
