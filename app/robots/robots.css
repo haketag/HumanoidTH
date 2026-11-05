@@ -1,0 +1,34 @@
+.robot-title-link { color: var(--text-primary); }
+.robot-title-link:hover { color: var(--accent); }
+.robot-source-button, .robot-details-button { min-height: 44px; margin: 6px 6px 6px 0; font-weight: 600; }
+.robot-source-button svg, .robot-contact svg { flex-shrink: 0; }
+.robot-detail { max-width: 1200px; margin-inline: auto; overflow-wrap: anywhere; }
+.robot-back { display: inline-flex; gap: 8px; align-items: center; min-height: 44px; margin-bottom: 20px; }
+.robot-detail-header { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 28px; }
+.robot-detail-header h1 { font-size: clamp(28px, 3vw, 44px); line-height: 1.3; text-wrap: balance; }
+.robot-detail-header p { margin: 0 0 8px; }
+.robot-detail-hero { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,1fr); gap: clamp(20px,3vw,44px); align-items: start; }
+.robot-detail-image .card-banner { margin: 0; height: clamp(260px,32vw,440px); border: 1px solid var(--border); border-radius: 16px; background: var(--surface-muted); }
+.robot-detail-image img { padding: 10px; }
+.robot-detail-summary > p { line-height: 1.8; }
+.robot-facts { margin: 24px 0; }
+.robot-facts > div { display: grid; grid-template-columns: 1fr 1.5fr; gap: 16px; padding: 12px 0; border-top: 1px solid var(--border); }
+.robot-facts dt { color: var(--text-secondary); }
+.robot-facts dd { margin: 0; }
+.robot-source-hint { font-size: 12px; }
+.robot-detail-section { margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--border); }
+.robot-detail-section h2 { display: flex; align-items: center; gap: 10px; font-size: 23px; }
+.robot-research { padding: 22px; margin-top: 16px; background: var(--surface-muted); border-radius: 12px; }
+.robot-research h3 { margin: 0; font-size: 18px; line-height: 1.5; }
+.robot-research > .muted:first-child { margin-top: 0; font-size: 12px; }
+.robot-contact { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 18px; padding: clamp(20px,3vw,36px); margin-top: 40px; border: 1px solid var(--border); border-radius: 16px; background: var(--surface-muted); }
+.robot-contact > div { flex: 1; min-width: 200px; }
+.robot-contact p { margin: 8px 0; }
+.robot-contact .button { min-height: 44px; }
+.robot-detail a:focus-visible, .robot-title-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+@media (max-width: 700px) {
+  .robot-detail-hero { grid-template-columns: minmax(0,1fr); }
+  .robot-detail-header { align-items: flex-start; flex-direction: column; gap: 8px; }
+  .robot-detail-image .card-banner { height: 300px; }
+  .robot-facts > div { grid-template-columns: minmax(0,1fr); gap: 4px; }
+}
