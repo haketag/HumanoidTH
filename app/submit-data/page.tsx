@@ -1,10 +1,10 @@
 import { cookies } from "next/headers";
 import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
-import { createSubmission } from "@/app/actions";
 import Link from 'next/link';
 import { currentActor } from '@/lib/company-auth';
 import { getTranslation } from "@/lib/translations";
+import SubmissionForm from "./SubmissionForm";
 
 export const dynamic = "force-dynamic";
 
@@ -42,7 +42,8 @@ export const metadata: Metadata = {
     accountName: "Display Name",
     accountButton: "Create Account / Continue",
     accountHint: "Already have an account? Use the same email to continue.",
-    type: "Submission Type",
+    type: "Where should this data go?",
+    destinationHint: "Choose a destination. An administrator will review your submission before publication.",
     title: "Title / Identifier",
     refUrl: "Reference URL",
     desc: "Description / Core Source Notes",
@@ -70,7 +71,8 @@ export const metadata: Metadata = {
     accountName: "ชื่อที่แสดง",
     accountButton: "สร้างบัญชี / ดำเนินการต่อ",
     accountHint: "มีบัญชีแล้ว? ใช้อีเมลเดิมเพื่อดำเนินการต่อ",
-    type: "ประเภทข้อมูล",
+    type: "ต้องการส่งข้อมูลไปที่ไหน",
+    destinationHint: "เลือกปลายทางของข้อมูล ผู้ดูแลระบบจะตรวจสอบก่อนเผยแพร่",
     title: "ชื่อเรื่อง / ตัวระบุข้อมูล",
     refUrl: "ลิงก์อ้างอิง",
     desc: "คำอธิบาย / หมายเหตุแหล่งข้อมูล",
@@ -131,45 +133,7 @@ export default async function SubmitDataPage() {
       )}
 
       <div className="two" style={{ gap: 16 }}>
-        <form className="form panel" action={createSubmission} aria-disabled={!currentUser}>
-          {currentUser && (
-            <div className="notice">
-              {localT.signedInAs}: <strong>{currentUser.name || currentUser.email}</strong>
-            </div>
-          )}
-
-          <label>
-            {localT.type}
-            <select name="submissionType" required disabled={!currentUser}>
-              <option value="source_url">Source URL (News, Article, Blog)</option>
-              <option value="robot_model">Robot Model Spec</option>
-              <option value="owned_inventory_update">Owned Inventory Unit Update</option>
-              <option value="contribution_claim">Contribution Claim (Paper, Repo)</option>
-              <option value="event_demo_record">Event or Public Demo Record</option>
-              <option value="correction_request">Database Correction Request</option>
-            </select>
-          </label>
-
-          <label>
-            {localT.title}
-            <input name="title" required disabled={!currentUser} placeholder="e.g. NAO Robot deployment at KMUTT, Dinsaw Mini review" />
-          </label>
-
-          <label>
-            {localT.refUrl}
-            <input name="url" type="url" disabled={!currentUser} placeholder="https://example.com/source-link" />
-          </label>
-
-          <label>
-            {localT.desc}
-            <textarea name="notes" rows={5} disabled={!currentUser} placeholder="Provide source excerpts, model details, correction notes, or inventory context." />
-          </label>
-
-          <button className="primary" type="submit" disabled={!currentUser} style={{ marginTop: 10 }}>
-            {localT.submitBtn}
-          </button>
-          {!currentUser && <p className="muted" style={{ fontSize: 12, margin: 0 }}>{localT.locked}</p>}
-        </form>
+        <SubmissionForm lang={lang} currentUser={currentUser ? { name: currentUser.name, email: currentUser.email } : null} labels={localT} />
 
         <aside className="panel" style={{ fontSize: 13 }}>
           <h2>{localT.policyTitle}</h2>

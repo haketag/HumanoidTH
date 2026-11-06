@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import Link from 'next/link';
 import { ExternalLink, ArrowUpRight } from "lucide-react";
 import { robotProfile } from "@/lib/robot-profile";
+import { safeUrl } from "@/lib/humanoid-match";
 import "./robots.css";
 import FavoriteButton from '../components/FavoriteButton';
 import RobotSourceImage from '../components/RobotSourceImage';
@@ -87,6 +88,7 @@ export default async function RobotsPage() {
         {robots.map((robot) => {
           const bannerUrl = getRobotSourceImage(robot, sources);
           const profile = robotProfile(robot.sourceMeta, robot.officialUrl);
+          const evidenceUrl = safeUrl((robot.sourceMeta as Record<string, unknown> | null)?.evidenceUrl);
           return (
             <article className="card" key={robot.id}>
               <RobotSourceImage url={bannerUrl} name={robot.canonicalName} sourceMeta={robot.sourceMeta}/>
@@ -98,6 +100,7 @@ export default async function RobotsPage() {
               <p><strong>{robot.manufacturer ?? robot.developerOrg ?? "Unknown developer"}</strong><br />{robot.primaryUseCase ?? "Use case unclassified"}</p>
               {profile.sourceUrl && <a className="button robot-source-button" href={profile.sourceUrl} target="_blank" rel="noopener noreferrer" aria-label={`${lang === "th" ? "เปิดเอกสารต้นทางของ" : "Open original source for"} ${robot.canonicalName} (${lang === "th" ? "แท็บใหม่" : "new tab"})`}><ExternalLink size={16} aria-hidden="true" />{lang === "th" ? "เปิดเอกสารต้นทาง" : "Original source"}</a>}
               <div style={{ marginTop: 10 }}><Link className="button" href={`/research-assistant?q=${encodeURIComponent(`What evidence and limitations are available for ${robot.canonicalName}?`)}`}>Ask Research Assistant</Link></div>
+              {evidenceUrl && <p><a href={evidenceUrl} target="_blank" rel="noopener noreferrer">{lang === "th" ? "หลักฐานที่ส่งมา" : "Submitted evidence"}</a></p>}
             </article>
           );
         })}

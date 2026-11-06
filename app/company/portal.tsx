@@ -15,7 +15,7 @@ function Field({name,label,value='',type='text',required=true,large=false}:{name
   return <label>{label}{large ? <textarea name={name} defaultValue={value} required={required} maxLength={8000} rows={4}/> : <input name={name} type={type} autoComplete={type==='password' ? 'current-password' : type==='email' ? 'email' : undefined} defaultValue={value} required={required} maxLength={type==='password' ? 128 : 2000} minLength={type==='password' ? 12 : undefined}/>}</label>;
 }
 function ProposalEditor({kind,company,initial={},submission,send,busy}:{kind:string;company:Membership;initial?:Record<string,unknown>;submission?:Submission;send:Send;busy:boolean}) {
-  const val=(key:string,fallback='')=>typeof initial[key]==='string' ? initial[key] as string : fallback;
+  const val=(key:string,defaultValue='')=>typeof initial[key]==='string' ? initial[key] as string : defaultValue;
   async function save(event:FormEvent<HTMLFormElement>) {
     event.preventDefault();const f=new FormData(event.currentTarget);const v=(key:string)=>String(f.get(key)||'').trim();
     let proposed:Record<string,unknown>;

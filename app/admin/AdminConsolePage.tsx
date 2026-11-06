@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { getTranslation } from "@/lib/translations";
 import { currentActor } from '@/lib/company-auth';
 import {
+  approvePerspectiveSubmission,
+  approveRobotModelSubmission,
   updateSubmissionStatus,
   upsertContributionAction,
   upsertRobotModelAction,
@@ -16,6 +18,8 @@ export const dynamic = "force-dynamic";
 type SearchParams = Promise<{
   collection?: string;
   selectedId?: string;
+  q?: string;
+  status?: string;
 }>;
 
 type CmsCollection = "source-records" | "robot-models" | "contributions" | "submitted-data";
@@ -32,6 +36,22 @@ const relevanceStatuses = ["PENDING", "ACCEPTED", "REJECTED", "UNCERTAIN"] as co
 const reviewStatuses = ["QUEUED", "FETCHING", "ANALYZED", "NEEDS_REVIEW", "APPROVED", "REJECTED", "FAILED"] as const;
 const visibilityOptions = ["public", "private"] as const;
 const robotStatusOptions = ["observed_in_thailand", "developed_in_thailand", "imported_for_evaluation", "unknown"] as const;
+
+const submissionFieldLabels: Record<string, { en: string; th: string }> = {
+  perspectiveTheme: { en: "Theme", th: "ประเด็นมุมมอง" },
+  stance: { en: "Stance", th: "ท่าที" },
+  sentiment: { en: "Sentiment", th: "ความรู้สึก" },
+  evidenceExcerpt: { en: "Evidence excerpt", th: "ข้อความอ้างอิง" },
+  canonicalName: { en: "Robot model", th: "ชื่อรุ่นหุ่นยนต์" },
+  manufacturer: { en: "Manufacturer", th: "ผู้ผลิต" },
+  developerOrg: { en: "Developer organization", th: "องค์กรผู้พัฒนา" },
+  countryOfOrigin: { en: "Country of origin", th: "ประเทศต้นกำเนิด" },
+  robotType: { en: "Robot type", th: "ประเภทหุ่นยนต์" },
+  thailandStatus: { en: "Thailand status", th: "สถานะในประเทศไทย" },
+  primaryUseCase: { en: "Primary use case", th: "การใช้งานหลัก" },
+  officialUrl: { en: "Official website", th: "เว็บไซต์ทางการ" },
+  description: { en: "Description", th: "คำอธิบาย" }
+};
 
 function toLocalDateTime(value?: Date | null) {
   if (!value) return "";
@@ -103,8 +123,10 @@ export default async function AdminConsolePage({ searchParams }: { searchParams:
   )
     ? (params.collection as CmsCollection)
     : "submitted-data";
-  const selectedId = params.selectedId || "new";
+  const selectedId = params.selectedId;
   const isNew = selectedId === "new";
+  const query = (params.q || "").trim().slice(0, 150);
+  const statusFilter = params.status === "APPROVED" ? "APPROVED" : params.status === "pending" ? "pending" : "all";
 
   let dbOffline = false;
   let errorMessage: string | null = null;
@@ -133,10 +155,38 @@ export default async function AdminConsolePage({ searchParams }: { searchParams:
         orderBy: { canonicalName: "asc" }
       });
     } else {
-      records = await prisma.submittedData.findMany({
-        orderBy: { updatedAt: "desc" },
-        take: 100
-      });
+      const search = query ? {
+        OR: [
+          { title: { contains: query, mode: "insensitive" as const } },
+          { url: { contains: query, mode: "insensitive" as const } },
+          { submitterContact: { contains: query, mode: "insensitive" as const } }
+        ]
+      } : {};
+      if (query || statusFilter !== "all") {
+        records = await prisma.submittedData.findMany({
+          where: {
+            ...search,
+            ...(statusFilter === "APPROVED" ? { status: "APPROVED" as const } :
+              statusFilter === "pending" ? { status: { in: ["QUEUED", "NEEDS_REVIEW"] as const } } : {})
+          },
+          orderBy: { updatedAt: "desc" },
+          take: 100
+        });
+      } else {
+        const [pending, reviewed] = await Promise.all([
+          prisma.submittedData.findMany({
+            where: { status: { in: ["QUEUED", "NEEDS_REVIEW"] } },
+            orderBy: { createdAt: "desc" },
+            take: 100
+          }),
+          prisma.submittedData.findMany({
+            where: { status: { notIn: ["QUEUED", "NEEDS_REVIEW"] } },
+            orderBy: { updatedAt: "desc" },
+            take: 50
+          })
+        ]);
+        records = [...pending, ...reviewed];
+      }
     }
   } catch (error) {
     dbOffline = true;
@@ -144,6 +194,10 @@ export default async function AdminConsolePage({ searchParams }: { searchParams:
   }
 
   const selectedItem = isNew ? null : records.find((record) => record.id === selectedId) ?? records[0] ?? null;
+  const selectedPayload = selectedItem?.payloadJson && typeof selectedItem.payloadJson === "object" && !Array.isArray(selectedItem.payloadJson)
+    ? selectedItem.payloadJson as Record<string, unknown>
+    : {};
+  const isNewSubmissionType = selectedItem?.submissionType === "perspective" || selectedItem?.submissionType === "robot_model";
 
   const collectionTabs = [
     { key: "submitted-data" as const, label: "Review Queue" },
@@ -153,6 +207,10 @@ export default async function AdminConsolePage({ searchParams }: { searchParams:
   ];
 
   const titleForCollection = collectionLabels[collection];
+  const queueParams = new URLSearchParams();
+  if (query) queueParams.set("q", query);
+  if (statusFilter !== "all") queueParams.set("status", statusFilter);
+  const queueSuffix = queueParams.toString() ? `&${queueParams}` : "";
 
   return (
     <div className="admin-page">
@@ -190,6 +248,18 @@ export default async function AdminConsolePage({ searchParams }: { searchParams:
 
       <div className="grid" style={{ gridTemplateColumns: "minmax(0, 1.2fr) minmax(360px, 0.8fr)" }}>
         <section className="panel">
+          {collection === "submitted-data" && (
+            <form action="/admin" method="get" style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 16 }}>
+              <input type="hidden" name="collection" value="submitted-data" />
+              <input name="q" type="search" defaultValue={query} placeholder={lang === "th" ? "ค้นหาชื่อ ลิงก์ หรืออีเมลผู้ส่ง" : "Search title, URL or submitter email"} aria-label={lang === "th" ? "ค้นหาคำขอ" : "Search submissions"} style={{ flex: "1 1 220px" }} />
+              <select name="status" defaultValue={statusFilter} aria-label={lang === "th" ? "กรองสถานะ" : "Filter status"}>
+                <option value="all">{lang === "th" ? "ทุกสถานะ" : "All statuses"}</option>
+                <option value="pending">{lang === "th" ? "รอตรวจ" : "Pending review"}</option>
+                <option value="APPROVED">{lang === "th" ? "อนุมัติแล้ว" : "Approved"}</option>
+              </select>
+              <button type="submit" className="button">{lang === "th" ? "ค้นหา" : "Search"}</button>
+            </form>
+          )}
           <div style={{ display: "flex", justifyContent: "space-between", gap: "12px", alignItems: "baseline" }}>
             <div>
               <h2>{localT.list}</h2>
@@ -217,7 +287,7 @@ export default async function AdminConsolePage({ searchParams }: { searchParams:
                     }}
                   >
                     <td>
-                      <Link href={`/admin?collection=${collection}&selectedId=${record.id}`} style={{ color: "inherit", display: "block" }}>
+                      <Link href={`/admin?collection=${collection}&selectedId=${record.id}${collection === "submitted-data" ? queueSuffix : ""}`} style={{ color: "inherit", display: "block" }}>
                         <strong>
                           {record.title || record.canonicalName || record.displayName || "Untitled"}
                         </strong>
@@ -462,21 +532,51 @@ export default async function AdminConsolePage({ searchParams }: { searchParams:
           {collection === "submitted-data" && (
             <div style={{ display: "grid", gap: "12px", marginTop: "12px" }}>
               {selectedItem && (
+                <section className="notice" style={{ margin: 0 }} aria-label={lang === "th" ? "ตัวอย่างข้อมูลที่ส่ง" : "Submission preview"}>
+                  <strong>{lang === "th" ? "ข้อมูลที่ส่งมาเพื่อตรวจสอบ" : "Submission preview"}</strong>
+                  <p style={{ margin: "8px 0" }}>
+                    <span className="badge">{selectedItem.submissionType === "perspective" ? "Perspectives" : selectedItem.submissionType === "robot_model" ? "Robot Model" : selectedItem.submissionType}</span>{" "}
+                    <span className="badge">{selectedItem.status}</span>
+                  </p>
+                  <p><strong>{selectedItem.title}</strong></p>
+                  {selectedItem.url && <p><a href={selectedItem.url} target="_blank" rel="noreferrer" style={{ overflowWrap: "anywhere" }}>{selectedItem.url}</a></p>}
+                  <dl style={{ display: "grid", gridTemplateColumns: "minmax(130px, 1fr) 2fr", gap: "8px 12px", margin: "12px 0 0" }}>
+                    {Object.entries(submissionFieldLabels).map(([key, label]) => {
+                      const value = selectedPayload[key];
+                      if (typeof value !== "string" || !value) return null;
+                      return (
+                        <div key={key} style={{ display: "contents" }}>
+                          <dt className="muted">{label[lang]}</dt>
+                          <dd style={{ margin: 0, overflowWrap: "anywhere", whiteSpace: "pre-wrap" }}>{value}</dd>
+                        </div>
+                      );
+                    })}
+                  </dl>
+                  {selectedItem.submitterContact && <p className="muted" style={{ marginTop: 12 }}>{lang === "th" ? "ผู้ส่ง" : "Submitted by"}: {selectedItem.submitterName || selectedItem.submitterContact} ({selectedItem.submitterContact})</p>}
+                  {selectedItem.submissionType === "perspective" && selectedItem.status === "APPROVED" && typeof selectedPayload.publishedAnnotationId === "string" && (
+                    <p style={{ marginTop: 12 }}><Link href="/perspectives">{lang === "th" ? "ดูข้อมูลที่เผยแพร่ใน Perspectives" : "View published Perspectives"}</Link></p>
+                  )}
+                  {selectedItem.submissionType === "robot_model" && selectedItem.status === "APPROVED" && typeof selectedPayload.publishedRobotModelId === "string" && (
+                    <p style={{ marginTop: 12 }}><Link href="/robots">{lang === "th" ? "ดูข้อมูลที่เผยแพร่ใน Robots" : "View published Robots"}</Link></p>
+                  )}
+                </section>
+              )}
+              {selectedItem && (
                 <div className="notice" style={{ margin: 0 }}>
                   <strong>Review actions</strong>
                   <div style={{ display: "flex", gap: "8px", marginTop: "8px", flexWrap: "wrap" }}>
-                    <form action={updateSubmissionStatus.bind(null, selectedItem.id, "APPROVED")}>
-                      <button type="submit" className="primary" style={{ background: "var(--success)", borderColor: "var(--success)" }}>
+                    <form action={selectedItem.submissionType === "perspective" ? approvePerspectiveSubmission.bind(null, selectedItem.id) : selectedItem.submissionType === "robot_model" ? approveRobotModelSubmission.bind(null, selectedItem.id) : updateSubmissionStatus.bind(null, selectedItem.id, "APPROVED")}>
+                      <button type="submit" className="primary" disabled={selectedItem.status === "APPROVED"} style={{ background: "var(--success)", borderColor: "var(--success)" }}>
                         Approve
                       </button>
                     </form>
                     <form action={updateSubmissionStatus.bind(null, selectedItem.id, "REJECTED")}>
-                      <button type="submit" className="button" style={{ color: "var(--danger)", borderColor: "var(--danger)" }}>
+                      <button type="submit" className="button" disabled={isNewSubmissionType && selectedItem.status === "APPROVED"} style={{ color: "var(--danger)", borderColor: "var(--danger)" }}>
                         Reject
                       </button>
                     </form>
                     <form action={updateSubmissionStatus.bind(null, selectedItem.id, "NEEDS_REVIEW")}>
-                      <button type="submit" className="button">
+                      <button type="submit" className="button" disabled={isNewSubmissionType && selectedItem.status === "APPROVED"}>
                         Needs review
                       </button>
                     </form>
@@ -501,7 +601,7 @@ export default async function AdminConsolePage({ searchParams }: { searchParams:
                 <label>
                   Status
                   <select name="status" defaultValue={selectedItem?.status ?? "QUEUED"}>
-                    {reviewStatuses.map((value) => <option key={value} value={value}>{value}</option>)}
+                    {reviewStatuses.map((value) => <option key={value} value={value} disabled={isNewSubmissionType && value === "APPROVED"}>{value}</option>)}
                   </select>
                 </label>
                 <label>

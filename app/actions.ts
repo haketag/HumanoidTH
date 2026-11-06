@@ -79,12 +79,69 @@ export async function createSubmission(formData: FormData) {
     redirect("/profile?from=/submit-data");
   }
 
+  const submissionType = readTextField(formData, "submissionType");
+  if (submissionType !== "perspective" && submissionType !== "robot_model") {
+    throw new Error("Choose Perspectives or Robot Model.");
+  }
+
+  const title = readTextField(formData, "title");
+  const rawUrl = readTextField(formData, "url");
+  if (!title || !rawUrl) {
+    throw new Error("Title and evidence URL are required.");
+  }
+  const requireWebUrl = (value: string) => {
+    const parsed = new URL(value);
+    if (!["http:", "https:"].includes(parsed.protocol)) throw new Error("A web URL is required.");
+    return canonicalizeUrl(value);
+  };
+  const url = requireWebUrl(rawUrl);
+
+  let payloadJson: Record<string, string | null>;
+  let notes: string | null;
+
+  if (submissionType === "perspective") {
+    const perspectiveTheme = readTextField(formData, "perspectiveTheme");
+    const stance = readTextField(formData, "stance");
+    const sentiment = readTextField(formData, "sentiment");
+    const evidenceExcerpt = readTextField(formData, "evidenceExcerpt");
+    const themes = ["healthcare_trust", "job_displacement", "safety", "privacy", "education", "ethics", "other"];
+    const stances = ["supportive", "cautious_supportive", "neutral", "skeptical", "critical", "mixed"];
+    const sentiments = ["positive", "neutral", "negative", "mixed"];
+    if (!themes.includes(perspectiveTheme) || !stances.includes(stance) || !sentiments.includes(sentiment) || !evidenceExcerpt) {
+      throw new Error("Complete the perspective theme, stance, sentiment and evidence excerpt.");
+    }
+    payloadJson = { perspectiveTheme, stance, sentiment, evidenceExcerpt };
+    notes = evidenceExcerpt;
+  } else {
+    const thailandStatus = readTextField(formData, "thailandStatus");
+    const robotType = readOptionalTextField(formData, "robotType");
+    const allowedStatuses = ["observed_in_thailand", "developed_in_thailand", "imported_for_evaluation", "unknown"];
+    const allowedTypes = ["humanoid", "social", "service", "education", "other"];
+    if (!allowedStatuses.includes(thailandStatus) || (robotType && !allowedTypes.includes(robotType))) {
+      throw new Error("Choose a valid robot type and Thailand status.");
+    }
+    const officialUrl = readOptionalTextField(formData, "officialUrl");
+    payloadJson = {
+      canonicalName: title,
+      manufacturer: readOptionalTextField(formData, "manufacturer"),
+      developerOrg: readOptionalTextField(formData, "developerOrg"),
+      countryOfOrigin: readOptionalTextField(formData, "countryOfOrigin"),
+      robotType,
+      thailandStatus,
+      primaryUseCase: readOptionalTextField(formData, "primaryUseCase"),
+      officialUrl: officialUrl ? requireWebUrl(officialUrl) : null,
+      description: readOptionalTextField(formData, "description")
+    };
+    notes = payloadJson.description;
+  }
+
   await prisma.submittedData.create({
     data: {
-      submissionType: String(formData.get("submissionType") ?? "source_url"),
-      title: String(formData.get("title") ?? ""),
-      url: canonicalizeUrl(String(formData.get("url") ?? "")) || null,
-      notes: String(formData.get("notes") ?? "") || null,
+      submissionType,
+      title,
+      url,
+      payloadJson,
+      notes,
       submitterName: user.name || null,
       submitterContact: user.email,
       submittedById: user.id,
@@ -99,8 +156,160 @@ export async function createSubmission(formData: FormData) {
 
 export async function updateSubmissionStatus(id: string, status: "APPROVED" | "REJECTED" | "NEEDS_REVIEW") {
   await requireAdminSession();
+  const submission = await prisma.submittedData.findUnique({ where: { id }, select: { submissionType: true, status: true } });
+  if (submission?.submissionType === "perspective" || submission?.submissionType === "robot_model") {
+    if (status === "APPROVED") {
+      throw new Error("Use the destination-specific approval action.");
+    }
+    if (submission.status === "APPROVED") throw new Error("Published submissions cannot return to the review queue.");
+  }
   await prisma.submittedData.update({ where: { id }, data: { status } });
   revalidateAtlasCms();
+}
+
+export async function approvePerspectiveSubmission(id: string) {
+  await requireAdminSession();
+
+  await prisma.$transaction(async (tx) => {
+    const submission = await tx.submittedData.findUnique({ where: { id } });
+    if (!submission || submission.submissionType !== "perspective") throw new Error("Perspective submission not found.");
+    if (submission.status === "APPROVED") return;
+    if (submission.status !== "QUEUED" && submission.status !== "NEEDS_REVIEW") {
+      throw new Error("This submission is not ready for approval.");
+    }
+
+    const payload = submission.payloadJson;
+    if (!payload || typeof payload !== "object" || Array.isArray(payload)) throw new Error("Invalid perspective details.");
+    const theme = payload.perspectiveTheme;
+    const stance = payload.stance;
+    const sentiment = payload.sentiment;
+    const excerpt = payload.evidenceExcerpt;
+    if (!submission.title.trim() || !submission.url ||
+        !["healthcare_trust", "job_displacement", "safety", "privacy", "education", "ethics", "other"].includes(String(theme)) ||
+        !["supportive", "cautious_supportive", "neutral", "skeptical", "critical", "mixed"].includes(String(stance)) ||
+        !["positive", "neutral", "negative", "mixed"].includes(String(sentiment)) ||
+        typeof excerpt !== "string" || !excerpt.trim()) {
+      throw new Error("Perspective submission is incomplete.");
+    }
+
+    const claimed = await tx.submittedData.updateMany({
+      where: { id, status: { in: ["QUEUED", "NEEDS_REVIEW"] } },
+      data: { status: "APPROVED" }
+    });
+    if (claimed.count !== 1) throw new Error("Submission was already reviewed. Reload and try again.");
+
+    const source = await tx.sourceRecord.upsert({
+      where: { url: submission.url },
+      create: {
+        sourceType: "SUBMISSION",
+        title: submission.title,
+        url: submission.url,
+        excerpt,
+        platform: "community_submission",
+        rawMeta: { submissionId: id },
+        relevanceStatus: "ACCEPTED",
+        relevanceReason: "Approved community perspective submission",
+        relevanceConfidence: 0.5
+      },
+      update: {}
+    });
+
+    const annotationKey = {
+      sourceId: source.id,
+      perspectiveTheme: String(theme),
+      targetEntity: "humanoid/social robotics",
+      evidenceExcerpt: excerpt
+    };
+    const existingAnnotation = await tx.perspectiveAnnotation.findUnique({
+      where: { sourceId_perspectiveTheme_targetEntity_evidenceExcerpt: annotationKey }
+    });
+    if (existingAnnotation && (existingAnnotation.stance !== stance || existingAnnotation.sentiment !== sentiment)) {
+      throw new Error("An existing perspective uses this evidence with different labels. Review it before approving.");
+    }
+    const annotation = await tx.perspectiveAnnotation.upsert({
+      where: { sourceId_perspectiveTheme_targetEntity_evidenceExcerpt: annotationKey },
+      create: {
+        sourceId: source.id,
+        perspectiveTheme: String(theme),
+        stance: String(stance),
+        sentiment: String(sentiment),
+        evidenceExcerpt: excerpt,
+        targetEntity: "humanoid/social robotics",
+        confidence: 0.5,
+        method: "admin_reviewed_submission"
+      },
+      update: {}
+    });
+    await tx.submittedData.update({
+      where: { id },
+      data: { payloadJson: { ...payload, publishedSourceId: source.id, publishedAnnotationId: annotation.id } }
+    });
+  });
+
+  revalidateAtlasCms();
+  revalidatePath("/profile");
+  revalidatePath("/network");
+}
+
+export async function approveRobotModelSubmission(id: string) {
+  await requireAdminSession();
+
+  await prisma.$transaction(async (tx) => {
+    const submission = await tx.submittedData.findUnique({ where: { id } });
+    if (!submission || submission.submissionType !== "robot_model") throw new Error("Robot Model submission not found.");
+    if (submission.status === "APPROVED") return;
+    if (submission.status !== "QUEUED" && submission.status !== "NEEDS_REVIEW") {
+      throw new Error("This submission is not ready for approval.");
+    }
+
+    const payload = submission.payloadJson;
+    if (!payload || typeof payload !== "object" || Array.isArray(payload)) throw new Error("Invalid robot model details.");
+    const name = submission.title.trim();
+    const thailandStatus = payload.thailandStatus;
+    const robotType = payload.robotType;
+    if (!name || !submission.url ||
+        !["observed_in_thailand", "developed_in_thailand", "imported_for_evaluation", "unknown"].includes(String(thailandStatus)) ||
+        (robotType != null && !["humanoid", "social", "service", "education", "other"].includes(String(robotType)))) {
+      throw new Error("Robot Model submission is incomplete.");
+    }
+
+    const duplicate = await tx.robotModel.findFirst({
+      where: { canonicalName: { equals: name, mode: "insensitive" } },
+      select: { id: true }
+    });
+    if (duplicate) throw new Error("A robot model with this name already exists. Review the existing model before approving.");
+
+    const claimed = await tx.submittedData.updateMany({
+      where: { id, status: { in: ["QUEUED", "NEEDS_REVIEW"] } },
+      data: { status: "APPROVED" }
+    });
+    if (claimed.count !== 1) throw new Error("Submission was already reviewed. Reload and try again.");
+
+    const optionalText = (value: unknown) => typeof value === "string" && value.trim() ? value.trim() : null;
+    const robot = await tx.robotModel.create({
+      data: {
+        canonicalName: name,
+        manufacturer: optionalText(payload.manufacturer),
+        developerOrg: optionalText(payload.developerOrg),
+        countryOfOrigin: optionalText(payload.countryOfOrigin),
+        robotType: optionalText(robotType) || "unknown",
+        thailandStatus: String(thailandStatus),
+        primaryUseCase: optionalText(payload.primaryUseCase),
+        officialUrl: optionalText(payload.officialUrl),
+        description: optionalText(payload.description),
+        sourceMeta: { submissionId: id, evidenceUrl: submission.url }
+      }
+    });
+    await tx.submittedData.update({
+      where: { id },
+      data: { payloadJson: { ...payload, publishedRobotModelId: robot.id } }
+    });
+  });
+
+  revalidateAtlasCms();
+  revalidatePath("/profile");
+  revalidatePath("/network");
+  revalidatePath("/map");
 }
 
 export async function runDataPull(formData: FormData) {
@@ -340,6 +549,19 @@ export async function upsertSubmittedDataAction(formData: FormData) {
 
   if (!title) throw new Error("Submission title is required.");
   if (!submissionType) throw new Error("Submission type is required.");
+  const requestedStatus = readOptionalTextField(formData, "status") || "QUEUED";
+  const existingSubmission = id
+    ? await prisma.submittedData.findUnique({ where: { id }, select: { submissionType: true, status: true } })
+    : null;
+  if ((submissionType === "perspective" || submissionType === "robot_model" ||
+       existingSubmission?.submissionType === "perspective" || existingSubmission?.submissionType === "robot_model") &&
+      requestedStatus === "APPROVED" && existingSubmission?.status !== "APPROVED") {
+    throw new Error("Use the destination-specific approval action.");
+  }
+  if (existingSubmission?.status === "APPROVED" && requestedStatus !== "APPROVED" &&
+      (existingSubmission.submissionType === "perspective" || existingSubmission.submissionType === "robot_model")) {
+    throw new Error("Published submissions cannot return to the review queue.");
+  }
 
   const payload = {
     submissionType,
@@ -348,7 +570,7 @@ export async function upsertSubmittedDataAction(formData: FormData) {
     notes: readOptionalTextField(formData, "notes"),
     submitterName: readOptionalTextField(formData, "submitterName"),
     submitterContact: readOptionalTextField(formData, "submitterContact"),
-    status: readOptionalTextField(formData, "status") as any || "QUEUED",
+    status: requestedStatus as any,
     reviewNotes: readOptionalTextField(formData, "reviewNotes")
   };
 

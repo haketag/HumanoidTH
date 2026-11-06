@@ -5,6 +5,8 @@ import Link from 'next/link';
 type SearchParams = Promise<{
   collection?: string;
   selectedId?: string;
+  q?: string;
+  status?: string;
 }>;
 
 export const dynamic = "force-dynamic";
