@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { verifyAdminSessionToken } from "@/lib/admin-session";
+import { generateWithGemini } from "@/lib/gemini-client";
 
 async function requireAdminSession() {
   const token = (await cookies()).get("admin_session")?.value;
@@ -117,14 +118,7 @@ For each cluster/location:
 Return the response as a JSON object matching the requested schema.
 `;
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-goog-api-key": apiKey
-    },
-    body: JSON.stringify({
+  const response = await generateWithGemini({
       contents: [{
         parts: [{ text: prompt }]
       }],
@@ -159,8 +153,6 @@ Return the response as a JSON object matching the requested schema.
           required: ["clusters"]
         }
       }
-    }),
-    cache: "no-store"
   });
 
   if (!response.ok) {

@@ -1,3 +1,5 @@
+import { generateWithGemini } from "./gemini-client";
+
 const robotTerms = [
   "robot",
   "robotics",
@@ -147,14 +149,7 @@ Please evaluate and classify this article. Set:
   Keep entity names clean and canonical. Return an empty array if no clear relationships can be extracted.
 `;
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-goog-api-key": apiKey
-    },
-    body: JSON.stringify({
+  const response = await generateWithGemini({
       contents: [{
         parts: [{ text: prompt }]
       }],
@@ -198,8 +193,6 @@ Please evaluate and classify this article. Set:
           required: ["isRelevant", "relevanceReason", "relevanceConfidence", "theme", "stance", "sentiment", "targetEntity", "evidenceExcerpt", "confidence", "triplets"]
         }
       }
-    }),
-    cache: "no-store"
   });
 
   if (!response.ok) {
