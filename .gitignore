@@ -2,3 +2,10 @@ node_modules
 
 /.next/
 /generated/
+
+# Local credentials and generated verification output
+.env
+.env.*
+!.env.example
+.next-*/
+*.tsbuildinfo

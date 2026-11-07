@@ -274,6 +274,7 @@ model ResearchAssistantFeedback {
   id                 String   @id @default(cuid())
   vote               String
   questionCategory   String
+  expertRole         String?
   robotId            String?
   externalSearchUsed Boolean  @default(false)
   issueCategory      String?
@@ -405,4 +406,13 @@ model CompanyRateLimit {
   key String @id
   attempts Int
   expiresAt DateTime
+}
+
+model ResearchAssistantRateLimit {
+  keyHash String
+  windowStart DateTime @db.Timestamptz(3)
+  count Int @default(1)
+
+  @@id([keyHash, windowStart])
+  @@index([windowStart])
 }
