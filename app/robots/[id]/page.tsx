@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
-import { ExternalLink, ArrowLeft, Building2, BookOpen } from 'lucide-react';
+import { ExternalLink, ArrowLeft, Building2, BookOpen, ClipboardList } from 'lucide-react';
 import FavoriteButton from '../../components/FavoriteButton';
 import RobotSourceImage from '../../components/RobotSourceImage';
 import { getRobotSourceImage } from '@/lib/robot-images';
@@ -33,6 +33,7 @@ export default async function RobotDetail({ params, searchParams }: {
   }
   if (!robot) notFound();
   const profile = robotProfile(robot.sourceMeta, robot.officialUrl);
+  const evidence = profile.companyEvidence;
   const research = robot.contributions.filter(c => c.contributionType === 'research_paper' && safeUrl(c.sourceUrl));
   const backUrl = chosen.task ? `/match?industry=${chosen.industry!.id}&task=${query.task}&other=${encodeURIComponent(query.other || '')}` : '/robots';
   const developer = robot.developerOrg || robot.manufacturer;
@@ -57,6 +58,34 @@ export default async function RobotDetail({ params, searchParams }: {
         <p className="muted robot-source-hint">{th ? 'เปิดบทความโครงการ งานวิจัย หรือหน้าผลิตภัณฑ์ในแท็บใหม่' : 'Opens the project article, research paper or product page in a new tab.'}</p>
       </section>
     </div>
+
+    {evidence && <section className="robot-detail-section" aria-labelledby="company-evidence-title">
+      <h2 id="company-evidence-title"><ClipboardList size={22} aria-hidden="true" />{th ? 'สเปกและหลักฐานจากบริษัท' : 'Company specifications and evidence'}</h2>
+      {evidence.organization && <p>{th ? 'ข้อมูลส่งโดย' : 'Submitted by'} <strong>{evidence.organization}</strong></p>}
+      <p className="muted">{th ? 'ผู้ดูแลตรวจความสัมพันธ์กับบริษัทก่อนเผยแพร่ ข้อมูลความสามารถด้านล่างเป็นรายงานจากบริษัทและยังไม่มีสถานะยืนยันโดยอิสระในระบบ' : 'An administrator reviewed the company relationship before publication. The capabilities below are company-reported and have no independent verification status in the registry.'}</p>
+
+      {(evidence.modelIdentifier || evidence.specifications) && <div className="robot-research robot-company-specs">
+        <h3>{th ? 'ข้อมูลทางเทคนิค' : 'Technical specifications'}</h3>
+        {evidence.modelIdentifier && <p><strong>{th ? 'รหัสรุ่น' : 'Model identifier'}</strong> {evidence.modelIdentifier}</p>}
+        {evidence.specifications && <p className="robot-specification-text">{evidence.specifications}</p>}
+      </div>}
+
+      <h3>{th ? 'หลักฐานรายความสามารถ' : 'Evidence by capability'}</h3>
+      {evidence.capabilities.length > 0 ? (
+        <ul className="robot-capability-list">
+          {evidence.capabilities.map(({ claim, source }, index) => <li key={index}>
+            <strong>{claim}</strong>
+            <span className="muted">{th ? 'บริษัทรายงาน' : 'Company-reported'}</span>
+            <a href={source} target="_blank" rel="noopener noreferrer">{th ? 'เปิดหลักฐานจาก' : 'Open evidence from'} {new URL(source).hostname} <ExternalLink size={15} aria-hidden="true" /></a>
+          </li>)}
+        </ul>
+      ) : <p className="muted">{th ? 'ยังไม่มีความสามารถที่แนบลิงก์หลักฐานในโปรไฟล์นี้' : 'No capabilities with evidence links are listed on this profile yet.'}</p>}
+
+      {evidence.sources.length > 0 && <>
+        <h3>{th ? 'แหล่งอ้างอิงเพิ่มเติมจากบริษัท' : 'Additional company references'}</h3>
+        <ul className="robot-company-sources">{evidence.sources.map(source => <li key={source}><a href={source} target="_blank" rel="noopener noreferrer">{source}</a></li>)}</ul>
+      </>}
+    </section>}
 
     <section className="robot-detail-section" id="research">
       <h2><BookOpen size={22} aria-hidden="true" />{th ? 'งานวิจัยและเอกสารโครงการ' : 'Research & project documents'}</h2>

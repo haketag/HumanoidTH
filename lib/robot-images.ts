@@ -102,3 +102,14 @@ export function getRobotImageCredit(meta: unknown) {
     caption: typeof record?.imageCaption === 'string' ? record.imageCaption : null,
   } : null;
 }
+import reviewedProfiles from '../data/robot-profiles.json';
+
+
+const reviewedImagesByName = new Map(reviewedProfiles.map(({ name, sourceMeta }) => [
+  name.trim().toLowerCase(),
+  { url: sourceMeta.imageUrl, credit: getRobotImageCredit(sourceMeta) },
+]));
+
+export function getReviewedRobotImage(name: string) {
+  return reviewedImagesByName.get(name.trim().toLowerCase()) ?? null;
+}

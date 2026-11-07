@@ -21,6 +21,12 @@
 .robot-research { padding: 22px; margin-top: 16px; background: var(--surface-muted); border-radius: 12px; }
 .robot-research h3 { margin: 0; font-size: 18px; line-height: 1.5; }
 .robot-research > .muted:first-child { margin-top: 0; font-size: 12px; }
+.robot-company-specs, .robot-company-sources, .robot-capability-list { overflow-wrap: anywhere; }
+.robot-specification-text { white-space: pre-wrap; }
+.robot-capability-list { list-style: none; padding: 0; border-top: 1px solid var(--border); }
+.robot-capability-list li { display: grid; gap: 4px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.robot-capability-list a { justify-self: start; display: inline-flex; align-items: center; flex-wrap: wrap; gap: 6px; min-height: 44px; }
+:is(.robot-capability-list, .robot-company-sources) a { text-decoration: underline; text-underline-offset: 3px; }
 .robot-contact { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 18px; padding: clamp(20px,3vw,36px); margin-top: 40px; border: 1px solid var(--border); border-radius: 16px; background: var(--surface-muted); }
 .robot-contact > div { flex: 1; min-width: 200px; }
 .robot-contact p { margin: 8px 0; }

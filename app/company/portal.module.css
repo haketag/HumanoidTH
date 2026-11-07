@@ -69,8 +69,11 @@
   color: var(--text-primary);
   font: inherit;
 }
-.passwordField { display: grid; gap: 7px; }
-.passwordField p { margin: 0; font-size: 1rem; color: var(--text-secondary); }
+.accountField { display: grid; gap: 7px; }
+.accountField p { margin: 0; font-size: 1rem; color: var(--text-secondary); }
+.portal .accountForm .fieldError { color: var(--danger); margin: 0; }
+.portal .accountForm input[aria-invalid="true"] { border-color: var(--danger); }
+.accountForm input { scroll-margin-top: 90px; }
 .passwordControl { position: relative; }
 .portal .passwordControl input { padding-inline-end: 54px; }
 .portal .passwordControl button {

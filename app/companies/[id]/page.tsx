@@ -23,10 +23,13 @@ export default async function CompanyPublicPage({params}:{params:Promise<{id:str
     <section aria-labelledby="company-robots">
       <h2 id="company-robots" tabIndex={-1} className={styles.robotHeading}>หุ่นยนต์ในเครือบริษัท</h2>
       {robots.length ? <ul>{robots.map(r => <li key={r.id}><Link href={`/robots/${r.id}`}>{r.canonicalName}</Link></li>)}</ul> : <p>ยังไม่มีหุ่นยนต์ที่อนุมัติให้แสดงในโปรไฟล์นี้</p>}
-      <OptimusPrimeCard />
     </section>
 
     <h2>งานวิจัยและเอกสาร</h2>
     {research.length ? <ul>{research.map(r => <li key={r.id}><a href={r.sourceUrl} target="_blank" rel="noopener noreferrer">{r.title}</a></li>)}</ul> : <p>ยังไม่มีเอกสารที่อนุมัติ</p>}
+    <section aria-labelledby="company-display-example">
+      <h2 id="company-display-example">ตัวอย่างหน้าตาการ์ด</h2>
+      <OptimusPrimeCard />
+    </section>
   </section>;
 }

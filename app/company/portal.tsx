@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { Eye, EyeOff } from 'lucide-react';
+import AccountForm from './AccountForm';
 import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import styles from './portal.module.css';
 
@@ -11,58 +11,17 @@ type State={actor?:{id:string;email:string;name:string;isAdmin:boolean};membersh
 const statuses:Record<string,string>={DRAFT:'ฉบับร่าง',PENDING_REVIEW:'รอตรวจสอบ',APPROVED:'อนุมัติแล้ว',CHANGES_REQUESTED:'ขอข้อมูลเพิ่มเติม',REJECTED:'ไม่อนุมัติ'};
 const kindNames:Record<string,string>={PROFILE:'โปรไฟล์บริษัท',ROBOT:'ข้อมูลหุ่นยนต์',RESEARCH:'งานวิจัย / เอกสาร'};
 const lines=(value:FormDataEntryValue|null)=>String(value||'').split('\n').map(x=>x.trim()).filter(Boolean);
-type Send=(body:Record<string,unknown>)=>Promise<void>;
+type Send=(body:Record<string,unknown>)=>Promise<number | undefined>;
 function Field({name,label,value='',type='text',required=true,large=false}:{name:string;label:string;value?:string;type?:string;required?:boolean;large?:boolean}) {
   return <label>{label}{large ? <textarea name={name} defaultValue={value} required={required} maxLength={8000} rows={4}/> : <input name={name} type={type} autoComplete={type==='password' ? 'current-password' : type==='email' ? 'email' : undefined} defaultValue={value} required={required} maxLength={type==='password' ? 128 : 2000} minLength={type==='password' ? 12 : undefined}/>}</label>;
 }
 
 const profileSteps = [
-  { title: 'สร้างบัญชีตัวแทน', description: 'ใช้เพื่อติดตามคำขอ' },
-  { title: 'ขอสิทธิ์เป็นตัวแทนบริษัท', description: 'ส่งหลักฐานให้ผู้ดูแลตรวจ' },
-  { title: 'ส่งโปรไฟล์ให้ตรวจ', description: 'เผยแพร่หลังได้รับอนุมัติ' },
+  { th: ['สร้างบัญชีตัวแทน', 'ใช้เพื่อติดตามคำขอ'], en: ['Create a representative account', 'Use it to track your requests'] },
+  { th: ['ขอสิทธิ์เป็นตัวแทนบริษัท', 'ส่งหลักฐานให้ผู้ดูแลตรวจ'], en: ['Request company access', 'Submit proof for an administrator to review'] },
+  { th: ['ส่งโปรไฟล์ให้ตรวจ', 'เผยแพร่หลังได้รับอนุมัติ'], en: ['Submit a profile for review', 'The profile goes public after approval'] },
 ];
 
-function AccountForm({ initialRegister, busy, send }: { initialRegister: boolean; busy: boolean; send: Send }) {
-  const [register, setRegister] = useState(initialRegister);
-  const [showPassword, setShowPassword] = useState(false);
-
-  async function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const fields = new FormData(event.currentTarget);
-    await send({
-      action: register ? 'register' : 'login',
-      credentials: {
-        email: fields.get('email'),
-        password: fields.get('password'),
-        ...(register ? { name: fields.get('name') } : {}),
-      },
-    });
-  }
-
-  return <section className={styles.account} aria-labelledby="account-title">
-    <h2 id="account-title">{register ? 'สร้างบัญชีตัวแทน' : 'เข้าสู่ระบบ'}</h2>
-    <p>{register ? 'ใช้บัญชีนี้เพื่อติดตามคำขอและส่งโปรไฟล์' : 'เข้าสู่ระบบเพื่อติดตามคำขอและจัดการโปรไฟล์บริษัท'}</p>
-    <form className={`${styles.form} ${styles.accountForm}`} onSubmit={submit} aria-busy={busy}>
-      {register && <label>ชื่อผู้ติดต่อ<input name="name" autoComplete="name" maxLength={200} required /></label>}
-      <label>อีเมล<input name="email" type="email" autoComplete="email" maxLength={254} required /></label>
-      <div className={styles.passwordField}>
-        <label htmlFor="company-password">รหัสผ่าน</label>
-        <div className={styles.passwordControl}>
-          <input key={String(register)} id="company-password" name="password" type={showPassword ? 'text' : 'password'} autoComplete={register ? 'new-password' : 'current-password'} minLength={12} maxLength={128} aria-describedby={register ? 'company-password-hint' : undefined} required />
-          <button type="button" onClick={() => setShowPassword(!showPassword)} aria-label={showPassword ? 'ซ่อนรหัสผ่าน' : 'แสดงรหัสผ่าน'}>
-            {showPassword ? <EyeOff size={22} aria-hidden="true" /> : <Eye size={22} aria-hidden="true" />}
-          </button>
-        </div>
-        {register && <p id="company-password-hint">อย่างน้อย 12 ตัวอักษร</p>}
-      </div>
-      <button className={styles.accountSubmit} type="submit" disabled={busy}>{busy ? 'กำลังดำเนินการ…' : register ? 'สร้างบัญชี' : 'เข้าสู่ระบบ'}</button>
-    </form>
-    <p className={styles.switchMode}>
-      {register ? 'มีบัญชีแล้ว?' : 'ยังไม่มีบัญชี?'}
-      <button type="button" disabled={busy} onClick={() => { setShowPassword(false); setRegister(!register); }}>{register ? 'เข้าสู่ระบบ' : 'สร้างบัญชีตัวแทน'}</button>
-    </p>
-  </section>;
-}
 function ProposalEditor({kind,company,initial={},submission,send,busy}:{kind:string;company:Membership;initial?:Record<string,unknown>;submission?:Submission;send:Send;busy:boolean}) {
   const val=(key:string,defaultValue='')=>typeof initial[key]==='string' ? initial[key] as string : defaultValue;
   async function save(event:FormEvent<HTMLFormElement>) {
@@ -87,7 +46,7 @@ function ReviewForm({row,target,send,busy}:{row:{id:string;version:number};targe
     <label className={styles.check}><input name="verified" type="checkbox"/>ตรวจหลักฐานสิทธิ์ตัวแทน / ความสัมพันธ์ผู้ผลิตแล้ว (จำเป็นสำหรับการอนุมัติสิทธิ์หรือหุ่นยนต์)</label><button disabled={busy}>บันทึกผลการตรวจ</button>
   </form>;
 }
-export default function CompanyPortal({admin=false}:{admin?:boolean}) {
+export default function CompanyPortal({admin=false, lang='th'}:{admin?:boolean; lang?:'th'|'en'}) {
   const [state,setState]=useState<State>({memberships:[],submissions:[],robots:[],research:[]});const [loading,setLoading]=useState(true);const [busy,setBusy]=useState(false);const [error,setError]=useState('');const [notice,setNotice]=useState('');const [kind,setKind]=useState('PROFILE');const [companyId,setCompanyId]=useState('');
   const [companies,setCompanies]=useState<{id:string;published:Profile}[]>([]);
   const load = useCallback(async () => {
@@ -97,16 +56,31 @@ export default function CompanyPortal({admin=false}:{admin?:boolean}) {
   }, [admin]);
   useEffect(()=>{Promise.all([load(),fetch('/api/company?view=companies',{cache:'no-store'}).then(r=>r.json()).then(r=>setCompanies(r.companies||[]))]).catch(e=>setError(e.message)).finally(()=>setLoading(false));},[load]);
   async function send(body:Record<string,unknown>) {
+    const accountAction = body.action === 'register' || body.action === 'login';
     setBusy(true);setError('');setNotice('');
-    try {const response=await fetch('/api/company',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const result=await response.json();if(!response.ok) throw new Error(result.error);await load();setNotice('บันทึกสำเร็จ ข้อมูลสาธารณะจะเปลี่ยนเมื่อผู้ดูแลอนุมัติเท่านั้น');}catch(e){setError(e instanceof Error ? e.message : 'บันทึกไม่สำเร็จ');}finally{setBusy(false);}
+    try {
+      const response = await fetch('/api/company',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+      if (!response.ok) {
+        if (accountAction) return response.status;
+        const result = await response.json();
+        throw new Error(result.error);
+      }
+      await load();
+      if (!accountAction && body.action !== 'logout') setNotice('บันทึกสำเร็จ ข้อมูลสาธารณะจะเปลี่ยนเมื่อผู้ดูแลอนุมัติเท่านั้น');
+    } catch (e) {
+      if (accountAction) return 503;
+      setError(e instanceof Error ? e.message : 'บันทึกไม่สำเร็จ');
+    } finally { setBusy(false); }
   }
   const approved=state.memberships.filter(m=>m.status==='APPROVED');const selected=approved.find(m=>m.companyId===companyId)||approved[0];
   const onboarding = !admin && !state.actor;
-  return <section className={onboarding ? `${styles.portal} ${styles.onboarding}` : styles.portal} lang="th">
+  const displayLang = onboarding ? lang : 'th';
+  const th = displayLang === 'th';
+  return <section className={onboarding ? `${styles.portal} ${styles.onboarding}` : styles.portal} lang={displayLang}>
     <header>
       <div>
-        <h1>{admin ? 'ตรวจข้อมูลจากบริษัท' : 'พอร์ทัลบริษัท'}</h1>
-        <p>{onboarding ? 'เพิ่มโปรไฟล์บริษัทในคลังข้อมูล HumanoidTH' : 'ส่งข้อมูลที่ตรวจสอบที่มาได้ ผู้ดูแลตรวจสิทธิ์และอนุมัติก่อนเผยแพร่'}</p>
+        <h1>{admin ? 'ตรวจข้อมูลจากบริษัท' : th ? 'พอร์ทัลบริษัท' : 'Company Portal'}</h1>
+        <p>{onboarding ? (th ? 'เพิ่มโปรไฟล์บริษัทในคลังข้อมูล HumanoidTH' : 'Add your company profile to the HumanoidTH registry.') : 'ส่งข้อมูลที่ตรวจสอบที่มาได้ ผู้ดูแลตรวจสิทธิ์และอนุมัติก่อนเผยแพร่'}</p>
       </div>
       {!onboarding && <div className={styles.links}>
         <Link href="/companies">บริษัทที่เผยแพร่แล้ว</Link>
@@ -114,22 +88,25 @@ export default function CompanyPortal({admin=false}:{admin?:boolean}) {
         {state.actor && <button disabled={busy} onClick={() => send({ action: 'logout' })}>ออกจากระบบ</button>}
       </div>}
     </header>
-    {error && <p className={styles.error} role="alert">{error}</p>}
+    {error && <p className={styles.error} role="alert">{th ? error : 'The portal could not load. Refresh the page and try again.'}</p>}
     {notice && <p className={styles.success} role="status">{notice}</p>}
-    {loading ? <p role="status">กำลังโหลดข้อมูล…</p> : !state.actor ? (
+    {loading ? <p role="status">{th ? 'กำลังโหลดข้อมูล…' : 'Loading portal…'}</p> : !state.actor ? (
       <div className={onboarding ? styles.onboardingGrid : undefined}>
-        <AccountForm initialRegister={!admin} busy={busy} send={send} />
+        <AccountForm initialRegister={!admin} busy={busy} send={send} th={th} />
         {onboarding && <aside className={styles.profileGuide} aria-labelledby="profile-steps-title">
-          <h2 id="profile-steps-title">ขั้นตอนเพิ่มโปรไฟล์</h2>
+          <h2 id="profile-steps-title">{th ? 'ขั้นตอนเพิ่มโปรไฟล์' : 'How to publish a profile'}</h2>
           <ol>
-            {profileSteps.map(({ title, description }, index) => (
-              <li key={title} aria-current={index === 0 ? 'step' : undefined}>
-                <strong>{title}</strong>
-                <p>{description}</p>
-              </li>
-            ))}
+            {profileSteps.map((step, index) => {
+              const [title, description] = step[displayLang];
+              return (
+                <li key={title} aria-current={index === 0 ? 'step' : undefined}>
+                  <strong>{title}</strong>
+                  <p>{description}</p>
+                </li>
+              );
+            })}
           </ol>
-          <Link href="/companies">ดูรายชื่อบริษัท</Link>
+          <Link href="/companies">{th ? 'ดูรายชื่อบริษัท' : 'Browse companies'}</Link>
         </aside>}
       </div>
     ) : admin ? <>
