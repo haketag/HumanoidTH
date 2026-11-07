@@ -1,6 +1,6 @@
 .portal {max-width:1120px;margin:auto;color:#1e3044;font-family:var(--font-thai-stack)}
 :global(html[data-theme="dark"]) .portal {color:var(--text-primary)}
-:global(html[data-theme="dark"]) :is(.portal header,.card) {border-color:var(--border)}
+:global(html[data-theme="dark"]) :is(.portal:not(.onboarding) header,.card) {border-color:var(--border)}
 :global(html[data-theme="dark"]) :is(.card,.portal input,.portal textarea,.portal select,.portal .secondary) {background:var(--surface);color:var(--text-primary);border-color:var(--border)}
 :global(html[data-theme="dark"]) :is(.eyebrow,.note) {color:var(--text-secondary)}
 :global(html[data-theme="dark"]) :is(.portal a,.portal .secondary) {color:#a8cdf0}
@@ -17,3 +17,123 @@
 .badge {display:inline-block;background:#eef3f8;color:#325875;border-radius:4px;padding:4px 10px;font-size:12px;font-weight:500}.note {font-size:12px;color:#5a6878}.error,.success {border-left:3px solid;padding:14px 18px;white-space:pre-wrap}.error {background:#fff1ef;border-color:#ad4036}.success {background:#edf5f0;border-color:#447558}.evidence {white-space:pre-wrap;padding:14px;background:#f3f6f9}
 .portal pre {white-space:pre-wrap;overflow-wrap:anywhere;background:#f4f6f8;padding:16px;font-size:12px;max-height:420px;overflow:auto}.columns,.compare {display:grid;grid-template-columns:1fr 1fr;gap:18px}.compare>div {min-width:0}.portal summary {cursor:pointer;min-height:44px;padding:10px 0}.portal small {overflow-wrap:anywhere}
 @media(max-width:650px){.portal header{flex-direction:column}.columns,.compare{grid-template-columns:1fr}.card{padding:18px}.portal h1{font-size:26px}.links{gap:12px}}
+
+.onboarding {
+  --portal-field: var(--surface);
+  --portal-rule: #9aa59f;
+  --portal-link: var(--accent-strong);
+  max-width: 1528px;
+  margin-inline: auto;
+  color: var(--text-primary);
+}
+
+:global(html[data-theme="dark"]) .onboarding {
+  --portal-field: #171a1b;
+  --portal-rule: #697573;
+  --portal-link: #9be6ab;
+}
+
+.portal.onboarding > header {
+  border-color: var(--portal-rule);
+  padding-bottom: 30px;
+  margin-bottom: 40px;
+}
+
+.onboarding h1,
+.onboarding h2 {
+  margin: 0;
+  text-transform: none;
+  letter-spacing: normal;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.onboarding h1 { font-size: clamp(2.25rem, 4vw, 3.5rem); font-weight: 700; }
+.onboarding h2 { font-size: clamp(1.625rem, 2.5vw, 2.25rem); font-weight: 650; }
+.onboarding > header p { margin: 12px 0 0; font-size: clamp(1.0625rem, 1.6vw, 1.5rem); }
+.onboardingGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 57fr) minmax(0, 43fr);
+  align-items: stretch;
+}
+.onboarding .account { max-width: 680px; margin-right: clamp(24px, 5vw, 84px); }
+.account > p { margin: 8px 0 0; }
+.onboarding .account > p { font-size: clamp(1rem, 1.45vw, 1.375rem); }
+.accountForm { gap: 18px; margin: 20px 0 8px; }
+.onboarding .accountForm label { font-size: clamp(1rem, 1.2vw, 1.25rem); font-weight: 600; }
+.portal.onboarding .accountForm input {
+  min-height: 48px;
+  border-color: var(--portal-rule);
+  border-radius: 7px;
+  background: var(--portal-field);
+  color: var(--text-primary);
+  font: inherit;
+}
+.passwordField { display: grid; gap: 7px; }
+.passwordField p { margin: 0; font-size: 1rem; color: var(--text-secondary); }
+.passwordControl { position: relative; }
+.portal .passwordControl input { padding-inline-end: 54px; }
+.portal .passwordControl button {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 4px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  margin-block: auto;
+  padding: 0;
+  border: 0;
+  color: var(--text-primary);
+  background: transparent;
+}
+.portal .passwordControl button:hover { color: var(--accent-strong); }
+.onboarding .accountSubmit {
+  min-width: min(100%, 220px);
+  min-height: 50px;
+  margin-top: 10px;
+  border: 1px solid var(--text-primary);
+  border-radius: 7px;
+  background: var(--text-primary);
+  color: var(--background);
+  font: inherit;
+  font-size: clamp(1.0625rem, 1.3vw, 1.25rem);
+  font-weight: 700;
+  justify-content: center;
+}
+.onboarding .accountSubmit:hover:not(:disabled) { opacity: .86; }
+
+.switchMode { display: flex; flex-wrap: wrap; align-items: center; gap: 0 12px; }
+.portal .switchMode button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--portal-link, var(--accent-strong));
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.profileGuide {
+  border-inline-start: 1px solid var(--portal-rule);
+  padding-inline-start: clamp(24px, 3.2vw, 56px);
+}
+.profileGuide ol {
+  display: grid;
+  gap: 24px;
+  margin: 30px 0 34px;
+  padding-inline-start: 2rem;
+}
+.profileGuide li { padding-inline-start: .65rem; font-size: clamp(1.0625rem, 1.6vw, 1.5rem); }
+.profileGuide li::marker { font-weight: 650; }
+.profileGuide li[aria-current="step"], .portal.onboarding .profileGuide a { color: var(--portal-link); }
+.profileGuide li p { margin: 2px 0 0; color: var(--text-primary); font-size: clamp(.9375rem, 1.35vw, 1.25rem); }
+.profileGuide a { display: inline-flex; align-items: center; min-height: 44px; font-size: clamp(1rem, 1.4vw, 1.25rem); font-weight: 600; }
+.onboarding :focus-visible { outline: 2px solid var(--accent-strong); outline-offset: 3px; }
+
+@media (max-width: 760px) {
+  .portal.onboarding > header { padding-bottom: 22px; margin-bottom: 26px; }
+  .onboardingGrid { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .onboarding .account { margin-right: 0; }
+  .profileGuide { border-inline-start: 0; border-top: 1px solid var(--portal-rule); padding: 24px 0 0; }
+  .profileGuide ol { margin-block: 18px; gap: 14px; }
+}

@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
-import { useEffect, useState, type FormEvent } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
+import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import styles from './portal.module.css';
 
 type Profile={name?:string;website?:string;description?:string;logoUrl?:string;contactEmail?:string;contact?:string};
@@ -13,6 +14,54 @@ const lines=(value:FormDataEntryValue|null)=>String(value||'').split('\n').map(x
 type Send=(body:Record<string,unknown>)=>Promise<void>;
 function Field({name,label,value='',type='text',required=true,large=false}:{name:string;label:string;value?:string;type?:string;required?:boolean;large?:boolean}) {
   return <label>{label}{large ? <textarea name={name} defaultValue={value} required={required} maxLength={8000} rows={4}/> : <input name={name} type={type} autoComplete={type==='password' ? 'current-password' : type==='email' ? 'email' : undefined} defaultValue={value} required={required} maxLength={type==='password' ? 128 : 2000} minLength={type==='password' ? 12 : undefined}/>}</label>;
+}
+
+const profileSteps = [
+  { title: 'สร้างบัญชีตัวแทน', description: 'ใช้เพื่อติดตามคำขอ' },
+  { title: 'ขอสิทธิ์เป็นตัวแทนบริษัท', description: 'ส่งหลักฐานให้ผู้ดูแลตรวจ' },
+  { title: 'ส่งโปรไฟล์ให้ตรวจ', description: 'เผยแพร่หลังได้รับอนุมัติ' },
+];
+
+function AccountForm({ initialRegister, busy, send }: { initialRegister: boolean; busy: boolean; send: Send }) {
+  const [register, setRegister] = useState(initialRegister);
+  const [showPassword, setShowPassword] = useState(false);
+
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const fields = new FormData(event.currentTarget);
+    await send({
+      action: register ? 'register' : 'login',
+      credentials: {
+        email: fields.get('email'),
+        password: fields.get('password'),
+        ...(register ? { name: fields.get('name') } : {}),
+      },
+    });
+  }
+
+  return <section className={styles.account} aria-labelledby="account-title">
+    <h2 id="account-title">{register ? 'สร้างบัญชีตัวแทน' : 'เข้าสู่ระบบ'}</h2>
+    <p>{register ? 'ใช้บัญชีนี้เพื่อติดตามคำขอและส่งโปรไฟล์' : 'เข้าสู่ระบบเพื่อติดตามคำขอและจัดการโปรไฟล์บริษัท'}</p>
+    <form className={`${styles.form} ${styles.accountForm}`} onSubmit={submit} aria-busy={busy}>
+      {register && <label>ชื่อผู้ติดต่อ<input name="name" autoComplete="name" maxLength={200} required /></label>}
+      <label>อีเมล<input name="email" type="email" autoComplete="email" maxLength={254} required /></label>
+      <div className={styles.passwordField}>
+        <label htmlFor="company-password">รหัสผ่าน</label>
+        <div className={styles.passwordControl}>
+          <input key={String(register)} id="company-password" name="password" type={showPassword ? 'text' : 'password'} autoComplete={register ? 'new-password' : 'current-password'} minLength={12} maxLength={128} aria-describedby={register ? 'company-password-hint' : undefined} required />
+          <button type="button" onClick={() => setShowPassword(!showPassword)} aria-label={showPassword ? 'ซ่อนรหัสผ่าน' : 'แสดงรหัสผ่าน'}>
+            {showPassword ? <EyeOff size={22} aria-hidden="true" /> : <Eye size={22} aria-hidden="true" />}
+          </button>
+        </div>
+        {register && <p id="company-password-hint">อย่างน้อย 12 ตัวอักษร</p>}
+      </div>
+      <button className={styles.accountSubmit} type="submit" disabled={busy}>{busy ? 'กำลังดำเนินการ…' : register ? 'สร้างบัญชี' : 'เข้าสู่ระบบ'}</button>
+    </form>
+    <p className={styles.switchMode}>
+      {register ? 'มีบัญชีแล้ว?' : 'ยังไม่มีบัญชี?'}
+      <button type="button" disabled={busy} onClick={() => { setShowPassword(false); setRegister(!register); }}>{register ? 'เข้าสู่ระบบ' : 'สร้างบัญชีตัวแทน'}</button>
+    </p>
+  </section>;
 }
 function ProposalEditor({kind,company,initial={},submission,send,busy}:{kind:string;company:Membership;initial?:Record<string,unknown>;submission?:Submission;send:Send;busy:boolean}) {
   const val=(key:string,defaultValue='')=>typeof initial[key]==='string' ? initial[key] as string : defaultValue;
@@ -39,22 +88,51 @@ function ReviewForm({row,target,send,busy}:{row:{id:string;version:number};targe
   </form>;
 }
 export default function CompanyPortal({admin=false}:{admin?:boolean}) {
-  const [state,setState]=useState<State>({memberships:[],submissions:[],robots:[],research:[]});const [loading,setLoading]=useState(true);const [busy,setBusy]=useState(false);const [error,setError]=useState('');const [notice,setNotice]=useState('');const [register,setRegister]=useState(false);const [kind,setKind]=useState('PROFILE');const [companyId,setCompanyId]=useState('');
+  const [state,setState]=useState<State>({memberships:[],submissions:[],robots:[],research:[]});const [loading,setLoading]=useState(true);const [busy,setBusy]=useState(false);const [error,setError]=useState('');const [notice,setNotice]=useState('');const [kind,setKind]=useState('PROFILE');const [companyId,setCompanyId]=useState('');
   const [companies,setCompanies]=useState<{id:string;published:Profile}[]>([]);
-  async function load() {
+  const load = useCallback(async () => {
     const response=await fetch(`/api/company${admin ? '?view=review' : ''}`,{cache:'no-store'});const result=await response.json();
     if(response.status===401) {setState({memberships:[],submissions:[],robots:[],research:[]});return;}
     if(!response.ok) throw new Error(result.error);setState({...result,robots:result.robots||[],research:result.research||[]});
-  }
-  useEffect(()=>{Promise.all([load(),fetch('/api/company?view=companies',{cache:'no-store'}).then(r=>r.json()).then(r=>setCompanies(r.companies||[]))]).catch(e=>setError(e.message)).finally(()=>setLoading(false));},[]);
+  }, [admin]);
+  useEffect(()=>{Promise.all([load(),fetch('/api/company?view=companies',{cache:'no-store'}).then(r=>r.json()).then(r=>setCompanies(r.companies||[]))]).catch(e=>setError(e.message)).finally(()=>setLoading(false));},[load]);
   async function send(body:Record<string,unknown>) {
     setBusy(true);setError('');setNotice('');
     try {const response=await fetch('/api/company',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const result=await response.json();if(!response.ok) throw new Error(result.error);await load();setNotice('บันทึกสำเร็จ ข้อมูลสาธารณะจะเปลี่ยนเมื่อผู้ดูแลอนุมัติเท่านั้น');}catch(e){setError(e instanceof Error ? e.message : 'บันทึกไม่สำเร็จ');}finally{setBusy(false);}
   }
   const approved=state.memberships.filter(m=>m.status==='APPROVED');const selected=approved.find(m=>m.companyId===companyId)||approved[0];
-  return <section className={styles.portal} lang="th"><header><div><p className={styles.eyebrow}>HumanoidTH / Company Portal</p><h1>{admin ? 'ตรวจข้อมูลจากบริษัท' : 'ร่วมเพิ่มข้อมูลในนามบริษัท'}</h1><p>ส่งข้อมูลที่ตรวจสอบที่มาได้ ผู้ดูแลตรวจสิทธิ์และอนุมัติก่อนเผยแพร่</p></div><div className={styles.links}><Link href="/companies">บริษัทที่เผยแพร่แล้ว</Link>{state.actor?.isAdmin && <Link href={admin ? '/company' : '/company-review'}>{admin ? 'พอร์ทัลบริษัท' : 'คิวตรวจสอบ'}</Link>}{state.actor && <button disabled={busy} onClick={()=>send({action:'logout'})}>ออกจากระบบ</button>}</div></header>
-    {error && <p className={styles.error} role="alert">{error}</p>}{notice && <p className={styles.success} role="status">{notice}</p>}
-    {loading ? <p role="status">กำลังโหลดข้อมูล…</p> : !state.actor ? <div className={styles.card}><h2>{register ? 'สร้างบัญชีตัวแทน' : 'เข้าสู่ระบบ'}</h2><p>การสมัครบัญชียังไม่ให้สิทธิ์จัดการบริษัท ต้องผ่านการตรวจหลักฐานโดยผู้ดูแล</p><form className={styles.form} onSubmit={async event=>{event.preventDefault();const f=new FormData(event.currentTarget);await send({action:register ? 'register' : 'login',credentials:{email:f.get('email'),password:f.get('password'),...(register ? {name:f.get('name')} : {})}});}}>{register && <Field name="name" label="ชื่อผู้ติดต่อ"/>}<Field name="email" label="อีเมล" type="email"/><Field name="password" label="รหัสผ่านอย่างน้อย 12 ตัวอักษร" type="password"/><button disabled={busy}>{register ? 'สร้างบัญชี' : 'เข้าสู่ระบบ'}</button></form><button className={styles.secondary} onClick={()=>setRegister(!register)}>{register ? 'มีบัญชีแล้ว เข้าสู่ระบบ' : 'ยังไม่มีบัญชี สมัครตัวแทน'}</button></div> : admin ? <>
+  const onboarding = !admin && !state.actor;
+  return <section className={onboarding ? `${styles.portal} ${styles.onboarding}` : styles.portal} lang="th">
+    <header>
+      <div>
+        <h1>{admin ? 'ตรวจข้อมูลจากบริษัท' : 'พอร์ทัลบริษัท'}</h1>
+        <p>{onboarding ? 'เพิ่มโปรไฟล์บริษัทในคลังข้อมูล HumanoidTH' : 'ส่งข้อมูลที่ตรวจสอบที่มาได้ ผู้ดูแลตรวจสิทธิ์และอนุมัติก่อนเผยแพร่'}</p>
+      </div>
+      {!onboarding && <div className={styles.links}>
+        <Link href="/companies">บริษัทที่เผยแพร่แล้ว</Link>
+        {state.actor?.isAdmin && <Link href={admin ? '/company' : '/company-review'}>{admin ? 'พอร์ทัลบริษัท' : 'คิวตรวจสอบ'}</Link>}
+        {state.actor && <button disabled={busy} onClick={() => send({ action: 'logout' })}>ออกจากระบบ</button>}
+      </div>}
+    </header>
+    {error && <p className={styles.error} role="alert">{error}</p>}
+    {notice && <p className={styles.success} role="status">{notice}</p>}
+    {loading ? <p role="status">กำลังโหลดข้อมูล…</p> : !state.actor ? (
+      <div className={onboarding ? styles.onboardingGrid : undefined}>
+        <AccountForm initialRegister={!admin} busy={busy} send={send} />
+        {onboarding && <aside className={styles.profileGuide} aria-labelledby="profile-steps-title">
+          <h2 id="profile-steps-title">ขั้นตอนเพิ่มโปรไฟล์</h2>
+          <ol>
+            {profileSteps.map(({ title, description }, index) => (
+              <li key={title} aria-current={index === 0 ? 'step' : undefined}>
+                <strong>{title}</strong>
+                <p>{description}</p>
+              </li>
+            ))}
+          </ol>
+          <Link href="/companies">ดูรายชื่อบริษัท</Link>
+        </aside>}
+      </div>
+    ) : admin ? <>
       <h2>คำขอเป็นตัวแทนบริษัท ({state.memberships.length})</h2>{!state.memberships.length && <p>ยังไม่มีคำขอรอตรวจ</p>}{state.memberships.map(m=><article className={styles.card} key={m.id}><h3>{m.name}</h3><p>{m.representativeName} · {m.email} · อีเมลธุรกิจ {m.businessEmail}</p><a href={m.website} target="_blank" rel="noopener noreferrer">เว็บไซต์บริษัท</a><p className={styles.evidence}>{m.evidence}</p><ReviewForm row={m} target="membership" send={send} busy={busy}/></article>)}
       <h2>ข้อเสนอรออนุมัติ ({state.submissions.length})</h2>{!state.submissions.length && <p>ยังไม่มีข้อเสนอรอตรวจ</p>}{state.submissions.map(s=><article className={styles.card} key={s.id}><h3>{s.companyName} / {kindNames[s.kind]}</h3><p>Submission: {s.id} · เวอร์ชัน {s.version}</p><div className={styles.compare}><div><h4>ข้อมูลสาธารณะปัจจุบัน</h4><pre>{JSON.stringify(s.kind==='PROFILE' ? s.currentProfile : s.currentRobot,null,2) || 'รายการใหม่'}</pre></div><div><h4>ข้อเสนอใหม่และหลักฐาน</h4><pre>{JSON.stringify(s.proposed,null,2)}</pre></div></div><p>ตรวจลิงก์และต้นฉบับด้วยตนเองก่อนอนุมัติ ระบบไม่ยืนยัน DOI หรือผลวิจัยโดยอัตโนมัติ</p><ReviewForm row={s} target="submission" send={send} busy={busy}/></article>)}
       <h2>ประวัติการตรวจล่าสุด</h2>{state.reviews?.map(r=><p key={r.id}>{statuses[r.decision]} — {r.feedback} ({new Date(r.createdAt).toLocaleString('th-TH')})</p>)}
