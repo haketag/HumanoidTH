@@ -24,7 +24,8 @@ export const metadata: Metadata = {
       email: "Email Address",
       password: "Security Password",
       btn: "Authorize Session",
-      errorMsg: "Invalid credentials. Please verify your admin email and password."
+      errorMsg: "Invalid credentials. Please verify your admin email and password.",
+      rateLimitMsg: "Too many sign-in attempts. Please wait up to 15 minutes before trying again."
     },
     th: {
       title: "การยืนยันตัวตนผู้ดูแลระบบ",
@@ -32,7 +33,8 @@ export const metadata: Metadata = {
       email: "อีเมลผู้ดูแลระบบ",
       password: "รหัสผ่านความปลอดภัย",
       btn: "ยืนยันสิทธิ์การเข้าใช้งาน",
-      errorMsg: "ข้อมูลการเข้าสู่ระบบไม่ถูกต้อง กรุณาตรวจสอบอีเมลและรหัสผ่านอีกครั้ง"
+      errorMsg: "ข้อมูลการเข้าสู่ระบบไม่ถูกต้อง กรุณาตรวจสอบอีเมลและรหัสผ่านอีกครั้ง",
+      rateLimitMsg: "ลองเข้าสู่ระบบหลายครั้งเกินไป กรุณารอไม่เกิน 15 นาทีแล้วลองใหม่"
     }
   }[lang];
 
@@ -275,7 +277,7 @@ export const metadata: Metadata = {
 
           {error && (
             <div className="login-error">
-              {localT.errorMsg}
+              {error === "rate_limit" ? localT.rateLimitMsg : localT.errorMsg}
             </div>
           )}
 

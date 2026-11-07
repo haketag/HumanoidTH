@@ -7,7 +7,7 @@ import type { SourceType } from "../generated/prisma";
 import { prisma } from "@/lib/prisma";
 import { runAdapter } from "@/lib/ingest/adapters";
 import { canonicalizeUrl } from "@/lib/url";
-import { authenticate, currentActor, logoutCompany, requireCompanyAdmin } from '@/lib/company-auth';
+import { authenticate, currentActor, logoutCompany, PortalError, requireCompanyAdmin } from '@/lib/company-auth';
 import { createAdminSessionToken, verifyAdminSessionToken } from "@/lib/admin-session";
 
 async function requireAdminSession() {
@@ -390,8 +390,9 @@ export async function adminLoginAction(formData: FormData) {
     cookieStore.set("user_email", actor.email, { path: "/", httpOnly: true, sameSite: "strict", secure });
     cookieStore.set("user_role", "ADMIN", { path: "/", httpOnly: true, sameSite: "strict", secure });
     cookieStore.set("admin_session", sessionToken, { path: "/", httpOnly: true, sameSite: "strict", secure, maxAge: 8 * 60 * 60 });
-  } catch {
-    redirect("/admin-login?error=invalid_credentials");
+  } catch (error) {
+    const reason = error instanceof PortalError && error.status === 429 ? "rate_limit" : "invalid_credentials";
+    redirect(`/admin-login?error=${reason}`);
   }
 
   revalidateAtlasCms();
