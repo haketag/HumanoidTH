@@ -1,5 +1,6 @@
 import { PrismaClient } from "../generated/prisma";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { supabasePoolerCa } from "./supabase-pooler-ca";
 
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 
@@ -11,8 +12,26 @@ function getPrismaClient(): PrismaClient {
     throw new Error("DATABASE_URL is required for Prisma.");
   }
 
+  const url = new URL(connectionString);
+  let adapter: PrismaPg;
+  if (
+    url.hostname.endsWith(".pooler.supabase.com") &&
+    url.port === "6543" &&
+    url.searchParams.get("sslmode") === "verify-full" &&
+    !url.searchParams.has("sslrootcert")
+  ) {
+    // pg replaces explicit TLS options when sslmode is present in the URL.
+    url.searchParams.delete("sslmode");
+    adapter = new PrismaPg({
+      connectionString: url.toString(),
+      ssl: { ca: supabasePoolerCa, rejectUnauthorized: true }
+    });
+  } else {
+    adapter = new PrismaPg(connectionString);
+  }
+
   const client = new PrismaClient({
-    adapter: new PrismaPg(connectionString),
+    adapter,
     log: process.env.PRISMA_LOG_LEVEL === "silent" ? [] : process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"]
   });
 
