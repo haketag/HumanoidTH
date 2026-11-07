@@ -6,7 +6,7 @@ import { generateWithGemini } from "@/lib/gemini-client";
 import { excerptAnswer, rankEvidence, safeSourceUrl, searchTerms, type Evidence, type ResearchResponse, type ResearchRole } from "@/lib/research-assistant";
 import { assessEvidenceConfidence } from "@/lib/ai/confidence";
 import { classifyResearchIntent, detectQuestionLanguage, isComparisonQuestion } from "@/lib/ai/intent";
-import { isInventoryQuestion, isOrganizationQuestion, isPerspectiveQuestion, robotEvidenceExcerpt, robotFacts } from "@/lib/ai/robot-context";
+import { isInventoryQuestion, isPerspectiveQuestion, robotEvidenceExcerpt, robotFacts } from "@/lib/ai/robot-context";
 
 export const dynamic = "force-dynamic";
 
@@ -82,7 +82,7 @@ export async function POST(request: Request) {
     const terms = searchTerms(retrievalQuestion);
     if (!terms.length && !contextRobot) return NextResponse.json({ error: "กรุณาระบุคำค้นที่ชัดเจนขึ้น" }, { status: 400 });
     const containsAny = (field: string) => terms.map((term) => ({ [field]: { contains: term, mode: "insensitive" as const } }));
-    const [sources, robots, contributions, perspectives, inventoryRows, companyRows] = await Promise.all([
+    const [sources, robots, contributions, perspectives, inventoryRows] = await Promise.all([
       prisma.sourceRecord.findMany({
         where: { relevanceStatus: "ACCEPTED", OR: [...containsAny("title"), ...containsAny("excerpt")] },
         select: { id: true, title: true, excerpt: true, url: true, relevanceStatus: true },
@@ -117,7 +117,6 @@ export async function POST(request: Request) {
         take: 100,
         orderBy: { updatedAt: "desc" }
       }) : Promise.resolve([]),
-      isOrganizationQuestion(parsed.data.question) ? prisma.company.findMany({ select: { id: true, name: true, website: true, published: true }, take: 100 }) : Promise.resolve([])
     ]);
 
     const candidates: Evidence[] = [
@@ -128,11 +127,7 @@ export async function POST(request: Request) {
       }),
       ...contributions.map((item) => ({ id: item.id, type: "contribution" as const, title: item.title, excerpt: (item.description || "").slice(0, 1200), url: safeSourceUrl(item.sourceUrl), status: item.verificationStatus })),
       ...perspectives.map((item) => ({ id: item.id, type: "perspective" as const, title: item.source.title, excerpt: `Derived perspective annotation (${item.perspectiveTheme}; ${item.stance}; ${item.sentiment}) for ${item.targetEntity}. ${item.evidenceExcerpt}`.slice(0, 1200), url: safeSourceUrl(item.source.url), status: "Derived annotation; linked source is ACCEPTED" })),
-      ...inventoryRows.filter((item) => terms.some((term) => `${item.displayName} ${item.ownershipStatus} ${item.robotModel?.canonicalName || ""}`.toLocaleLowerCase().includes(term))).map((item) => ({ id: item.id, type: "inventory" as const, title: item.displayName, excerpt: `Public-safe inventory status: ${item.ownershipStatus}${item.robotModel?.canonicalName ? `; model: ${item.robotModel.canonicalName}` : ""}`, url: safeSourceUrl(item.robotModel?.officialUrl), status: "Public inventory record" })),
-      ...companyRows.filter((item) => item.published !== null && terms.some((term) => `${item.name} ${item.website}`.toLocaleLowerCase().includes(term))).map((item) => {
-        const profile = item.published && typeof item.published === "object" && !Array.isArray(item.published) ? item.published as Record<string, unknown> : {};
-        return { id: item.id, type: "organization" as const, title: item.name, excerpt: typeof profile.description === "string" ? profile.description.slice(0, 1000) : "Published organization profile", url: safeSourceUrl(item.website), status: "Published company profile" };
-      })
+      ...inventoryRows.filter((item) => terms.some((term) => `${item.displayName} ${item.ownershipStatus} ${item.robotModel?.canonicalName || ""}`.toLocaleLowerCase().includes(term))).map((item) => ({ id: item.id, type: "inventory" as const, title: item.displayName, excerpt: `Public-safe inventory status: ${item.ownershipStatus}${item.robotModel?.canonicalName ? `; model: ${item.robotModel.canonicalName}` : ""}`, url: safeSourceUrl(item.robotModel?.officialUrl), status: "Public inventory record" }))
     ].map((item) => ({ ...item, citation: 0 }));
     const ranked = rankEvidence(candidates, retrievalQuestion);
     const comparisonRobots = isComparisonQuestion(parsed.data.question) ? ranked.filter((item) => item.type === "robot").slice(0, 4) : [];

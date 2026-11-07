@@ -36,7 +36,7 @@ const MAX_EXTRACTIVE_CLAIMS = 3;
 const MAX_EXCERPT_LENGTH = 360;
 
 const stopWords = new Set([
-  "about", "after", "also", "from", "have", "into", "more", "that", "them", "there", "this", "what", "when", "where", "which", "with",
+  "about", "after", "also", "company", "from", "have", "into", "makes", "more", "that", "them", "there", "this", "what", "when", "where", "which", "with",
   "และ", "หรือ", "ของ", "ใน", "กับ", "จาก", "เกี่ยวกับ", "อะไร", "อย่างไร", "ไหม", "ได้", "มี", "เป็น", "ที่", "สำหรับ"
 ]);
 
@@ -56,7 +56,9 @@ function evidenceScore(item: Evidence, terms: string[], question: string) {
   const exactQuestion = normalizedText(question);
   const titleHits = terms.filter((term) => title.includes(term)).length;
   const excerptHits = terms.filter((term) => excerpt.includes(term)).length;
-  return titleHits * 6 + excerptHits + (exactQuestion.length > 3 && title.includes(exactQuestion) ? 12 : 0);
+  const robotFactQuestion = /\b(manufacturer|developer|who makes|who made|which company makes|price|availability|country of origin)\b|ผู้ผลิต|ผู้พัฒนา|ราคา|มีขาย|ประเทศไหน/iu.test(question);
+  const robotFactBoost = item.type === "robot" && robotFactQuestion ? 24 : 0;
+  return titleHits * 6 + excerptHits + robotFactBoost + (exactQuestion.length > 3 && title.includes(exactQuestion) ? 12 : 0);
 }
 
 export function rankEvidence<T extends Evidence>(evidence: T[], question: string) {
@@ -125,6 +127,28 @@ function comparisonAnswer(evidence: Evidence[], language: "th" | "en") {
     : `Comparison from available HumanoidTH records:\n${rows.join("\n")}\nOnly fields present in at least one record are listed. Missing values are marked “${unknown}”. Manufacturer-reported data is not independent verification.`;
 }
 
+function robotFactAnswer(evidence: Evidence[], question: string, language: "th" | "en") {
+  const robots = evidence.filter((item) => item.type === "robot");
+  if (!robots.length) return null;
+  const manufacturer = /\b(manufacturer|developer|who makes|who made|which company makes)\b|ผู้ผลิต|ผู้พัฒนา/iu.test(question);
+  const useCase = /\b(use case|used for|what.*do)\b|ใช้ทำอะไร|ทำอะไรได้|เหมาะกับ|งานอะไร/iu.test(question);
+  const thailand = /\b(thailand|available|availability|for sale)\b|ในไทย|ประเทศไทย|มีขาย|จำหน่าย/iu.test(question);
+  const country = /\b(country of origin|which country)\b|ประเทศต้นทาง|ประเทศไหน|ประเทศอะไร/iu.test(question);
+  const price = /\b(price|pricing|cost|how much)\b|ราคา|ค่าตัว|เท่าไหร่/iu.test(question);
+  const field = manufacturer ? "manufacturer" : useCase ? "primaryUseCase" : thailand ? "thailandStatus" : country ? "countryOfOrigin" : price ? "price" : null;
+  if (!field) return null;
+  const label: Record<string, string> = language === "th"
+    ? { manufacturer: "ผู้ผลิตที่ระบุใน HumanoidTH", primaryUseCase: "การใช้งานที่ระบุใน HumanoidTH", thailandStatus: "สถานะในฐานข้อมูล HumanoidTH", countryOfOrigin: "ประเทศต้นทางที่ระบุใน HumanoidTH", price: "ราคาใน HumanoidTH" }
+    : { manufacturer: "Manufacturer listed in HumanoidTH", primaryUseCase: "Use case listed in HumanoidTH", thailandStatus: "Thailand status in HumanoidTH", countryOfOrigin: "Country listed in HumanoidTH", price: "Price in HumanoidTH" };
+  const missing = language === "th" ? "ยังไม่มีข้อมูลยืนยัน" : "Not verified in HumanoidTH";
+  const claims = robots.map((robot) => `${robot.title}: ${label[field]} — ${robot.facts?.[field] || missing} [${robot.citation}]`);
+  const note = thailand
+    ? language === "th" ? "สถานะในทะเบียนไม่ยืนยันว่ามีจำหน่ายหรือพร้อมใช้งานในปัจจุบัน" : "Registry status does not confirm current sales or availability."
+    : price && robots.every((robot) => !robot.facts?.price)
+      ? language === "th" ? "ไม่พบราคาในข้อมูลภายใน และยังตรวจเว็บภายนอกไม่ได้ จึงไม่สามารถยืนยันราคา" : "No price was found internally; external verification is unavailable, so the price cannot be confirmed."
+      : "";
+  return [claims.join("\n"), note].filter(Boolean).join("\n");
+}
 export function excerptAnswer(evidence: Evidence[], question: string, role: ResearchRole = "general", language: "th" | "en" = "th"): ResearchResponse {
   if (!evidence.length) {
     return {
@@ -158,7 +182,8 @@ export function excerptAnswer(evidence: Evidence[], question: string, role: Rese
     return `[${item.citation}] ${item.title}: ${excerpt}`;
   });
   const comparison = isComparisonQuestion(question) ? comparisonAnswer(evidence, language) : null;
-  const answer = comparison || (language === "th"
+  const directRobotAnswer = robotFactAnswer(evidence, question, language);
+  const answer = comparison || directRobotAnswer || (language === "th"
     ? `จากข้อมูลในระบบที่ตรงกับคำถาม พบ ${evidence.length} รายการ${labels ? ` จาก ${labels}` : ""} ข้อความที่เกี่ยวข้อง:\n${claims.join("\n")}${role === "researcher" ? "\nควรตรวจประชากร วิธีศึกษา ตัวเปรียบเทียบ และผลลัพธ์ในต้นฉบับก่อนสรุปผล" : role === "company" ? "\nแยกข้อมูล capability/ผู้ผลิตออกจากหลักฐานการนำไปใช้งานจริง" : ""}`
     : `From ${evidence.length} matching ${labels || "records"} in the system, the retrieved evidence says:\n${claims.join("\n")}${role === "researcher" ? "\nCheck the original study's population, methods, comparator, and outcomes before drawing conclusions." : role === "company" ? "\nSeparate capability/manufacturer claims from evidence of real-world deployment." : ""}`);
   const metadataOnly = evidence.filter((item) => !item.excerpt.trim()).length;

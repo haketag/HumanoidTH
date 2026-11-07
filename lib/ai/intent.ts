@@ -7,11 +7,13 @@ const currentPatterns = [
 const comparisonPatterns = [/\b(compare|comparison|versus|vs\.?|difference|different)\b/i, /เปรียบเทียบ|ต่างกัน|เทียบกับ/u];
 const recommendationPatterns = [/\b(recommend|suitable|fit for|best for|which robot|use case)\b/i, /แนะนำ|เหมาะกับ|เลือกหุ่น|หุ่นตัวไหน/u];
 const researchPatterns = [/\b(study|research|paper|evidence|trial|participants|method)\b/i, /งานวิจัย|หลักฐาน|บทความ|การศึกษา|ทดลอง/u];
+const robotDetailPatterns = [/\b(robot|manufacturer|developer|who makes|who made|which company makes|robot model)\b/i, /หุ่นยนต์|ผู้ผลิต|ผู้พัฒนา/u];
 
 export function classifyResearchIntent(question: string, hasRobotContext = false): ResearchIntent {
   if (comparisonPatterns.some((pattern) => pattern.test(question))) return "comparison";
   if (currentPatterns.some((pattern) => pattern.test(question))) return "current_information";
   if (recommendationPatterns.some((pattern) => pattern.test(question))) return "recommendation";
+  if (robotDetailPatterns.some((pattern) => pattern.test(question))) return "robot_detail";
   if (researchPatterns.some((pattern) => pattern.test(question))) return "research";
   if (hasRobotContext) return "robot_detail";
   return "general";
