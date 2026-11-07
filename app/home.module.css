@@ -1,4 +1,4 @@
-.home {
+.shell {
   --home-bg: #f7f7f5;
   --home-text: #17191d;
   --home-muted: #52565d;
@@ -10,11 +10,14 @@
   display: flex;
   flex-direction: column;
   min-height: 100svh;
+}
+
+.home {
   background: var(--home-bg);
   color: var(--home-text);
 }
 
-:global(html[data-theme="dark"]) .home {
+:global(html[data-theme="dark"]) .shell {
   --home-bg: #08090a;
   --home-text: #f1f1ef;
   --home-muted: #b4b5b6;
@@ -28,15 +31,19 @@
   :global(html):has(.home) { scroll-behavior: smooth; }
 }
 
-.home a { color: inherit; }
-.home a:hover, .home summary:hover { color: var(--home-accent); }
-.home :is(a, button, summary):focus-visible { outline: 2px solid var(--home-accent); outline-offset: 4px; }
+.home a, .header a { color: inherit; }
+.home a:hover, .home summary:hover, .header :is(a, summary):hover { color: var(--home-accent); }
+:is(.home, .header) :is(a, button, summary):focus-visible { outline: 2px solid var(--home-accent); outline-offset: 4px; }
+
+.chatLayout { height: 100dvh; min-height: 0; }
 
 .header {
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: 10;
+  flex-shrink: 0;
   background: var(--home-bg);
+  color: var(--home-text);
   border-bottom: 1px solid var(--home-rule);
   display: flex;
   justify-content: space-between;
@@ -100,6 +107,7 @@
   box-shadow: none;
 }
 .menuPanel :global(.nav) a:is(:hover, :focus-visible) { background: var(--home-hover); color: var(--home-text); transform: none; }
+.primaryLinks a[aria-current="page"], .menuPanel :global(.nav) a[aria-current="page"] { color: var(--home-accent); }
 
 .language :global(.lang-selector) {
   display: flex;

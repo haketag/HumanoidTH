@@ -3,32 +3,26 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "../home.module.css";
 import {
+  ACESFilmicToneMapping,
   AmbientLight,
+  AnimationMixer,
   Box3,
   Clock,
   Color,
   DirectionalLight,
   Group,
   MathUtils,
-  Mesh,
   Object3D,
-  PCFSoftShadowMap,
   PerspectiveCamera,
+  PMREMGenerator,
+  Quaternion,
   Scene,
   Vector2,
   Vector3,
   WebGLRenderer
 } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-
-const headNodeName = "Head_06";
-const eyeNodeNames = ["Eye Control.L_010", "Eye Control.R_019"];
-
-type RotationBase = {
-  x: number;
-  y: number;
-  z: number;
-};
+import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 
 export default function RobotViewer({ lang }: { lang: "en" | "th" }) {
   const thai = lang === "th";
@@ -55,8 +49,7 @@ export default function RobotViewer({ lang }: { lang: "en" | "th" }) {
     }
     renderer.setClearColor(new Color(0xffffff), 0);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = PCFSoftShadowMap;
+    renderer.toneMapping = ACESFilmicToneMapping;
     renderer.domElement.style.width = "100%";
     renderer.domElement.style.height = "100%";
     renderer.domElement.style.display = "block";
@@ -64,41 +57,40 @@ export default function RobotViewer({ lang }: { lang: "en" | "th" }) {
     renderer.domElement.setAttribute("aria-hidden", "true");
     frame.appendChild(renderer.domElement);
 
+    const room = new RoomEnvironment();
+    const reflections = new PMREMGenerator(renderer);
+    const environment = reflections.fromScene(room, 0.04);
+    scene.environment = environment.texture;
+    scene.environmentIntensity = 0.8;
+    room.dispose();
+    reflections.dispose();
+
     const ambient = new AmbientLight(0xffffff, 1.4);
     scene.add(ambient);
 
     const keyLight = new DirectionalLight(0xffffff, 2.7);
     keyLight.position.set(2.8, 4, 4);
-    keyLight.castShadow = true;
     scene.add(keyLight);
 
-    const fillLight = new DirectionalLight(0x7fffd0, 1.5);
+    const fillLight = new DirectionalLight(0xffffff, 1.5);
     fillLight.position.set(-3, 2, 2.5);
     scene.add(fillLight);
 
-    const rimLight = new DirectionalLight(0xd9fff0, 2.1);
+    const rimLight = new DirectionalLight(0xffffff, 2.1);
     rimLight.position.set(0, 3.2, -3);
     scene.add(rimLight);
 
     const robotRoot = new Group();
-    const baseRootY = -0.52;
+    const baseRootY = -0.36;
     robotRoot.position.y = baseRootY;
     scene.add(robotRoot);
 
     const pointer = new Vector2(0, 0);
     const targetHead = new Vector2(0, 0);
     const currentHead = new Vector2(0, 0);
-    const baseRotations = new WeakMap<Object3D, RotationBase>();
-    const activeHeadNodes: Object3D[] = [];
-    const activeEyeNodes: Object3D[] = [];
-
-    let rightShoulder: Object3D | null = null;
-    let rightElbow: Object3D | null = null;
-    let rightForearm: Object3D | null = null;
-
-    let isWaving = false;
-    let waveTime = 0;
-    let waveTriggerTime = 3.2; // welcoming wave 3.2s after loading
+    let head: Object3D | undefined;
+    const headRest = new Quaternion();
+    let mixer: AnimationMixer | undefined;
     let lastTime = 0;
 
     let disposed = false;
@@ -123,15 +115,6 @@ export default function RobotViewer({ lang }: { lang: "en" | "th" }) {
     resizeObserver.observe(frame);
     resize();
 
-    const saveBaseRotation = (node: Object3D) => {
-      if (baseRotations.has(node)) return;
-      baseRotations.set(node, {
-        x: node.rotation.x,
-        y: node.rotation.y,
-        z: node.rotation.z
-      });
-    };
-
     const fitModelToStage = (model: Object3D) => {
       const box = new Box3().setFromObject(model);
       const size = new Vector3();
@@ -139,7 +122,7 @@ export default function RobotViewer({ lang }: { lang: "en" | "th" }) {
       box.getSize(size);
       box.getCenter(center);
 
-      const scale = size.y > 0 ? 3.35 / size.y : 1;
+      const scale = size.y > 0 ? 3 / size.y : 1;
       model.scale.setScalar(scale);
 
       const scaledCenter = center.multiplyScalar(scale);
@@ -147,40 +130,23 @@ export default function RobotViewer({ lang }: { lang: "en" | "th" }) {
     };
 
     const loader = new GLTFLoader();
-    loader.load("/teal_v.2.glb", (gltf) => {
+    loader.load("/silver-sentinel-v5.glb", (gltf) => {
       if (disposed) return;
 
       const model = gltf.scene;
       model.traverse((child) => {
         child.frustumCulled = false;
-        saveBaseRotation(child);
-
-        if (child instanceof Mesh) {
-          child.castShadow = true;
-          child.receiveShadow = true;
-        }
-
-        if (child.name === headNodeName) {
-          activeHeadNodes.push(child);
-        }
-
-        if (eyeNodeNames.includes(child.name)) {
-          activeEyeNodes.push(child);
-        }
-
-        if (child.name === "Arm.R_069") {
-          rightShoulder = child;
-        }
-        if (child.name === "Arm.R.001_070") {
-          rightElbow = child;
-        }
-        if (child.name === "Arm.R.002_071") {
-          rightForearm = child;
-        }
       });
 
       fitModelToStage(model);
       robotRoot.add(model);
+      head = model.getObjectByName("Head");
+      if (head) headRest.copy(head.quaternion);
+      const presentation = gltf.animations.find((clip) => clip.name === "Subtle presentation");
+      if (presentation) {
+        mixer = new AnimationMixer(model);
+        mixer.clipAction(presentation).play();
+      }
       setStatus("ready");
     }, undefined, () => {
       if (!disposed) setStatus("unavailable");
@@ -274,71 +240,13 @@ export default function RobotViewer({ lang }: { lang: "en" | "th" }) {
       const breathScale = 1 + Math.sin(elapsed * 1.55 + 0.4) * 0.004;
       robotRoot.scale.setScalar(breathScale + interactionEnergy * 0.006);
 
-      // Programmatic Waving Animation logic
-      if (rightShoulder && rightElbow && rightForearm) {
-        const baseShoulder = baseRotations.get(rightShoulder);
-        const baseElbow = baseRotations.get(rightElbow);
-        const baseForearm = baseRotations.get(rightForearm);
+      if (head) head.quaternion.copy(headRest);
+      if (reducedMotion.matches) mixer?.setTime(0);
+      else mixer?.update(deltaTime);
 
-        if (baseShoulder && baseElbow && baseForearm) {
-          if (reducedMotion.matches) isWaving = false;
-          if (!isWaving && elapsed > waveTriggerTime) {
-            isWaving = true;
-            waveTime = 0;
-          }
-
-          if (isWaving) {
-            waveTime += deltaTime;
-            let waveFactor = 0;
-
-            if (waveTime < 0.5) {
-              waveFactor = waveTime / 0.5; // Ease in / raise arm
-            } else if (waveTime >= 0.5 && waveTime < 2.5) {
-              waveFactor = 1.0; // Fully raised
-            } else if (waveTime >= 2.5 && waveTime < 3.0) {
-              waveFactor = (3.0 - waveTime) / 0.5; // Ease out / lower arm
-            } else {
-              waveFactor = 0;
-              isWaving = false;
-              waveTriggerTime = elapsed + 15 + Math.random() * 15; // Wave again in 15-30s
-            }
-
-            const waveOsc = Math.sin(waveTime * 14) * 0.32 * waveFactor;
-
-            // Raise shoulder up (Z-rotation negative, X-rotation slightly negative for forward tilt)
-            rightShoulder.rotation.z = baseShoulder.z - 1.25 * waveFactor;
-            rightShoulder.rotation.x = baseShoulder.x - 0.35 * waveFactor;
-            // Bend elbow forward (Y-rotation positive)
-            rightElbow.rotation.y = baseElbow.y + 0.7 * waveFactor;
-            // Wave forearm (Z-rotation oscillation)
-            rightForearm.rotation.z = baseForearm.z + waveOsc;
-          } else {
-            // Smoothly return to rest base position
-            rightShoulder.rotation.z += (baseShoulder.z - rightShoulder.rotation.z) * 0.1;
-            rightShoulder.rotation.x += (baseShoulder.x - rightShoulder.rotation.x) * 0.1;
-            rightElbow.rotation.y += (baseElbow.y - rightElbow.rotation.y) * 0.1;
-            rightForearm.rotation.z += (baseForearm.z - rightForearm.rotation.z) * 0.1;
-          }
-        }
-      }
-
-      for (const node of activeHeadNodes) {
-        const base = baseRotations.get(node);
-        if (!base) continue;
-        const curiousTilt = Math.sin(elapsed * 0.9) * 0.015 * idleEnergy;
-        node.rotation.x = base.x + currentHead.y + curiousTilt;
-        node.rotation.y = base.y + currentHead.x;
-        node.rotation.z = base.z + Math.sin(elapsed * 1.2) * 0.012 + currentHead.x * 0.08;
-      }
-
-      for (const node of activeEyeNodes) {
-        const base = baseRotations.get(node);
-        if (!base) continue;
-        const microSaccadeX = Math.sin(elapsed * 5.1) * 0.018 * idleEnergy;
-        const microSaccadeY = Math.sin(elapsed * 4.4 + 0.6) * 0.012 * idleEnergy;
-        node.rotation.x = base.x + currentHead.y * 0.45 + microSaccadeY;
-        node.rotation.y = base.y + currentHead.x * 0.62 + microSaccadeX;
-        node.rotation.z = base.z;
+      if (head && !reducedMotion.matches) {
+        head.rotation.x += currentHead.y;
+        head.rotation.y += currentHead.x;
       }
 
       renderer.render(scene, camera);
@@ -362,6 +270,8 @@ export default function RobotViewer({ lang }: { lang: "en" | "th" }) {
       window.removeEventListener("pointerup", onPointerUp);
       window.removeEventListener("pointercancel", onPointerUp);
       document.removeEventListener("pointerleave", onPointerLeave);
+      mixer?.stopAllAction();
+      environment.dispose();
       renderer.dispose();
       frame.removeChild(renderer.domElement);
     };

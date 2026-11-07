@@ -5,29 +5,29 @@ import type { ReactNode } from "react";
 import styles from "../home.module.css";
 
 export default function AtlasShell({
-  homeHeader,
-  consoleChrome,
+  header,
   consoleFooter,
   children,
 }: {
-  homeHeader: ReactNode;
-  consoleChrome: ReactNode;
+  header: ReactNode;
   consoleFooter: ReactNode;
   children: ReactNode;
 }) {
   const pathname = usePathname();
 
-  if (pathname === "/") {
-    return <div className={styles.home}>{homeHeader}{children}</div>;
-  }
-
-  if (pathname === "/research-assistant") return <main className="pet-chat-route">{children}</main>;
+  const isHome = pathname === "/";
+  const isChat = pathname === "/research-assistant";
+  const pageClass = isHome ? styles.home : isChat ? styles.chatLayout : "";
 
   return (
-    <div className="app-shell">
-      {consoleChrome}
-      <main className="main">{children}</main>
-      {consoleFooter}
+    <div className={`${styles.shell} ${pageClass}`}>
+      {header}
+      {isHome ? children : (
+        <main id="main-content" tabIndex={-1} className={isChat ? "pet-chat-route" : "main"}>
+          {children}
+        </main>
+      )}
+      {!isHome && !isChat && consoleFooter}
     </div>
   );
 }

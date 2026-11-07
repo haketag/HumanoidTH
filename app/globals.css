@@ -1188,8 +1188,8 @@ a:focus-visible, .nav a:focus-visible, summary:focus-visible { outline: 2px soli
   .pet-ai-expert-cards { grid-template-columns: minmax(0, 1fr); }
 }
 /* Dedicated Pet AI conversation workspace */
-.pet-chat-route { margin: 0; padding: 0; height: 100dvh; overflow: hidden; }
-.pet-chat-shell { --chat-bg: var(--surface, #fff); --chat-side: #f5f7f5; --chat-ink: var(--text-primary, #202720); --chat-soft: var(--text-secondary, #748074); display: grid; grid-template-columns: 264px minmax(0,1fr); height: 100dvh; color: var(--chat-ink); background: var(--chat-bg); font-size: 15px; }
+.pet-chat-route { flex: 1; min-height: 0; overflow: hidden; }
+.pet-chat-shell { --chat-bg: var(--surface, #fff); --chat-side: #f5f7f5; --chat-ink: var(--text-primary, #202720); --chat-soft: var(--text-secondary, #748074); display: grid; grid-template-columns: 264px minmax(0,1fr); height: 100%; color: var(--chat-ink); background: var(--chat-bg); font-size: 15px; }
 .pet-chat-shell button, .pet-chat-shell select, .pet-chat-shell input, .pet-chat-shell textarea { font: inherit; }
 .pet-chat-shell button { box-shadow: none; text-transform: none; letter-spacing: normal; }
 .pet-chat-sidebar { background: var(--chat-side); display: flex; flex-direction: column; padding: 24px 14px 18px; min-height: 0; border-right: 1px solid var(--border); }

@@ -1,18 +1,13 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import AtlasShell from "./components/AtlasShell";
 import HomeHeader from "./components/HomeHeader";
-import SidebarNav from "./components/SidebarNav";
-import LanguageSelector from "./components/LanguageSelector";
-import MobileHeader from "./components/MobileHeader";
-import MobileTabNav from "./components/MobileTabNav";
 import DataPullFab from "./components/DataPullFab";
 import { defaultSeoDescription, getSiteUrl, siteName } from "@/lib/seo";
 import { verifyAdminSessionToken } from "@/lib/admin-session";
 import "./globals.css";
 import { FavoritesProvider } from './components/FavoritesProvider';
-import ThemeToggle, { ThemeProvider } from './components/ThemeToggle';
+import { ThemeProvider } from './components/ThemeToggle';
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
@@ -129,31 +124,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <ThemeProvider initialTheme={theme}>
         <FavoritesProvider>
           <AtlasShell
-            homeHeader={<HomeHeader lang={lang} isAdmin={isAdmin} />}
-            consoleChrome={
-              <>
-                <MobileHeader lang={lang} isAdmin={isAdmin} />
-                <aside className="sidebar">
-                  <Link href="/" className="brand-logo-container">
-                    <img src="/logo.png" alt="" className="brand-logo" />
-                    <span>HumanoidTH</span>
-                  </Link>
-                  <div className="sidebar-scroll">
-                    <SidebarNav currentLang={lang} isAdmin={isAdmin} />
-                  </div>
-                  <div className="sidebar-settings">
-                    <ThemeToggle lang={lang} />
-                    <LanguageSelector currentLang={lang} />
-                  </div>
-                </aside>
-              </>
-            }
-            consoleFooter={
-              <>
-                {isAdmin && <DataPullFab />}
-                <MobileTabNav currentLang={lang} />
-              </>
-            }
+            header={<HomeHeader lang={lang} isAdmin={isAdmin} />}
+            consoleFooter={isAdmin && <DataPullFab />}
           >
             {children}
           </AtlasShell>
