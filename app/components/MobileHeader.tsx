@@ -4,7 +4,7 @@ import LanguageSelector from "./LanguageSelector";
 import SidebarNav from "./SidebarNav";
 import ThemeToggle from './ThemeToggle';
 
-export default function MobileHeader({lang='en'}:{lang?:'th'|'en'}) {
+export default function MobileHeader({lang='en', isAdmin=false}:{lang?:'th'|'en'; isAdmin?:boolean}) {
   return (
     <header className="mobile-header">
       <Link href="/" className="mobile-brand">
@@ -17,7 +17,7 @@ export default function MobileHeader({lang='en'}:{lang?:'th'|'en'}) {
         <details className="mobile-all-nav">
           <summary aria-label={lang === 'th' ? 'เมนูทั้งหมด' : 'All pages'}><Menu size={22} aria-hidden="true" /></summary>
           <div className="mobile-all-nav-content">
-            <SidebarNav currentLang={lang} />
+            <SidebarNav currentLang={lang} isAdmin={isAdmin} />
             <LanguageSelector currentLang={lang} />
           </div>
         </details>

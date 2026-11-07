@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import styles from "../home.module.css";
 import {
   AmbientLight,
   Box3,
@@ -9,6 +10,7 @@ import {
   DirectionalLight,
   Group,
   MathUtils,
+  Mesh,
   Object3D,
   PCFSoftShadowMap,
   PerspectiveCamera,
@@ -28,7 +30,9 @@ type RotationBase = {
   z: number;
 };
 
-export default function RobotViewer() {
+export default function RobotViewer({ lang }: { lang: "en" | "th" }) {
+  const thai = lang === "th";
+  const [status, setStatus] = useState<"loading" | "ready" | "unavailable">("loading");
   const frameRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -42,7 +46,13 @@ export default function RobotViewer() {
     camera.position.set(0, 0.45, 4.75);
     camera.lookAt(0, 0.32, 0);
 
-    const renderer = new WebGLRenderer({ alpha: true, antialias: true });
+    let renderer: WebGLRenderer;
+    try {
+      renderer = new WebGLRenderer({ alpha: true, antialias: true });
+    } catch {
+      setStatus("unavailable");
+      return;
+    }
     renderer.setClearColor(new Color(0xffffff), 0);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
@@ -51,7 +61,7 @@ export default function RobotViewer() {
     renderer.domElement.style.height = "100%";
     renderer.domElement.style.display = "block";
     renderer.domElement.style.cursor = "grab";
-    renderer.domElement.setAttribute("aria-label", "Interactive humanoid robot model");
+    renderer.domElement.setAttribute("aria-hidden", "true");
     frame.appendChild(renderer.domElement);
 
     const ambient = new AmbientLight(0xffffff, 1.4);
@@ -98,11 +108,13 @@ export default function RobotViewer() {
     let targetRootYaw = 0;
     let currentRootYaw = 0;
     let animationFrame = 0;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     const resize = () => {
       const width = frame.clientWidth || 1;
       const height = frame.clientHeight || 1;
       camera.aspect = width / height;
+      camera.zoom = Math.min(1, camera.aspect / 0.9);
       camera.updateProjectionMatrix();
       renderer.setSize(width, height, false);
     };
@@ -143,7 +155,7 @@ export default function RobotViewer() {
         child.frustumCulled = false;
         saveBaseRotation(child);
 
-        if ((child as any).isMesh) {
+        if (child instanceof Mesh) {
           child.castShadow = true;
           child.receiveShadow = true;
         }
@@ -169,6 +181,9 @@ export default function RobotViewer() {
 
       fitModelToStage(model);
       robotRoot.add(model);
+      setStatus("ready");
+    }, undefined, () => {
+      if (!disposed) setStatus("unavailable");
     });
 
     const updatePointerTarget = (event: PointerEvent) => {
@@ -197,6 +212,7 @@ export default function RobotViewer() {
     };
 
     const onPointerMove = (event: PointerEvent) => {
+      if (reducedMotion.matches && !dragging) return;
       updatePointerTarget(event);
 
       if (!dragging) return;
@@ -230,9 +246,10 @@ export default function RobotViewer() {
     const clock = new Clock();
 
     const animate = () => {
-      const elapsed = clock.getElapsedTime();
-      const deltaTime = lastTime === 0 ? 0.016 : elapsed - lastTime;
-      lastTime = elapsed;
+      const clockTime = clock.getElapsedTime();
+      const deltaTime = lastTime === 0 ? 0.016 : clockTime - lastTime;
+      lastTime = clockTime;
+      const elapsed = reducedMotion.matches ? 0 : clockTime;
 
       interactionEnergy = MathUtils.lerp(interactionEnergy, dragging ? 1 : 0, dragging ? 0.08 : 0.018);
       const idleEnergy = 1 - interactionEnergy;
@@ -264,6 +281,7 @@ export default function RobotViewer() {
         const baseForearm = baseRotations.get(rightForearm);
 
         if (baseShoulder && baseElbow && baseForearm) {
+          if (reducedMotion.matches) isWaving = false;
           if (!isWaving && elapsed > waveTriggerTime) {
             isWaving = true;
             waveTime = 0;
@@ -327,12 +345,18 @@ export default function RobotViewer() {
       animationFrame = window.requestAnimationFrame(animate);
     };
 
-    animate();
+    const visibility = new IntersectionObserver(([entry]) => {
+      window.cancelAnimationFrame(animationFrame);
+      lastTime = 0;
+      if (entry.isIntersecting) animate();
+    });
+    visibility.observe(frame);
 
     return () => {
       disposed = true;
       window.cancelAnimationFrame(animationFrame);
       resizeObserver.disconnect();
+      visibility.disconnect();
       renderer.domElement.removeEventListener("pointerdown", onPointerDown);
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerup", onPointerUp);
@@ -343,5 +367,17 @@ export default function RobotViewer() {
     };
   }, []);
 
-  return <div ref={frameRef} className="robot-viewer-frame" />;
+  return (
+    <div ref={frameRef} className="robot-viewer-frame" data-model-state={status}>
+      {status === "ready" ? (
+        <span role="img" aria-label={thai ? "โมเดลหุ่นยนต์ฮิวแมนนอยด์ 3 มิติ" : "3D humanoid robot model"} />
+      ) : (
+        <p className={styles.viewerMessage} role="status">
+          {status === "loading"
+            ? (thai ? "กำลังโหลดโมเดล 3 มิติ…" : "Loading 3D model…")
+            : (thai ? "ไม่สามารถแสดงโมเดล 3 มิติได้" : "The 3D model could not be displayed.")}
+        </p>
+      )}
+    </div>
+  );
 }

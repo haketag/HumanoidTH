@@ -1,12 +1,13 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
+import AtlasShell from "./components/AtlasShell";
+import HomeHeader from "./components/HomeHeader";
 import SidebarNav from "./components/SidebarNav";
 import LanguageSelector from "./components/LanguageSelector";
 import MobileHeader from "./components/MobileHeader";
 import MobileTabNav from "./components/MobileTabNav";
 import DataPullFab from "./components/DataPullFab";
-import { getTranslation } from "@/lib/translations";
 import { defaultSeoDescription, getSiteUrl, siteName } from "@/lib/seo";
 import { verifyAdminSessionToken } from "@/lib/admin-session";
 import "./globals.css";
@@ -89,7 +90,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const theme = cookieStore.get('theme')?.value === 'dark' ? 'dark' : 'light';
   const isAdmin = await verifyAdminSessionToken(cookieStore.get("admin_session")?.value, process.env.ADMIN_SESSION_SECRET);
   const lang = (cookieStore.get("lang")?.value || "en") as "en" | "th";
-  const t = getTranslation(lang);
   const siteUrl = getSiteUrl();
   const structuredData = {
     "@context": "https://schema.org",
@@ -128,25 +128,35 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         />
         <ThemeProvider initialTheme={theme}>
         <FavoritesProvider>
-        <div className="app-shell">
-          <MobileHeader lang={lang} />
-          <aside className="sidebar">
-            <Link href="/" className="brand-logo-container">
-              <img src="/logo.png" alt="" className="brand-logo" />
-              <span>HumanoidTH</span>
-            </Link>
-            <div className="sidebar-scroll">
-              <SidebarNav currentLang={lang} />
-            </div>
-            <div className="sidebar-settings">
-              <ThemeToggle lang={lang}/>
-              <LanguageSelector currentLang={lang} />
-            </div>
-          </aside>
-          <main className="main">{children}</main>
-          {isAdmin && <DataPullFab />}
-          <MobileTabNav currentLang={lang} />
-        </div>
+          <AtlasShell
+            homeHeader={<HomeHeader lang={lang} isAdmin={isAdmin} />}
+            consoleChrome={
+              <>
+                <MobileHeader lang={lang} isAdmin={isAdmin} />
+                <aside className="sidebar">
+                  <Link href="/" className="brand-logo-container">
+                    <img src="/logo.png" alt="" className="brand-logo" />
+                    <span>HumanoidTH</span>
+                  </Link>
+                  <div className="sidebar-scroll">
+                    <SidebarNav currentLang={lang} isAdmin={isAdmin} />
+                  </div>
+                  <div className="sidebar-settings">
+                    <ThemeToggle lang={lang} />
+                    <LanguageSelector currentLang={lang} />
+                  </div>
+                </aside>
+              </>
+            }
+            consoleFooter={
+              <>
+                {isAdmin && <DataPullFab />}
+                <MobileTabNav currentLang={lang} />
+              </>
+            }
+          >
+            {children}
+          </AtlasShell>
         </FavoritesProvider>
         </ThemeProvider>
       </body>
