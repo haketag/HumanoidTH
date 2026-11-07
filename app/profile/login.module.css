@@ -1,0 +1,134 @@
+.login {
+  display: grid;
+  grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr);
+  max-width: 960px;
+  margin: clamp(12px, 5vh, 62px) auto;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--surface);
+  color: var(--text-primary);
+}
+.atlas {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 520px;
+  padding: clamp(26px, 4vw, 44px);
+  background: #18372f;
+  color: #f0f7ea;
+  overflow: hidden;
+}
+.atlas .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  align-self: flex-start;
+  color: inherit;
+  font-weight: 720;
+}
+.map {
+  position: absolute;
+  z-index: -1;
+  inset: 12% 0 auto;
+  width: 100%;
+  height: 72%;
+  color: #9cc8a9;
+  opacity: .65;
+}
+.atlasCopy p { max-width: 32ch; margin: 0; line-height: 1.6; }
+.atlasCopy p + p { margin-top: 12px; color: #d5e6d8; }
+.atlasCopy .atlasTitle {
+  font: 400 clamp(28px, 3.9vw, 49px) / 1.04 Georgia, serif;
+  letter-spacing: -.035em;
+}
+.panel { min-width: 0; padding: clamp(24px, 4.7vw, 54px); }
+.panel h1 { margin: 27px 0 7px; font-size: clamp(26px, 3vw, 36px); line-height: 1.25; }
+.intro, .hint { color: var(--text-secondary); }
+.intro { margin: 0 0 25px; line-height: 1.65; }
+.switcher {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface-muted);
+}
+.switcher button, .password button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  cursor: pointer;
+}
+.switcher button { min-height: 40px; padding: 6px 8px; border-radius: 8px; font-weight: 650; }
+.switcher button[aria-pressed="true"] {
+  background: var(--surface);
+  color: var(--text-primary);
+  box-shadow: 0 0 0 1px var(--border);
+}
+.form fieldset { display: grid; min-width: 0; gap: 8px; border: 0; padding: 0; margin: 0; }
+.form label { display: block; font-weight: 650; }
+.form label + label { margin-top: 7px; }
+.form input {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 9px 12px;
+  background: var(--surface);
+  color: var(--text-primary);
+  font: inherit;
+}
+.form label input { margin-top: 7px; }
+.password { position: relative; }
+.password input { padding-inline-end: 49px; }
+.password button {
+  position: absolute;
+  inset: 1px 1px 1px auto;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  padding: 0;
+  border-radius: 8px;
+}
+.login :is(a, button, input):focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.hint, .error { margin: 0; font-size: .88rem; }
+.error { color: var(--text-primary); border-inline-start: 3px solid #c26c55; padding-inline-start: 9px; }
+.submit {
+  margin-top: 12px;
+  min-height: 46px;
+  border: 0;
+  border-radius: 9px;
+  background: #245c47;
+  color: #fff;
+  font: inherit;
+  font-weight: 720;
+  cursor: pointer;
+}
+.submit:hover { background: #1c4c3a; }
+.submit:disabled { opacity: .65; cursor: wait; }
+.portal {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 26px;
+  padding-top: 17px;
+  border-top: 1px solid var(--border);
+  color: var(--accent);
+  font-size: .92rem;
+}
+@media (max-width: 760px) {
+  .login { grid-template-columns: minmax(0, 1fr); }
+  .atlas { min-height: 210px; gap: 24px; }
+  .map { width: 65%; inset: 0 0 0 auto; height: 100%; }
+  .atlasCopy .atlasTitle { font-size: 30px; }
+  .atlasCopy p + p { margin-top: 8px; }
+}

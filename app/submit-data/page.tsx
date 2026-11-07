@@ -127,7 +127,7 @@ export default async function SubmitDataPage() {
         <section className="panel" style={{ border: "1px solid var(--warning)", marginBottom: 16 }}>
           <h2>{localT.accountTitle}</h2>
           <p className="muted" style={{ marginBottom: 14 }}>{localT.accountText}</p>
-          <Link href="/company">เข้าสู่ระบบ / สมัครบัญชีอย่างปลอดภัย</Link>
+          <Link href="/profile?from=/submit-data">{lang === "th" ? "เข้าสู่ระบบ / สมัครบัญชี" : "Sign in / Create account"}</Link>
           <p className="muted" style={{ fontSize: 12, marginTop: 12 }}>{localT.accountHint}</p>
         </section>
       )}
@@ -195,4 +195,3 @@ export default async function SubmitDataPage() {
     </>
   );
 }
-
