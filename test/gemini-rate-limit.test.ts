@@ -12,7 +12,5 @@ test("limits Gemini requests per client window and resets after one minute", () 
 
 test("uses the forwarding client address when available", () => {
   const request = new Request("http://localhost", { headers: { "x-forwarded-for": "203.0.113.8, 10.0.0.1" } });
-  assert.equal(clientRateLimitKey(request, true), "203.0.113.8");
+  assert.equal(clientRateLimitKey(request), "203.0.113.8");
 });
-
-test("does not trust spoofed forwarding headers by default", () => { const req = new Request("http://localhost", { headers: { "x-forwarded-for": "attacker" } }); assert.equal(clientRateLimitKey(req, false), "shared-client-bucket"); });

@@ -1,116 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowUp, Square, Plus, Search, PanelLeft, Copy, RotateCcw, Sparkles, ArrowLeft, X } from "lucide-react";
-import { safeSourceUrl, type Evidence, type ResearchResponse } from "@/lib/research-assistant";
-import { parseChatHistory, serializeChatHistory, type StoredConversation as ChatConversation, type StoredConversationTurn as ConversationTurn } from "@/lib/ai/chat-history";
+import type { Evidence, ResearchResponse } from "@/lib/research-assistant";
 
-type PlanRole = "student" | "researcher" | "company" | "general";
-type ExpertRole = "robotics_engineer" | "research_scientist" | "hri_wellness_specialist";
-const CHAT_STORAGE_KEY = "humanoidth-pet-ai-conversations-v1";
-const MAX_CHAT_CONVERSATIONS = 30;
-const MAX_CHAT_MESSAGES = 8;
-const EXPERT_ROLES: Array<{ id: ExpertRole; name: string; subtitle: string; icon: string; examples: [string, string] }> = [
-  { id: "robotics_engineer", name: "Robotics Engineer", subtitle: "Robotics, Hardware & Engineering", icon: "⚙️", examples: ["Unitree G1 ทำอะไรได้บ้าง?", "LiDAR กับกล้อง Depth ต่างกันอย่างไร?"] },
-  { id: "research_scientist", name: "Research Scientist", subtitle: "Research Papers & Scientific Analysis", icon: "🔬", examples: ["ช่วยหางานวิจัยเกี่ยวกับ Humanoid Robot", "สรุป Paper นี้ให้หน่อย"] },
-  { id: "hri_wellness_specialist", name: "HRI & Wellness Specialist", subtitle: "Human–Robot Interaction & Real-World Applications", icon: "🤝", examples: ["หุ่นยนต์ช่วยดูแลผู้สูงอายุได้จริงไหม?", "การออกแบบ HRI ที่ดีควรเป็นอย่างไร?"] }
-];
-
-function inlineMarkdown(text: string, prefix: string, citations: Set<number>, urls: Set<string>) {
-  const tokenPattern = /(\[\d+\]|\*\*[^*]+\*\*|`[^`]+`|\[[^\]]+\]\(https?:\/\/[^\s)]+\))/g;
-  const parts: React.ReactNode[] = [];
-  let cursor = 0;
-  for (const match of text.matchAll(tokenPattern)) {
-    const token = match[0];
-    const index = match.index ?? 0;
-    if (index > cursor) parts.push(text.slice(cursor, index));
-    const key = `${prefix}-${index}`;
-    const citation = /^\[(\d+)\]$/.exec(token);
-    const link = /^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/.exec(token);
-    if (citation && citations.has(Number(citation[1]))) parts.push(<a key={key} href={`#source-${citation[1]}`}>{token}</a>);
-    else if (link) {
-      const safeUrl = safeSourceUrl(link[2]);
-      parts.push(safeUrl && urls.has(safeUrl) ? <a key={key} href={safeUrl} target="_blank" rel="noreferrer">{link[1]}</a> : link[1]);
-    } else if (/^\*\*[^*]+\*\*$/.test(token)) parts.push(<strong key={key}>{token.slice(2, -2)}</strong>);
-    else if (/^`[^`]+`$/.test(token)) parts.push(<code key={key}>{token.slice(1, -1)}</code>);
-    else parts.push(token);
-    cursor = index + token.length;
-  }
-  if (cursor < text.length) parts.push(text.slice(cursor));
-  return parts;
-}
-
-function AnswerMarkdown({ text, evidence, externalSources = [] }: { text: string; evidence: Evidence[]; externalSources?: NonNullable<ResearchResponse["externalSources"]> }) {
-  const citations = new Set([...evidence.map((item) => item.citation), ...externalSources.map((item) => item.citation)]);
-  const urls = new Set([...evidence.flatMap((item) => [item.url, item.documentUrl].filter((url): url is string => Boolean(url)).map((url) => safeSourceUrl(url)).filter((url): url is string => Boolean(url))), ...externalSources.map((item) => safeSourceUrl(item.url)).filter((url): url is string => Boolean(url))]);
-  const lines = text.split(/\r?\n/);
-  const blocks: React.ReactNode[] = [];
-  let index = 0;
-  const renderTableCells = (line: string) => line.trim().replace(/^\||\|$/g, "").split("|").map((cell) => cell.trim());
-  const isTableDivider = (line: string) => /^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?\s*$/.test(line);
-  while (index < lines.length) {
-    const line = lines[index];
-    if (!line.trim()) { index += 1; continue; }
-    const fence = /^```([\w+-]*)\s*$/.exec(line);
-    if (fence) {
-      const code: string[] = []; index += 1;
-      while (index < lines.length && !/^```\s*$/.test(lines[index])) code.push(lines[index++]);
-      if (index < lines.length) index += 1;
-      blocks.push(<pre key={`code-${index}`}><code className={fence[1] ? `language-${fence[1]}` : undefined}>{code.join("\n")}</code></pre>);
-      continue;
-    }
-    const heading = /^(#{1,4})\s+(.+)$/.exec(line);
-    if (heading) {
-      const content = inlineMarkdown(heading[2], `heading-${index}`, citations, urls);
-      const key = `heading-${index++}`;
-      if (heading[1].length === 1) blocks.push(<h2 key={key}>{content}</h2>);
-      else if (heading[1].length === 2) blocks.push(<h3 key={key}>{content}</h3>);
-      else blocks.push(<h4 key={key}>{content}</h4>);
-      continue;
-    }
-    if (line.includes("|") && index + 1 < lines.length && isTableDivider(lines[index + 1])) {
-      const headers = renderTableCells(line); index += 2;
-      const rows: string[][] = [];
-      while (index < lines.length && lines[index].includes("|")) rows.push(renderTableCells(lines[index++]));
-      blocks.push(<div key={`table-${index}`} style={{ overflowX: "auto" }}><table><thead><tr>{headers.map((cell, column) => <th key={column}>{inlineMarkdown(cell, `th-${index}-${column}`, citations, urls)}</th>)}</tr></thead><tbody>{rows.map((row, rowIndex) => <tr key={rowIndex}>{headers.map((_, column) => <td key={column}>{inlineMarkdown(row[column] || "", `td-${index}-${rowIndex}-${column}`, citations, urls)}</td>)}</tr>)}</tbody></table></div>);
-      continue;
-    }
-    const listItem = /^\s*([-*+]|\d+\.)\s+(.+)$/.exec(line);
-    if (listItem) {
-      const ordered = /^\d+\.$/.test(listItem[1]); const items: string[] = [];
-      while (index < lines.length) {
-        const item = /^\s*([-*+]|\d+\.)\s+(.+)$/.exec(lines[index]);
-        if (!item || /^\d+\.$/.test(item[1]) !== ordered) break;
-        items.push(item[2]); index += 1;
-      }
-      const contents = items.map((item, itemIndex) => <li key={itemIndex}>{inlineMarkdown(item, `list-${index}-${itemIndex}`, citations, urls)}</li>);
-      blocks.push(ordered ? <ol key={`list-${index}`}>{contents}</ol> : <ul key={`list-${index}`}>{contents}</ul>);
-      continue;
-    }
-    if (/^>\s?/.test(line)) {
-      const quote: string[] = [];
-      while (index < lines.length && /^>\s?/.test(lines[index])) quote.push(lines[index++].replace(/^>\s?/, ""));
-      blocks.push(<blockquote key={`quote-${index}`}>{quote.map((item, quoteIndex) => <p key={quoteIndex}>{inlineMarkdown(item, `quote-${index}-${quoteIndex}`, citations, urls)}</p>)}</blockquote>);
-      continue;
-    }
-    const paragraph = [line]; index += 1;
-    while (index < lines.length && lines[index].trim() && !/^(#{1,4}\s|```|>\s?)/.test(lines[index]) && !/^\s*([-*+]|\d+\.)\s+/.test(lines[index]) && !(lines[index].includes("|") && index + 1 < lines.length && isTableDivider(lines[index + 1]))) paragraph.push(lines[index++]);
-    blocks.push(<p key={`p-${index}`}>{inlineMarkdown(paragraph.join(" "), `p-${index}`, citations, urls)}</p>);
-  }
-  return <div className="pet-ai-answer-markdown">{blocks}</div>;
-}
-
-function toPlanRole(role: ExpertRole): PlanRole {
-  return role === "research_scientist" ? "researcher" : role === "robotics_engineer" ? "company" : "general";
-}
-
-function fromPlanRole(role: PlanRole): ExpertRole {
-  return role === "researcher" ? "research_scientist" : role === "company" ? "robotics_engineer" : "hri_wellness_specialist";
-}
-
+type Role = "student" | "researcher" | "company" | "general";
+type ConversationTurn = { question: string; answer: string; evidence: Evidence[]; externalSources: NonNullable<ResearchResponse["externalSources"]> };
 type Plan = {
-  id: string; title: string; objective: string; steps: string; question: string; role: PlanRole;
+  id: string; title: string; objective: string; steps: string; question: string; role: Role;
   participantGroup: string; participantCount: string; siteContext: string; activityGoal: string;
   sessionLength: string; staffing: string; readinessNotes: string; evidence: Evidence[];
   evidenceSnapshotAt: string; updatedAt: string; revisionCount: number;
@@ -122,6 +19,19 @@ const EMPTY_PLAN: PlanForm = {
   title: "", objective: "", steps: "", question: "", role: "general", participantGroup: "", participantCount: "",
   siteContext: "", activityGoal: "", sessionLength: "", staffing: "", readinessNotes: "", evidence: [], feedback: ""
 };
+
+function EvidenceCards({ items, th }: { items: Evidence[]; th: boolean }) {
+  return <ol style={{ listStyle: "none", padding: 0, display: "grid", gap: 14 }}>
+    {items.map((item) => <li id={`source-${item.citation}`} key={`${item.type}-${item.id}`} className="panel">
+      <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+        <strong>[{item.citation}] {item.title}</strong><small>{item.type} · {item.status} · {item.excerpt ? (th ? "มีข้อความบางส่วน" : "Excerpt available") : (th ? "มีเฉพาะข้อมูลกำกับ" : "Metadata only")}</small>
+      </div>
+      <p style={{ whiteSpace: "pre-wrap" }}>{item.excerpt || (th ? "รายการนี้ยังไม่มีบทคัดย่อหรือข้อความเนื้อหา จึงใช้ยืนยันผลการศึกษาไม่ได้" : "No abstract or text is available, so this record cannot support study outcome claims.")}</p>
+      {item.url && <a href={item.url} target="_blank" rel="noreferrer">{th ? "เปิดแหล่งข้อมูล" : "Open source"}</a>}
+      {item.documentUrl && item.documentUrl !== item.url && <> · <a href={item.documentUrl} target="_blank" rel="noreferrer">{th ? "เปิดเอกสารฉบับเต็มที่เข้าถึงได้" : "Open accessible full text"}</a></>}
+    </li>)}
+  </ol>;
+}
 
 function makePlan(form: PlanForm, th: boolean): PlanForm {
   const activity = form.activityGoal.trim();
@@ -154,13 +64,9 @@ function makePlan(form: PlanForm, th: boolean): PlanForm {
 export default function ResearchAssistantClient({ lang, geminiConfigured, initialQuestion = "", initialRobotId = "", initialRobotName = "" }: { lang: "en" | "th"; geminiConfigured: boolean; initialQuestion?: string; initialRobotId?: string; initialRobotName?: string }) {
   const th = lang === "th";
   const [question, setQuestion] = useState(initialQuestion);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [pendingQuestion, setPendingQuestion] = useState("");
-  const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const [robotId, setRobotId] = useState(initialRobotId);
   const [robotName, setRobotName] = useState(initialRobotName);
-  const [expertRole, setExpertRole] = useState<ExpertRole>("hri_wellness_specialist");
-  const [roleChosen, setRoleChosen] = useState(Boolean(initialQuestion || initialRobotId));
+  const [role, setRole] = useState<Role>("general");
   const [aiConsent, setAiConsent] = useState(false);
   const [result, setResult] = useState<ResearchResponse | null>(null);
   const [loading, setLoading] = useState(false);
@@ -174,40 +80,11 @@ export default function ResearchAssistantClient({ lang, geminiConfigured, initia
   const [staleEvidenceIds, setStaleEvidenceIds] = useState<string[]>([]);
   const [saving, setSaving] = useState(false);
   const [deletingId, setDeletingId] = useState("");
-  const [conversations, setConversations] = useState<ChatConversation[]>([]);
-  const [selectedConversationId, setSelectedConversationId] = useState("");
-  const [chatSearch, setChatSearch] = useState("");
-  const [chatsReady, setChatsReady] = useState(false);
-  const abortController = useRef<AbortController | null>(null);
-  const activeConversation = conversations.find((item) => item.id === selectedConversationId) || null;
-  const activeMessages = activeConversation?.messages || [];
-
-  useEffect(() => { if (activeMessages.length || loading) messagesEndRef.current?.scrollIntoView({ block: "end" }); }, [activeMessages.length, loading, selectedConversationId]);
-
-  useEffect(() => {
-    const chats = parseChatHistory(localStorage.getItem(CHAT_STORAGE_KEY));
-    setConversations(chats);
-    const resumeSavedChat = !initialQuestion && !initialRobotId ? chats[0] : undefined;
-    setSelectedConversationId(resumeSavedChat?.id || "");
-    if (resumeSavedChat) {
-      setExpertRole(resumeSavedChat.expertRole);
-      setRobotId(resumeSavedChat.robotId || initialRobotId);
-      setRobotName(resumeSavedChat.robotName || initialRobotName);
-      setRoleChosen(true);
-      const lastTurn = resumeSavedChat.messages.at(-1);
-      setResult(lastTurn?.response || null);
-      setQuestion(initialQuestion);
-    } else {
-      setQuestion(initialQuestion);
-    }
-    setChatsReady(true);
-  }, [initialQuestion, initialRobotId, initialRobotName]);
-
-  useEffect(() => {
-    if (!chatsReady) return;
-    try { localStorage.setItem(CHAT_STORAGE_KEY, serializeChatHistory(conversations.slice(0, MAX_CHAT_CONVERSATIONS))); }
-    catch { setNotice(th ? "พื้นที่จัดเก็บประวัติในเบราว์เซอร์เต็ม · บทสนทนาปัจจุบันยังใช้งานต่อได้" : "Browser storage is full; the current chat still works."); }
-  }, [conversations, chatsReady, th]);
+  const [feedbackSent, setFeedbackSent] = useState(false);
+  const [feedbackError, setFeedbackError] = useState("");
+  const [feedbackIssue, setFeedbackIssue] = useState<"incorrect" | "missing_information" | "broken_source" | "">("");
+  const [feedbackComment, setFeedbackComment] = useState("");
+  const [conversation, setConversation] = useState<ConversationTurn[]>([]);
 
   const loadPlans = useCallback(async () => {
     setPlansLoading(true);
@@ -222,100 +99,39 @@ export default function ResearchAssistantClient({ lang, geminiConfigured, initia
 
   useEffect(() => { void loadPlans(); }, [loadPlans]);
 
-  async function runQuestion(questionToAsk: string, regenerate = false) {
-    const askedQuestion = questionToAsk.trim();
-    if (askedQuestion.length < 3 || loading || !geminiConfigured || !aiConsent) return;
-    setPendingQuestion(askedQuestion); setQuestion(""); setLoading(true); setError(""); setNotice(""); setResult(null); setDraftId(""); setSaved(false); setStaleEvidenceIds([]);
-    const contextMessages = regenerate ? activeMessages.slice(0, -1) : activeMessages;
-    const history = contextMessages.slice(-3).flatMap((turn) => [
+  async function ask(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault(); setLoading(true); setError(""); setNotice(""); setResult(null); setDraftId(""); setSaved(false); setStaleEvidenceIds([]);
+    setFeedbackSent(false); setFeedbackError(""); setFeedbackIssue(""); setFeedbackComment("");
+    const askedQuestion = question.trim();
+    const history = conversation.slice(-3).flatMap((turn) => [
       { role: "user" as const, content: turn.question.slice(0, 800) },
       { role: "assistant" as const, content: turn.answer.slice(0, 800) }
     ]).slice(-6);
-    const conversationId = activeConversation?.id || "";
-    const requestController = new AbortController();
-    abortController.current = requestController;
     try {
       const response = await fetch("/api/research-assistant", {
-        method: "POST", headers: { "Content-Type": "application/json" }, signal: requestController.signal,
-        body: JSON.stringify({ question: askedQuestion, history, role: toPlanRole(expertRole), expertRole, language: lang, robotId: robotId || undefined, allowGemini: geminiConfigured && aiConsent, adultConfirmed: geminiConfigured && aiConsent })
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ question: askedQuestion, history, role, language: lang, robotId: robotId || undefined, allowGemini: geminiConfigured && aiConsent, adultConfirmed: geminiConfigured && aiConsent })
       });
       const data = await response.json();
-      if (requestController.signal.aborted) return;
-      if (!response.ok) throw new Error((data.error || (th ? "ค้นข้อมูลไม่สำเร็จ" : "Search failed")) + (data.requestId ? " (" + data.requestId.slice(0, 8) + ")" : ""));
+      if (!response.ok) throw new Error(data.error || (th ? "ค้นข้อมูลไม่สำเร็จ" : "Search failed"));
       setResult(data as ResearchResponse);
-      const chatId = conversationId || ("chat-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8));
-      const now = new Date().toISOString();
-      const turn: ConversationTurn = { id: "turn-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8), question: askedQuestion, answer: data.answer, expertRole, response: data as ResearchResponse };
-      setConversations((current) => {
-        const existing = current.find((chat) => chat.id === chatId);
-        const updated: ChatConversation = existing
-          ? { ...existing, title: existing.messages.length ? existing.title : askedQuestion.slice(0, 80), expertRole, robotId: data.robotContext?.id || robotId, robotName: data.robotContext?.name || robotName, messages: [...(regenerate ? existing.messages.slice(0, -1) : existing.messages), turn].slice(-MAX_CHAT_MESSAGES), updatedAt: now }
-          : { id: chatId, title: askedQuestion.slice(0, 80), expertRole, robotId: data.robotContext?.id || robotId, robotName: data.robotContext?.name || robotName, messages: [turn], createdAt: now, updatedAt: now };
-        return [updated, ...current.filter((chat) => chat.id !== chatId)].slice(0, MAX_CHAT_CONVERSATIONS);
-      });
-      setSelectedConversationId(chatId); setRoleChosen(true);
+      setConversation((current) => [...current, { question: askedQuestion, answer: data.answer, evidence: data.evidence, externalSources: data.externalSources || [] }].slice(-6));
       if (data.robotContext) { setRobotId(data.robotContext.id); setRobotName(data.robotContext.name); }
-      setForm({ ...EMPTY_PLAN, question: askedQuestion, role: toPlanRole(expertRole), evidence: data.evidence });
-    } catch (failure) {
-      if (!(failure instanceof Error && failure.name === "AbortError")) { setQuestion(askedQuestion); setError(failure instanceof Error ? failure.message : (th ? "ค้นข้อมูลไม่สำเร็จ" : "Search failed")); }
-    } finally { if (abortController.current === requestController) abortController.current = null; setLoading(false); setPendingQuestion(""); }
+      setForm({ ...EMPTY_PLAN, question: askedQuestion, role, evidence: data.evidence });
+    } catch (failure) { setError(failure instanceof Error ? failure.message : (th ? "ค้นข้อมูลไม่สำเร็จ" : "Search failed")); }
+    finally { setLoading(false); }
   }
 
-  function ask(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    void runQuestion(question);
-  }
-
-  function startNewChat() {
-    if (loading) abortController.current?.abort();
-    setSelectedConversationId(""); setQuestion(""); setResult(null); setError(""); setNotice(""); setDraftId(""); setSaved(false);
-    setExpertRole("hri_wellness_specialist"); setRoleChosen(false); setRobotId(""); setRobotName(""); setSidebarOpen(false);
-  }
-
-  function selectChat(chat: ChatConversation) {
-    if (loading) abortController.current?.abort();
-    setSelectedConversationId(chat.id); setExpertRole(chat.expertRole); setRoleChosen(true);
-    setRobotId(chat.robotId || ""); setRobotName(chat.robotName || ""); setQuestion("");
-    setError(""); setNotice(""); setDraftId(""); setSaved(false); setStaleEvidenceIds([]);
-    const lastTurn = chat.messages.at(-1);
-    setResult(lastTurn?.response || null);
-    setSidebarOpen(false);
-  }
-
-  function switchExpertRole(nextRole: ExpertRole) {
-    setExpertRole(nextRole); setRoleChosen(true); setForm((current) => ({ ...current, role: toPlanRole(nextRole) }));
-    if (activeConversation) setConversations((current) => current.map((chat) => chat.id === activeConversation.id ? { ...chat, expertRole: nextRole, updatedAt: new Date().toISOString() } : chat));
-  }
-
-  async function copyAnswer() {
-    if (!result) return;
+  async function sendAnswerFeedback(vote: "HELPFUL" | "NOT_HELPFUL") {
+    if (!result || feedbackSent) return;
+    setFeedbackError("");
     try {
-      await navigator.clipboard.writeText(result.answer);
-      setNotice(th ? "คัดลอกคำตอบแล้ว" : "Answer copied.");
-    } catch { setNotice(th ? "คัดลอกไม่ได้ในเบราว์เซอร์นี้" : "Clipboard access is unavailable in this browser."); }
-  }
-
-  function regenerateAnswer() {
-    const lastTurn = activeMessages.at(-1);
-    if (lastTurn) void runQuestion(lastTurn.question, true);
-  }
-
-  function renameChat(chat: ChatConversation) {
-    const title = window.prompt(th ? "ตั้งชื่อบทสนทนา" : "Rename conversation", chat.title);
-    if (title?.trim()) setConversations((current) => current.map((item) => item.id === chat.id ? { ...item, title: title.trim().slice(0, 80), updatedAt: new Date().toISOString() } : item));
-  }
-
-  function deleteChat(chat: ChatConversation) {
-    if (!window.confirm(th ? "ลบบทสนทนานี้ออกจากเบราว์เซอร์หรือไม่?" : "Delete this conversation from this browser?")) return;
-    const next = conversations.filter((item) => item.id !== chat.id);
-    setConversations(next);
-    if (selectedConversationId === chat.id) {
-      setSelectedConversationId(next[0]?.id || "");
-      setResult(next[0]?.messages.at(-1)?.response || null);
-      setQuestion(next[0]?.messages.at(-1)?.question || "");
-      if (next[0]) { setExpertRole(next[0].expertRole); setRobotId(next[0].robotId); setRobotName(next[0].robotName); setRoleChosen(true); }
-      else { setRoleChosen(false); setQuestion(""); setResult(null); }
-    }
+      const response = await fetch("/api/research-assistant/feedback", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ vote, questionCategory: result.intent || "general", robotId: robotId || null, externalSearchUsed: result.externalSearchStatus === "used", issueCategory: feedbackIssue || null, comment: feedbackComment })
+      });
+      if (!response.ok) throw new Error("feedback unavailable");
+      setFeedbackSent(true);
+    } catch { setFeedbackError(th ? "ส่ง feedback ไม่สำเร็จ ลองอีกครั้งได้" : "Could not save feedback. Please try again."); }
   }
 
   function buildPlan() {
@@ -342,7 +158,7 @@ export default function ResearchAssistantClient({ lang, geminiConfigured, initia
   }
 
   function openDraft(plan: Plan) {
-    setDraftId(plan.id); setSaved(true); setStaleEvidenceIds(plan.staleEvidenceIds ?? []); setQuestion(plan.question); setExpertRole(fromPlanRole(plan.role)); setRoleChosen(true); setForm({
+    setDraftId(plan.id); setSaved(true); setStaleEvidenceIds(plan.staleEvidenceIds ?? []); setQuestion(plan.question); setRole(plan.role); setForm({
       title: plan.title, objective: plan.objective, steps: plan.steps, question: plan.question, role: plan.role,
       participantGroup: plan.participantGroup, participantCount: plan.participantCount, siteContext: plan.siteContext,
       activityGoal: plan.activityGoal, sessionLength: plan.sessionLength, staffing: plan.staffing,
@@ -386,40 +202,53 @@ export default function ResearchAssistantClient({ lang, geminiConfigured, initia
   const update = (key: keyof PlanForm, value: string) => setForm((current) => ({ ...current, [key]: value }));
   const hasEvidence = Boolean(result?.evidence.length);
 
-  const visibleChats = conversations.filter((chat) => chat.title.toLocaleLowerCase().includes(chatSearch.toLocaleLowerCase()));
+  return <div style={{ display: "grid", gap: 18, maxWidth: 1000 }}>
+    <header><h1>Pet AI · Research Assistant</h1><p className="muted">{th ? "ถามจากข้อมูล HumanoidTH พร้อมแหล่งอ้างอิง แล้วต่อยอดเป็นแผน HRI Living Lab ได้" : "Ask about HumanoidTH data with citations, then turn the evidence into an HRI Living Lab plan."}</p></header>
 
-  return <div className="pet-chat-shell">
-    {sidebarOpen && <button className="pet-chat-backdrop" aria-label={th ? "ปิดประวัติแชต" : "Close chat history"} onClick={() => setSidebarOpen(false)} />}
-    <aside className={"pet-chat-sidebar" + (sidebarOpen ? " is-open" : "")} aria-label={th ? "ประวัติแชต" : "Chat history"}>
-      <div className="pet-chat-brand"><Link href="/" aria-label="HumanoidTH"><span className="pet-chat-mark"><Sparkles size={20} /></span><strong>Pet AI</strong></Link><button className="pet-chat-icon mobile-only" onClick={() => setSidebarOpen(false)} aria-label={th ? "ปิดเมนู" : "Close menu"}><X size={19}/></button></div>
-      <button type="button" className="pet-chat-new" onClick={startNewChat}><Plus size={19}/>{th ? "แชตใหม่" : "New chat"}</button>
-      <label className="pet-chat-search"><Search size={16}/><span className="pet-chat-sr-only">{th ? "ค้นหาบทสนทนา" : "Search chats"}</span><input placeholder={th ? "ค้นหาบทสนทนา" : "Search chats"} value={chatSearch} onChange={(event) => setChatSearch(event.target.value)} maxLength={80}/></label>
-      <p className="pet-chat-history-label">{th ? "บทสนทนาล่าสุด" : "Recent conversations"}</p>
-      <nav className="pet-chat-history" aria-label={th ? "บทสนทนาที่บันทึกไว้" : "Saved conversations"}>
-        {!chatsReady ? <p className="pet-chat-empty-note" role="status">{th ? "กำลังโหลด..." : "Loading..."}</p> : visibleChats.length ? visibleChats.map((chat) => <div className={"pet-chat-history-row" + (chat.id === selectedConversationId ? " is-active" : "")} key={chat.id}>
-          <button className="pet-chat-history-title" aria-current={chat.id === selectedConversationId ? "page" : undefined} onClick={() => selectChat(chat)} title={chat.title}>{chat.title}</button>
-          <details className="pet-chat-history-menu"><summary aria-label={th ? "จัดการบทสนทนา" : "Conversation options"}>···</summary><div><button onClick={() => renameChat(chat)}>{th ? "เปลี่ยนชื่อ" : "Rename"}</button><button onClick={() => deleteChat(chat)}>{th ? "ลบ" : "Delete"}</button></div></details>
-        </div>) : <p className="pet-chat-empty-note">{th ? "เริ่มบทสนทนาแรกของคุณ" : "Start your first conversation"}</p>}
-      </nav>
-      <div className="pet-chat-sidebar-footer"><Link href="/robots"><ArrowLeft size={16}/>{th ? "กลับไป HumanoidTH" : "Back to HumanoidTH"}</Link><small>{th ? "ประวัติแชตเก็บเฉพาะในเบราว์เซอร์นี้" : "Chat history stays in this browser"}</small></div>
-    </aside>
-    <div className="pet-chat-main">
-      <header className="pet-chat-topbar"><div><button type="button" className="pet-chat-icon mobile-only" onClick={() => setSidebarOpen(true)} aria-label={th ? "เปิดประวัติแชต" : "Open chat history"}><PanelLeft size={21}/></button><span className="pet-chat-title">Pet AI <span>Research Assistant</span></span></div><label className="pet-chat-role-select"><span className="pet-chat-sr-only">{th ? "ผู้เชี่ยวชาญ" : "Expert role"}</span><select aria-label={th ? "ผู้เชี่ยวชาญ" : "Expert role"} value={expertRole} disabled={loading} onChange={(event) => switchExpertRole(event.target.value as ExpertRole)}>{EXPERT_ROLES.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label></header>
-      <div className="pet-chat-scroll">
-        <div className="pet-chat-thread">
-          {robotId && <div className="pet-chat-context"><span>{th ? "บริบท:" : "Context:"} <strong>{robotName || robotId}</strong></span><button className="pet-chat-icon" onClick={() => { setRobotId(""); setRobotName(""); }} aria-label={th ? "เอาบริบทออก" : "Remove context"}><X size={15}/></button></div>}
-          {!activeMessages.length && !result && !loading && <section className="pet-chat-welcome"><span className="pet-chat-welcome-mark"><Sparkles size={30}/></span><p className="pet-chat-eyebrow">HUMANOIDTH · RESEARCH COMPANION</p><h1>{th ? "วันนี้อยากค้นคว้าเรื่องอะไร?" : "What would you like to explore?"}</h1><p>{th ? "เลือกผู้เชี่ยวชาญ แล้วเริ่มค้นคว้าพร้อมแหล่งอ้างอิง" : "Choose an expert and explore ideas with cited sources."}</p><div className="pet-chat-experts">{EXPERT_ROLES.map((item) => <button className={"pet-chat-expert" + (roleChosen && expertRole === item.id ? " is-selected" : "")} key={item.id} onClick={() => switchExpertRole(item.id)}><span className="pet-chat-expert-icon" aria-hidden="true">{item.icon}</span><strong>{item.name}</strong><span>{item.subtitle}</span><small>{item.examples[0]}</small></button>)}</div></section>}
-          {activeMessages.map((turn, index) => <article className="pet-chat-turn" key={turn.id}><div className="pet-chat-user"><span className="pet-chat-sr-only">{th ? "คุณ:" : "You:"}</span>{turn.question}</div><div className="pet-chat-assistant"><div className="pet-chat-assistant-label"><Sparkles size={17}/><strong>{EXPERT_ROLES.find((item) => item.id === turn.expertRole)?.name || "Pet AI"}</strong></div><AnswerMarkdown text={turn.answer} evidence={turn.response.evidence} externalSources={turn.response.externalSources}/>{turn.response.researchProvider === "public" && <p className="pet-chat-notice">{th ? "แหล่งค้น: Wikipedia / Crossref · บทนำ บทคัดย่อ และข้อมูลบรรณานุกรม" : "Sources: Wikipedia / Crossref · introductions, abstracts and bibliographic metadata"}</p>}
-            {(turn.response.externalSources?.length || turn.response.evidence.length) ? <details className="pet-chat-sources"><summary>{th ? "แหล่งอ้างอิง" : "Sources"} <span>{turn.response.evidence.length + (turn.response.externalSources?.length || 0)}</span></summary><ol>{turn.response.evidence.map((source) => <li id={"source-" + source.citation} key={source.id}>{source.url ? <a href={source.url} target="_blank" rel="noreferrer">[{source.citation}] {source.title}</a> : <span>[{source.citation}] {source.title}</span>}</li>)}{turn.response.externalSources?.map((source) => <li id={"source-" + source.citation} key={source.url}><a href={source.url} target="_blank" rel="noreferrer">[{source.citation}] {source.title}</a></li>)}</ol></details> : null}
-            <div className="pet-chat-answer-actions"><button className="pet-chat-icon" onClick={() => { if (index === activeMessages.length - 1) void copyAnswer(); else void navigator.clipboard.writeText(turn.answer).catch(() => setNotice(th ? "คัดลอกไม่ได้" : "Could not copy.")); }} aria-label={th ? "คัดลอกคำตอบ" : "Copy answer"} title={th ? "คัดลอกคำตอบ" : "Copy answer"}><Copy size={16}/></button>{index === activeMessages.length - 1 && <button className="pet-chat-icon" disabled={loading} onClick={regenerateAnswer} aria-label={th ? "สร้างคำตอบใหม่" : "Regenerate answer"} title={th ? "สร้างคำตอบใหม่" : "Regenerate answer"}><RotateCcw size={16}/></button>}</div>
-          </div></article>)}
-          {!activeMessages.length && result && <section className="pet-chat-assistant"><AnswerMarkdown text={result.answer} evidence={result.evidence} externalSources={result.externalSources}/></section>}
-          {loading && <div className="pet-chat-turn"><div className="pet-chat-user">{pendingQuestion}</div><div className="pet-chat-assistant pet-chat-loading" role="status"><Sparkles size={18}/><span>{th ? "กำลังค้นคว้าและเรียบเรียงคำตอบ…" : "Researching and composing an answer…"}</span></div></div>}
-          {error && <div className="pet-chat-error" role="alert">{error}</div>}
-          {notice && <p className="pet-chat-notice" role="status">{notice}</p>}
-          {staleEvidenceIds.length > 0 && <p className="pet-chat-notice">{th ? "หลักฐานในแผนนี้อาจไม่เป็นปัจจุบัน กรุณาตรวจใหม่ก่อนบันทึก" : "Some plan evidence may be outdated. Review it before saving."}</p>}
-          {(result || drafts.length > 0) && <details className="pet-chat-tools"><summary>{th ? "เครื่องมือและแผน Living Lab" : "Living Lab tools and plans"}</summary><div className="pet-chat-tools-content">    {result && <section className="panel" style={{ display: "grid", gap: 12 }}>
-      <h2>{th ? "แผน HRI Wellness Living Lab" : "HRI Wellness Living Lab plan"}</h2>{saved && <small role="status">{th ? "บันทึกแผนแล้ว" : "Plan saved"}</small>}
+    {robotId && <section className="panel" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}><span>{th ? "กำลังถามเกี่ยวกับ:" : "Asking about:"} <strong>{robotName || robotId}</strong></span><div style={{ display: "flex", gap: 8 }}><Link className="button" href="/robots">{th ? "เปลี่ยนหุ่นยนต์" : "Change robot"}</Link><button type="button" onClick={() => { setRobotId(""); setRobotName(""); }}>{th ? "เอาบริบทออก" : "Remove context"}</button></div></section>}
+
+    <section className="panel" aria-live="polite" style={{ display: "flex", alignItems: "center", gap: 14 }}>
+      <div aria-hidden="true" style={{ width: 48, height: 48, borderRadius: 16, display: "grid", placeItems: "center", background: "#e9f7ee", fontSize: 25 }}>🤖</div>
+      <div><strong>ผู้ช่วยค้นหลักฐาน · Evidence Assistant</strong><div>{loading ? (th ? "กำลังค้นหลักฐาน..." : "Searching evidence...") : saved ? (th ? "บันทึก/เปิดแผนแล้ว" : "Plan saved or reopened") : error ? (th ? "ต้องตรวจคำค้นหรือการเชื่อมต่อ" : "Needs a query or connection check") : result?.evidence.length ? (th ? "พบหลักฐาน · โปรดตรวจข้อจำกัด" : "Evidence ready · check the limitations") : result ? (th ? "ยังไม่พบหลักฐานที่ตรง" : "No matching evidence") : (th ? "เริ่มต้นด้วยคำถามหรือสถานการณ์ที่ต้องการค้นข้อมูล" : "Start with a question or study scenario")}</div></div>
+    </section>
+
+    <form onSubmit={ask} className="panel" style={{ display: "grid", gap: 12 }}>
+      <label>{th ? "รูปแบบคำแนะนำ" : "Assistant role"}<select value={role} onChange={(event) => setRole(event.target.value as Role)} style={{ display: "block", marginTop: 6 }}>
+        <option value="student">Student · {th ? "อธิบายศัพท์และวิธีอ่านหลักฐาน" : "terms and source-reading prompts"}</option>
+        <option value="researcher">Researcher · {th ? "แบบศึกษา ประชากร ผลลัพธ์ ข้อจำกัด" : "design, population, outcomes, limits"}</option>
+        <option value="company">Company · {th ? "แยก capability, ผู้ผลิต และหลักฐาน deployment" : "capability, manufacturer, deployment evidence"}</option>
+        <option value="general">General · {th ? "สรุปสั้นและอ่านง่าย" : "plain-language overview"}</option>
+      </select><small>{th ? "บทบาทมีผลต่อแนวทางการช่วยคิดเท่านั้น และไม่เปลี่ยนสิทธิ์การเข้าถึงข้อมูล" : "Role changes the guidance only; it never changes data access."}</small></label>
+      <label>{th ? "คำถามหรือสถานการณ์" : "Question or scenario"}<textarea value={question} onChange={(event) => setQuestion(event.target.value)} rows={3} maxLength={500} required placeholder={th ? "ตัวอย่าง: เรามีหุ่นยนต์ NAO และต้องการจัดกิจกรรมสนทนากลุ่มกับผู้สูงอายุ ควรพิจารณาหลักฐานและข้อควรระวังอะไรบ้าง?" : "Example: We have a NAO for a group activity with older adults. What evidence and limits should we check?"} style={{ display: "block", width: "100%", marginTop: 6 }} /></label>
+      <div><small>{th ? "ตัวอย่างคำถาม:" : "Try asking:"}</small><div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 6 }}>{(th ? ["ใครเป็นผู้ผลิตหุ่นยนต์รุ่นนี้?", "มีงานวิจัยที่เกี่ยวข้องอะไรบ้าง?", "รุ่นนี้ต่างจากรุ่นอื่นอย่างไร?", "มีข้อมูลราคาและการจำหน่ายหรือไม่?"] : ["Who makes it?", "What research is linked?", "Compare with another robot", "Is current pricing available?"]).map((sample) => <button key={sample} type="button" onClick={() => setQuestion(robotName ? `${robotName} ${sample}` : sample)}>{sample}</button>)}</div></div>
+      {geminiConfigured && <label style={{ display: "flex", alignItems: "flex-start", gap: 8 }}><input type="checkbox" checked={aiConsent} onChange={(event) => setAiConsent(event.target.checked)} /><span>{th ? "ฉันมีอายุอย่างน้อย 18 ปี และยินยอมให้ส่งคำถามกับข้อมูลสาธารณะที่ค้นพบไปยัง Google Gemini เพื่อช่วยตอบและค้นเว็บเพิ่มเติมเมื่อหลักฐานไม่พอหรือเป็นข้อมูลปัจจุบัน ฉันจะไม่ระบุชื่อหรือข้อมูลส่วนบุคคล" : "I am 18 or older and consent to sending my question and retrieved public records to Google Gemini for answers and, when evidence is insufficient or current information is requested, web search. Do not include personal data."}</span></label>}
+      {!geminiConfigured && <small>{th ? "Gemini ยังไม่ได้ตั้งค่า · คำตอบจะแสดงข้อความจากรายการในระบบพร้อมแหล่งอ้างอิง" : "Gemini is not configured; answers use retrieved system excerpts with citations."}</small>}
+      <button className="primary" type="submit" disabled={loading || question.trim().length < 3}>{loading ? (th ? "กำลังค้นฐานข้อมูล..." : "Searching HumanoidTH...") : (th ? "ค้นข้อมูลด้วย Pet AI" : "Ask Pet AI")}</button>
+    </form>
+    {error && <p role="alert" style={{ color: "var(--danger)" }}>{error}</p>}
+    {notice && <p role="status">{notice}</p>}
+    {conversation.length > 1 && <section aria-label={th ? "ประวัติการสนทนา" : "Conversation history"} style={{ display: "grid", gap: 10 }}><div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}><h2>{th ? "บทสนทนาก่อนหน้า" : "Earlier in this conversation"}</h2><button type="button" onClick={() => setConversation([])}>{th ? "เริ่มบทสนทนาใหม่" : "Start a new chat"}</button></div>{conversation.slice(0, -1).map((turn, index) => <article className="panel" key={`${index}-${turn.question}`}><p><strong>{th ? "คุณ:" : "You:"}</strong> {turn.question}</p><p style={{ whiteSpace: "pre-wrap" }}><strong>Pet AI:</strong> {turn.answer}</p><div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>{turn.evidence.map((item) => item.url ? <a key={`e-${item.citation}`} href={item.url} target="_blank" rel="noreferrer">[{item.citation}] {item.title}</a> : null)}{turn.externalSources.map((source) => <a key={`w-${source.citation}`} href={source.url} target="_blank" rel="noreferrer">[{source.citation}] {source.title}</a>)}</div></article>)}</section>}
+    {staleEvidenceIds.length > 0 && <p role="alert" className="panel">{th ? `หลักฐาน ${staleEvidenceIds.length} รายการในแผนนี้ไม่อยู่ในชุดข้อมูลสาธารณะปัจจุบัน กรุณาค้นใหม่ก่อนบันทึก revision; ยังดาวน์โหลด snapshot เดิมได้` : `${staleEvidenceIds.length} evidence item(s) in this plan are no longer in the current public corpus. Search again before saving a revision; the saved snapshot can still be downloaded.`}</p>}
+
+    {result && <section className="panel" aria-live="polite"><h2>{result.mode === "web" ? (th ? "คำตอบจากข้อมูลในระบบและการค้นเว็บ" : "Answer from system data and web search") : result.mode === "gemini" ? (th ? "ร่างสังเคราะห์จาก Gemini · ตรวจแหล่งอ้างอิง" : "Gemini-assisted draft · verify citations") : hasEvidence ? (th ? "สรุปผลค้นจากฐานข้อมูล" : "Database search summary") : (th ? "ไม่พบในชุดข้อมูลที่ค้น" : "Not found in the searched corpus")}</h2><p style={{ whiteSpace: "pre-wrap" }}>{result.answer.split(/(\[\d+\])/g).map((part, index) => { const match = /^\[(\d+)\]$/.exec(part); return match ? <a key={index} href={`#source-${match[1]}`}>{part}</a> : <span key={index}>{part}</span>; })}</p>
+      {result.aiStatus === "unavailable" && <p role="status">{th ? "Gemini ใช้งานไม่ได้ในขณะนี้ จึงแสดงข้อความหลักฐานจากฐานข้อมูลพร้อมแหล่งอ้างอิงแทน" : "Gemini is unavailable; showing retrieved database excerpts with citations."}</p>}
+      {result.aiStatus === "not_configured" && <p className="muted">{th ? "ยังไม่ได้ตั้งค่า Gemini API key/model · คำตอบนี้ยกข้อความที่ตรงจากข้อมูลในระบบพร้อม citation" : "Gemini API key/model are not configured; this answer quotes matching system records with citations."}</p>}
+      {result.aiStatus === "not_consented" && <p className="muted">{th ? "ไม่ได้ส่งข้อมูลไป Gemini เพราะยังไม่ได้ให้ความยินยอม · คำตอบใช้ข้อความจากข้อมูลในระบบพร้อม citation" : "Nothing was sent to Gemini because consent was not given; the answer uses retrieved system excerpts with citations."}</p>}
+      {result.aiStatus === "rate_limited" && <p role="status">{th ? "ถึงขีดจำกัดการเรียก Gemini ชั่วคราวแล้ว · แสดงข้อความหลักฐานจากฐานข้อมูลพร้อม citation" : "Gemini request limit reached; showing retrieved database excerpts with citations."}</p>}
+      {result.externalSearchStatus === "not_consented" && <p className="muted">{th ? "หลักฐานยังไม่พอสำหรับคำตอบที่มั่นใจ · เปิดการยินยอมด้านบนเพื่อให้ค้นเว็บเพิ่มเติมได้" : "Evidence is limited; enable consent above to allow a web search."}</p>}
+      {result.externalSearchStatus === "not_configured" && <p className="muted">{th ? "ยังไม่ได้ตั้งค่า Gemini · แสดงเฉพาะข้อมูลที่ค้นพบในระบบ" : "Gemini is not configured; showing only records found in the system."}</p>}
+      {result.externalSearchStatus === "unavailable" && <p role="status">{th ? "ค้นเว็บเพิ่มเติมไม่สำเร็จ · แสดงข้อมูลที่พบในระบบและระบุส่วนที่ยังไม่ทราบ" : "Web search was unavailable; showing system records and noting what remains unknown."}</p>}
+      {result.externalSearchQueries?.length ? <p className="muted">{th ? "คำค้นบนเว็บ:" : "Web search queries:"} {result.externalSearchQueries.join(" · ")}</p> : null}
+      {(hasEvidence || result.externalSources?.length) && <><h3>{th ? "ข้อจำกัดและสิ่งที่ยังไม่รู้" : "Limitations and unknowns"}</h3><ul>{(result.limitations || []).map((item, i) => <li key={`l${i}`}>{item}</li>)}{(result.unknowns || []).map((item, i) => <li key={`u${i}`}>{item}</li>)}</ul><small>{th ? "Accepted/Approved เป็นสถานะ workflow ไม่ใช่การตรวจข้อเท็จจริงอย่างอิสระ · AI ช่วยสรุปข้อมูล ไม่ใช่ผู้ประเมินหลักฐาน" : "Accepted/Approved are workflow states, not independent fact checks. AI summarizes evidence; it does not validate it."}</small></>}
+      <div style={{ display: "grid", gap: 8 }}><strong>{th ? "คำตอบนี้มีประโยชน์หรือไม่?" : "Was this answer helpful?"}</strong><label>{th ? "หากมีปัญหา เลือกหัวข้อ (ไม่บังคับ)" : "Issue (optional)"}<select value={feedbackIssue} onChange={(event) => setFeedbackIssue(event.target.value as typeof feedbackIssue)}><option value="">{th ? "ไม่ระบุ" : "Choose an issue"}</option><option value="incorrect">{th ? "ข้อมูลไม่ถูกต้อง" : "Incorrect information"}</option><option value="missing_information">{th ? "ข้อมูลยังไม่ครบ" : "Missing information"}</option><option value="broken_source">{th ? "แหล่งอ้างอิงเปิดไม่ได้" : "Broken source"}</option></select></label><label>{th ? "หมายเหตุเพิ่มเติม (ไม่บังคับ; อย่าใส่ข้อมูลส่วนบุคคล)" : "Comment (optional; do not include personal information)"}<textarea value={feedbackComment} onChange={(event) => setFeedbackComment(event.target.value)} maxLength={500} rows={2} /></label><div style={{ display: "flex", gap: 8 }}><button type="button" disabled={feedbackSent} onClick={() => void sendAnswerFeedback("HELPFUL")}>{th ? "มีประโยชน์" : "Helpful"}</button><button type="button" disabled={feedbackSent} onClick={() => void sendAnswerFeedback("NOT_HELPFUL")}>{th ? "ควรปรับปรุง" : "Not helpful"}</button>{feedbackSent && <span role="status">{th ? "ขอบคุณสำหรับ feedback" : "Thanks for your feedback."}</span>}</div>{feedbackError && <p role="alert">{feedbackError}</p>}</div>
+    </section>}
+
+    {hasEvidence && <section><h2>{th ? "หลักฐานที่พบ" : "Retrieved evidence"}</h2><EvidenceCards items={result?.evidence ?? []} th={th} /></section>}
+    {result?.externalSources?.length ? <section><h2>{th ? "แหล่งข้อมูลจากเว็บ" : "Web sources"}</h2><ol style={{ display: "grid", gap: 8 }}>{result.externalSources.map((source) => <li id={`source-${source.citation}`} key={`${source.citation}-${source.url}`}><a href={source.url} target="_blank" rel="noreferrer">[{source.citation}] {source.title}</a> <small>({source.sourceKind === "academic" ? (th ? "แหล่งวิชาการ" : "Academic") : (th ? "เว็บภายนอก" : "External web")})</small></li>)}</ol></section> : null}
+    {result?.documentReads?.length ? <section><h2>{th ? "สถานะการอ่านลิงก์ต้นทาง" : "Source link reading status"}</h2><ul>{result.documentReads.map((item) => <li key={item.url}><a href={item.url} target="_blank" rel="noreferrer">{item.url}</a> · {item.status === "URL_RETRIEVAL_STATUS_SUCCESS" ? (th ? "เข้าถึงเนื้อหาได้ (ไม่ได้ยืนยันว่าอ่านครบทุกหน้า)" : "Content retrieved (this does not confirm every page was read)") : item.status === "URL_RETRIEVAL_STATUS_PAYWALL" ? (th ? "ติด paywall" : "Paywalled") : item.status === "URL_RETRIEVAL_STATUS_UNSAFE" ? (th ? "ระบบปฏิเสธลิงก์ที่ไม่ปลอดภัย" : "Rejected as unsafe") : (th ? "อ่านเนื้อหาไม่ได้" : "Content unavailable")}</li>)}</ul></section> : null}
+
+    {result && <section className="panel" style={{ display: "grid", gap: 12 }}>
+      <h2>{th ? "แผน HRI Wellness Living Lab" : "HRI Wellness Living Lab plan"}</h2>
       <p className="muted">{th ? "ระบุบริบทเพื่อสร้าง checklist ด้าน feasibility/usability แผนและประวัติแก้ไขจะบันทึกในฐานข้อมูล โดยผูกกับ browser token แบบส่วนตัว" : "Add context to build a feasibility/usability checklist. Plans and revisions are saved in the database and scoped to a private browser token."}</p>
       <label>{th ? "กลุ่มผู้เข้าร่วม" : "Participant group"}<input value={form.participantGroup} onChange={(e) => update("participantGroup", e.target.value)} maxLength={160} style={{ display: "block", width: "100%" }} /></label>
       <label>{th ? "จำนวนผู้เข้าร่วม (ประมาณการ)" : "Participant count (estimate)"}<input value={form.participantCount} onChange={(e) => update("participantCount", e.target.value)} maxLength={40} style={{ display: "block", width: "100%" }} /></label>
@@ -438,16 +267,5 @@ export default function ResearchAssistantClient({ lang, geminiConfigured, initia
 
     <section><h2>{th ? "แผน Living Lab ที่บันทึกไว้" : "Saved Living Lab plans"}</h2>{plansLoading ? <p>{th ? "กำลังโหลดแผน..." : "Loading plans..."}</p> : drafts.length ? <ul style={{ display: "grid", gap: 8, paddingLeft: 20 }}>{drafts.map((plan) => <li key={plan.id}>{plan.title} · {plan.revisionCount} {th ? "รุ่น" : "revisions"} <button type="button" onClick={() => openDraft(plan)}>{th ? "เปิด" : "Open"}</button> <button type="button" disabled={Boolean(deletingId)} onClick={() => void deleteDraft(plan.id)}>{deletingId === plan.id ? (th ? "กำลังลบ..." : "Deleting...") : (th ? "ลบ" : "Delete")}</button></li>)}</ul> : <p className="muted">{th ? "ยังไม่มีแผนที่บันทึกไว้ในเบราว์เซอร์นี้" : "No plans in this browser yet."}</p>}</section>
     {draftId && drafts.find((plan) => plan.id === draftId)?.revisions?.length ? <details className="panel"><summary>{th ? "ประวัติการปรับแผน" : "Plan revision history"}</summary><ol>{drafts.find((plan) => plan.id === draftId)!.revisions.map((revision, index) => <li key={`${revision.createdAt}-${index}`}>{new Date(revision.createdAt).toLocaleString()} · {revision.feedback || (th ? "ไม่มี feedback เพิ่ม" : "No additional feedback")}</li>)}</ol></details> : null}
-</div></details>}
-          <div ref={messagesEndRef}/>
-        </div>
-      </div>
-      <div className="pet-chat-compose-area"><div className="pet-chat-compose-width">
-        {!activeMessages.length && roleChosen && <div className="pet-chat-suggestions">{EXPERT_ROLES.find((item) => item.id === expertRole)?.examples.map((suggestion) => <button key={suggestion} onClick={() => setQuestion(suggestion)}>{suggestion}</button>)}</div>}
-        <form onSubmit={ask} className="pet-chat-composer"><label className="pet-chat-sr-only" htmlFor="pet-chat-question">{th ? "คำถามของคุณ" : "Your question"}</label><textarea id="pet-chat-question" value={question} onChange={(event) => { setQuestion(event.target.value); event.target.style.height = "auto"; event.target.style.height = Math.min(event.target.scrollHeight, 150) + "px"; }} onKeyDown={(event) => { if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); void runQuestion(question); } }} rows={2} maxLength={500} required placeholder={th ? "ถาม Pet AI ได้เลย…" : "Ask Pet AI anything…"}/><div className="pet-chat-composer-bottom"><span><Sparkles size={14}/>{EXPERT_ROLES.find((item) => item.id === expertRole)?.name}</span>{loading ? <button className="pet-chat-send" type="button" onClick={() => { setQuestion(pendingQuestion); abortController.current?.abort(); }} aria-label={th ? "หยุดสร้างคำตอบ" : "Stop generation"}><Square size={16} fill="currentColor"/></button> : <button className="pet-chat-send" type="submit" disabled={question.trim().length < 3 || !geminiConfigured || !aiConsent} aria-label={th ? "ส่งคำถาม" : "Send message"}><ArrowUp size={22}/></button>}</div></form>
-        {geminiConfigured ? <label className="pet-chat-consent"><input type="checkbox" checked={aiConsent} disabled={loading} onChange={(event) => setAiConsent(event.target.checked)}/><span>{th ? "ฉันอายุ 18 ปีขึ้นไป และยินยอมส่งคำถามและข้อมูลสาธารณะที่เกี่ยวข้องให้ Google Gemini เพื่อค้นคว้าและตอบคำถาม" : "I am 18+ and consent to sending my question and related public records to Google Gemini for research and answers."}</span></label> : <p className="pet-chat-notice">{th ? "บริการ AI ยังไม่ได้ตั้งค่า" : "AI research is not configured."}</p>}
-        <p className="pet-chat-footnote">{th ? "ตรวจสอบแหล่งอ้างอิงก่อนนำข้อมูลไปใช้ · Shift + Enter เพื่อขึ้นบรรทัดใหม่" : "Check cited sources before use · Shift + Enter for a new line"}</p>
-      </div></div>
-    </div>
   </div>;
 }
