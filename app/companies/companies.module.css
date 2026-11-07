@@ -1,0 +1,52 @@
+.actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+}
+
+.actions :global(.button) { min-height: 44px; }
+.robotHeading { scroll-margin-top: 92px; }
+
+.mockup {
+  display: grid;
+  max-width: 900px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  margin-block: 16px 28px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.preview { position: relative; height: 320px; background: var(--surface-muted); }
+.preview img { object-fit: contain; }
+.mockupCopy { align-self: center; padding: 24px; }
+.mockupCopy h3 { margin: 8px 0; text-transform: none; }
+.mockupCopy p { color: var(--text-secondary); }
+.label { color: var(--accent-strong); font-size: .875rem; font-weight: 600; }
+.mockupActions { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 8px 12px; }
+.mockupActions details { flex: 1 1 160px; }
+.mockupActions :is(button, summary) {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.mockupActions summary::-webkit-details-marker { display: none; }
+.mockupActions :is(button, summary):hover { background: var(--surface-muted); }
+.mockupActions button[aria-pressed="true"] { color: var(--accent-strong); border-color: var(--accent); }
+.mockupActions details[open] summary svg { transform: rotate(180deg); }
+.mockupActions a { text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 600px) {
+  .mockup { grid-template-columns: minmax(0, 1fr); }
+  .preview { height: 260px; }
+  .mockupCopy { grid-row: 1; padding: 18px; }
+}
