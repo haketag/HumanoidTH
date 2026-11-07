@@ -20,6 +20,7 @@ export function assessEvidenceConfidence(
   const fresh = questionNeedsFreshnessCheck(question) || intent === "current_information";
 
   if (!evidence.length) return { level: "LOW", reason: "No matching public records were retrieved.", matchedConcepts, totalConcepts };
+  if (intent === "catalog" && robotCount > 0) return { level: "MEDIUM", reason: "Robot registry entries were listed; the result reflects the records available in HumanoidTH, not an exhaustive external catalog.", matchedConcepts, totalConcepts };
   if (intent === "comparison" && robotCount < 2) return { level: "LOW", reason: "Fewer than two robot records matched the comparison request.", matchedConcepts, totalConcepts };
   if (intent === "recommendation" && !evidence.some((item) => item.facts && Object.keys(item.facts).length > 0)) {
     return { level: "LOW", reason: "The records do not contain structured capability evidence for a suitability recommendation.", matchedConcepts, totalConcepts };
@@ -37,5 +38,6 @@ export function assessEvidenceConfidence(
 }
 
 export function shouldSearchExternal(question: string, confidence: ConfidenceLevel, intent: ResearchIntent) {
+  if (intent === "catalog") return false;
   return confidence !== "HIGH" || intent === "current_information" || questionNeedsFreshnessCheck(question);
 }

@@ -6,7 +6,7 @@ import { generateWithGemini } from "@/lib/gemini-client";
 import { excerptAnswer, rankEvidence, safeSourceUrl, searchTerms, type Evidence, type ResearchResponse, type ResearchRole } from "@/lib/research-assistant";
 import { assessEvidenceConfidence, shouldSearchExternal } from "@/lib/ai/confidence";
 import { buildResearchContext, classifyResearchIntent, detectQuestionLanguage, isComparisonQuestion } from "@/lib/ai/intent";
-import { isInventoryQuestion, isPerspectiveQuestion, robotEvidenceExcerpt, robotFacts } from "@/lib/ai/robot-context";
+import { isInventoryQuestion, isPerspectiveQuestion, robotCatalogAnswer, robotEvidenceExcerpt, robotFacts } from "@/lib/ai/robot-context";
 import { classifySourceKind } from "@/lib/ai/sources";
 import { searchWithGoogleGrounding } from "@/lib/ai/web-search";
 
@@ -96,7 +96,9 @@ export async function POST(request: Request) {
     if (parsed.data.robotId && !contextRobot) return NextResponse.json({ error: "ไม่พบหุ่นยนต์ที่เลือก กรุณาเลือกจากคลังหุ่นยนต์อีกครั้ง" }, { status: 404 });
     const { priorQuestions: priorUserQuestions, retrievalQuestion } = buildResearchContext(parsed.data.question, parsed.data.history, contextRobot?.canonicalName);
     const terms = searchTerms(retrievalQuestion);
-    if (!terms.length && !contextRobot) return NextResponse.json({ error: "กรุณาระบุคำค้นที่ชัดเจนขึ้น" }, { status: 400 });
+    const questionIntent = classifyResearchIntent(parsed.data.question, Boolean(contextRobot));
+    const intent = questionIntent === "general" ? classifyResearchIntent(retrievalQuestion, Boolean(contextRobot)) : questionIntent;
+    if (!terms.length && !contextRobot && intent !== "catalog") return NextResponse.json({ error: "กรุณาระบุคำค้นที่ชัดเจนขึ้น" }, { status: 400 });
     const containsAny = (field: string) => terms.map((term) => ({ [field]: { contains: term, mode: "insensitive" as const } }));
     let companyLookupUnavailable = false;
     const [sources, robots, contributions, perspectives, inventoryRows, companies] = await Promise.all([
@@ -107,7 +109,7 @@ export async function POST(request: Request) {
         orderBy: { updatedAt: "desc" }
       }),
       prisma.robotModel.findMany({
-        where: { OR: [...(contextRobot ? [{ id: contextRobot.id }] : []), ...containsAny("canonicalName"), ...containsAny("description"), ...containsAny("manufacturer"), ...containsAny("developerOrg")] },
+        where: { OR: [...(contextRobot ? [{ id: contextRobot.id }] : []), ...containsAny("canonicalName"), ...containsAny("description"), ...containsAny("manufacturer"), ...containsAny("developerOrg"), ...(intent === "catalog" ? [{ canonicalName: { not: "" } }] : [])] },
         select: { id: true, canonicalName: true, description: true, officialUrl: true, manufacturer: true, developerOrg: true, countryOfOrigin: true, robotType: true, primaryUseCase: true, thailandStatus: true, sourceMeta: true },
         take: 30,
         orderBy: { updatedAt: "desc" }
@@ -167,16 +169,15 @@ export async function POST(request: Request) {
     ].map((item) => ({ ...item, citation: 0 }));
     const ranked = rankEvidence(candidates, retrievalQuestion);
     const comparisonRobots = isComparisonQuestion(parsed.data.question) ? ranked.filter((item) => item.type === "robot").slice(0, 4) : [];
-    const chosen = [...comparisonRobots, ...ranked.filter((item) => !comparisonRobots.some((robot) => robot.id === item.id))].slice(0, 8);
+    const chosen = [...comparisonRobots, ...ranked.filter((item) => !comparisonRobots.some((robot) => robot.id === item.id))].slice(0, intent === "catalog" ? 30 : 8);
     const evidence = chosen.map((item, index) => ({ ...item, citation: index + 1 }));
 
     const result: ResearchResponse = excerptAnswer(evidence, parsed.data.question, parsed.data.role, language);
-    const currentIntent = classifyResearchIntent(parsed.data.question, Boolean(contextRobot));
-    const intent = currentIntent === "general" ? classifyResearchIntent(retrievalQuestion, Boolean(contextRobot)) : currentIntent;
     const confidence = assessEvidenceConfidence(retrievalQuestion, evidence, intent, Boolean(contextRobot) || priorUserQuestions.length > 0);
     result.confidence = confidence.level;
     result.confidenceReason = confidence.reason;
     result.intent = intent;
+    if (intent === "catalog") result.answer = robotCatalogAnswer(evidence, language);
     if (companyLookupUnavailable) result.unknowns = [...new Set([...result.unknowns, language === "th" ? "ฐานข้อมูลที่เชื่อมต่อไม่มีตารางรายชื่อองค์กร จึงค้นข้อมูลบริษัทในหมวดนี้ไม่ได้" : "The connected database has no organization directory table, so company records could not be checked."])].slice(0, 8);
     const needsExternalSearch = shouldSearchExternal(retrievalQuestion, confidence.level, intent);
     result.externalSearchStatus = needsExternalSearch ? "unavailable" : "not_needed";
@@ -213,7 +214,7 @@ export async function POST(request: Request) {
           limitations: [...new Set([...result.limitations, language === "th" ? "ผลค้นเว็บอาจเปลี่ยนแปลงได้ โปรดเปิดอ่านแหล่งต้นฉบับก่อนนำไปใช้อ้างอิง" : "Web results may change; open and verify original sources before citing."])].slice(0, 8)
         });
       }
-    } else if (evidence.length && rateAllowed) {
+    } else if (evidence.length && rateAllowed && intent !== "catalog") {
       const synthesis = await synthesizeWithGemini(parsed.data.question, parsed.data.role, language, evidence, parsed.data.history);
       if (synthesis) Object.assign(result, {
         answer: synthesis.answer,

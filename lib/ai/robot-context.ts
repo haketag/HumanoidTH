@@ -57,6 +57,17 @@ export function isInventoryQuestion(question: string) {
   return /\b(inventory|in stock|owned|unit in thailand|how many units)\b|คลัง|มีหุ่น|จำนวนตัว|ครอบครอง/u.test(question);
 }
 
+export function robotCatalogAnswer(evidence: Array<{ type: string; title: string; citation: number }>, language: "th" | "en") {
+  const robots = evidence.filter((item) => item.type === "robot");
+  if (!robots.length) return language === "th"
+    ? "ขณะนี้ไม่พบระเบียนหุ่นยนต์ในชุดข้อมูล HumanoidTH ที่ค้นได้"
+    : "No robot records were found in the searchable HumanoidTH dataset.";
+  const list = robots.map((robot) => `[${robot.citation}] ${robot.title}`).join("\n");
+  return language === "th"
+    ? `พบระเบียนหุ่นยนต์ ${robots.length} รุ่นใน HumanoidTH:\n${list}\n\nรายการนี้อ้างอิงจากระเบียนที่แสดงในระบบ ณ เวลาค้นหา และอาจไม่ครอบคลุมทั้งหมด โปรดเปิดแหล่งอ้างอิงเพื่อตรวจรายละเอียด`
+    : `Found ${robots.length} robot records in HumanoidTH:\n${list}\n\nThis reflects records shown in the system at search time and may not be exhaustive. Open the citations to review details.`;
+}
+
 export function isOrganizationQuestion(question: string) {
   return /\b(company|organization|manufacturer|developer|who makes|who made)\b|บริษัท|องค์กร|ผู้ผลิต|ผู้พัฒนา/u.test(question);
 }

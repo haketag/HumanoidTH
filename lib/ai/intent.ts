@@ -1,4 +1,4 @@
-export type ResearchIntent = "comparison" | "current_information" | "recommendation" | "robot_detail" | "research" | "general";
+export type ResearchIntent = "comparison" | "current_information" | "recommendation" | "robot_detail" | "catalog" | "research" | "general";
 export type ResearchConversationMessage = { role: "user" | "assistant"; content: string };
 
 export function buildResearchContext(question: string, history: ResearchConversationMessage[], robotName?: string | null) {
@@ -11,12 +11,14 @@ const currentPatterns = [
   /ราคา|ค่าตัว|มีขาย|มีจำหน่าย|พร้อมจำหน่าย|ล่าสุด|ปัจจุบัน|อัปเดต|เฟิร์มแวร์|รุ่นใหม่/u
 ];
 const comparisonPatterns = [/\b(compare|comparison|versus|vs\.?|difference|different)\b/i, /เปรียบเทียบ|ต่างกัน|เทียบกับ/u];
+const catalogPatterns = [/\b(what|which) robots? (?:are )?(?:in|from) (?:the )?(?:database|system|registry)|list (?:the )?(?:robot )?models|robot models? (?:in|from) (?:the )?(?:database|system|registry)\b/i, /หุ่น(?:ยนต์)?(?:รุ่น)?ไหนบ้าง|มีหุ่น(?:ยนต์)?(?:รุ่น)?อะไรบ้าง|รายการหุ่น|รุ่นหุ่นยนต์ทั้งหมด/u];
 const recommendationPatterns = [/\b(recommend|suitable|fit for|best for|which robot|use case)\b/i, /แนะนำ|เหมาะกับ|เลือกหุ่น|หุ่นตัวไหน/u];
 const researchPatterns = [/\b(study|research|paper|evidence|trial|participants|method)\b/i, /งานวิจัย|หลักฐาน|บทความ|การศึกษา|ทดลอง/u];
 const robotDetailPatterns = [/\b(robot|manufacturer|developer|who makes|who made|which company makes|robot model)\b/i, /หุ่นยนต์|ผู้ผลิต|ผู้พัฒนา/u];
 
 export function classifyResearchIntent(question: string, hasRobotContext = false): ResearchIntent {
   if (comparisonPatterns.some((pattern) => pattern.test(question))) return "comparison";
+  if (catalogPatterns.some((pattern) => pattern.test(question))) return "catalog";
   if (currentPatterns.some((pattern) => pattern.test(question))) return "current_information";
   if (recommendationPatterns.some((pattern) => pattern.test(question))) return "recommendation";
   if (robotDetailPatterns.some((pattern) => pattern.test(question))) return "robot_detail";

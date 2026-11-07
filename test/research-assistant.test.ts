@@ -6,6 +6,7 @@ import { createPlanOwnerToken, hashPlanOwnerToken, isValidPlanOwnerToken, planIn
 import { assessEvidenceConfidence, shouldSearchExternal } from "../lib/ai/confidence";
 import { buildResearchContext, classifyResearchIntent } from "../lib/ai/intent";
 import { researchFeedbackSchema } from "../lib/ai/feedback";
+import { robotCatalogAnswer } from "../lib/ai/robot-context";
 
 test("reconstructs an OpenAlex abstract in token order", () => {
   assert.equal(reconstructOpenAlexAbstract({
@@ -43,6 +44,19 @@ test("keeps only public HTTP(S) OpenAlex full-text and landing-page URLs", () =>
 
 test("deduplicates query terms and ignores common Thai stop words", () => {
   assert.deepEqual(searchTerms("หุ่นยนต์ NAO และ NAO"), ["nao"]);
+});
+
+test("classifies broad robot list questions as catalog requests and answers from registry entries", () => {
+  assert.equal(classifyResearchIntent("มีหุ่นยนต์รุ่นไหนบ้างในฐานข้อมูล?"), "catalog");
+  assert.equal(classifyResearchIntent("What robots are in the database?"), "catalog");
+  const evidence: Evidence[] = [
+    { id: "g1", type: "robot", title: "Unitree G1", excerpt: "Registry entry", url: null, citation: 1, status: "Registry record" },
+    { id: "nao", type: "robot", title: "NAO", excerpt: "Registry entry", url: null, citation: 2, status: "Registry record" }
+  ];
+  assert.match(robotCatalogAnswer(evidence, "th"), /พบระเบียนหุ่นยนต์ 2 รุ่น/);
+  assert.match(robotCatalogAnswer(evidence, "th"), /\[1\] Unitree G1/);
+  assert.match(robotCatalogAnswer(evidence, "th"), /\[2\] NAO/);
+  assert.match(robotCatalogAnswer([], "th"), /ไม่พบระเบียนหุ่นยนต์/);
 });
 
 test("only exposes web URLs as source links", () => {
@@ -89,6 +103,13 @@ test("research excerpts trigger source reading/web research, while sufficient fa
   const direct = assessEvidenceConfidence("NAO manufacturer", [sufficient], "robot_detail");
   assert.equal(direct.level, "HIGH");
   assert.equal(shouldSearchExternal("NAO manufacturer", direct.level, "robot_detail"), false);
+});
+
+test("robot catalog retrieval does not trigger external search", () => {
+  const records: Evidence[] = [{ id: "nao", type: "robot", title: "NAO", excerpt: "", url: null, citation: 1, status: "Registry record" }];
+  const confidence = assessEvidenceConfidence("มีหุ่นยนต์รุ่นไหนบ้างในฐานข้อมูล?", records, "catalog");
+  assert.equal(confidence.level, "MEDIUM");
+  assert.equal(shouldSearchExternal("มีหุ่นยนต์รุ่นไหนบ้างในฐานข้อมูล?", confidence.level, "catalog"), false);
 });
 
 test("follow-up retrieval keeps the robot from earlier user turns without trusting assistant text", () => {
