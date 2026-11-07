@@ -23,20 +23,21 @@ import { getTranslation } from "@/lib/translations";
 
 interface SidebarNavProps {
   currentLang?: "en" | "th";
+  isAdmin?: boolean;
 }
 
-export default function SidebarNav({ currentLang = "en" }: SidebarNavProps) {
+export default function SidebarNav({ currentLang = "en", isAdmin = false }: SidebarNavProps) {
   const pathname = usePathname() || "/";
   const t = getTranslation(currentLang);
 
   const navGroups = [
     [
-      { href: "/", label: t.overview, icon: Home },      { href: "/robots", label: t.robots, icon: Bot },
+      { href: "/overview", label: t.overview, icon: Home },      { href: "/robots", label: t.robots, icon: Bot },
       { href: "/research-assistant", label: currentLang === "th" ? "ผู้ช่วยวิจัย" : "Research Assistant", icon: Newspaper },      { href: "/match", label: "Humanoid Match", icon: Bot },      { href: '/favorites', label: currentLang === 'th' ? 'รายการที่ถูกใจ' : 'Favorites', icon: Star },    ],
     [
       { href: "/dashboard", label: t.dashboard, icon: LayoutDashboard },      { href: "/network", label: t.network, icon: Network },      { href: '/companies', label: currentLang === 'th' ? 'บริษัทและองค์กร' : 'Companies', icon: Network },      { href: '/company', label: currentLang === 'th' ? 'พอร์ทัลบริษัท' : 'Company Portal', icon: UsersRound },      { href: "/map", label: t.map, icon: MapPinned },      { href: "/perspectives", label: t.perspectives, icon: Newspaper },      { href: "/inventory", label: t.inventory, icon: Package },      { href: "/contributions", label: t.contributors, icon: UsersRound },      { href: "/analytics", label: t.analytics, icon: BarChart3 },    ],
     [
-      { href: "/database", label: t.database, icon: Database },      { href: "/data-pulls", label: t.dataPulls, icon: Inbox },      { href: "/submit-data", label: t.submit, icon: Send },      { href: "/admin", label: t.admin, icon: Settings2 },      { href: "/profile", label: t.profile, icon: CircleUserRound }    ],
+      { href: "/database", label: t.database, icon: Database },      { href: "/data-pulls", label: t.dataPulls, icon: Inbox },      { href: "/submit-data", label: t.submit, icon: Send },      ...(isAdmin ? [{ href: "/admin", label: t.admin, icon: Settings2 }] : []),      { href: "/profile", label: t.profile, icon: CircleUserRound }    ],
   ];
 
   return (

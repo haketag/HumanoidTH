@@ -21,7 +21,7 @@ export default function MobileTabNav({ currentLang = "en" }: MobileTabNavProps) 
   const t = getTranslation(currentLang);
   const tabs = [
     { href: '/favorites', label: currentLang === 'th' ? 'รายการที่ถูกใจ' : 'Favorites', icon: Star },
-    { href: "/", label: t.overview, icon: Home },
+    { href: "/overview", label: t.overview, icon: Home },
     { href: "/dashboard", label: t.dashboard, icon: LayoutDashboard },
     { href: "/network", label: t.network, icon: Network },
     { href: "/robots", label: t.robots, icon: Bot },
