@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
   catch { return NextResponse.json({error:'Invalid robot IDs'}, {status:400}); }
   try {
     const robots = ids.length ? await prisma.robotModel.findMany({where:{id:{in:ids}},select:{id:true,canonicalName:true,manufacturer:true,developerOrg:true,description:true,sourceMeta:true,officialUrl:true},orderBy:{canonicalName:'asc'}}) : [];
-    const sources = robots.length ? await getPublicImageSources() : [];
+    const sources = robots.length ? await getPublicImageSources().catch(() => []) : [];
     return NextResponse.json({robots:robots.map(robot=>({...robot,imageUrl:getRobotSourceImage(robot,sources)}))}, {headers:{'Cache-Control':'no-store'}});
   } catch { return NextResponse.json({error:'Database unavailable'}, {status:503}); }
 }

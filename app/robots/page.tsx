@@ -65,7 +65,7 @@ export default async function RobotsPage() {
   try {
     [robots, sources] = await Promise.all([
       prisma.robotModel.findMany({ orderBy: { canonicalName: "asc" }, take: 200 }),
-      getPublicImageSources()
+      getPublicImageSources().catch(() => [])
     ]);
   } catch (error) {
     console.error("Database query failed in robots page:", error);
@@ -80,8 +80,8 @@ export default async function RobotsPage() {
       <Link href="/match">Humanoid Match</Link>
       <p className="muted" style={{ marginBottom: "18px" }}>{t.robotsDesc}</p>
       {dbOffline && (
-        <div className="notice" style={{ marginBottom: 16 }}>
-          Live database records are unavailable. No substitute robot registry records are being shown.
+        <div className="notice" role="alert" style={{ marginBottom: 16 }}>
+          {lang === "th" ? "โหลดทะเบียนหุ่นยนต์ไม่ได้ในขณะนี้ กรุณาลองใหม่ภายหลัง" : "The robot registry could not be loaded. Please try again later."}
         </div>
       )}
       <div className="cards">
@@ -104,7 +104,7 @@ export default async function RobotsPage() {
             </article>
           );
         })}
-        {!robots.length && <div className="empty">No robot models yet. Add seeds with `pnpm db:seed` or import sources.</div>}
+        {!dbOffline && !robots.length && <div className="empty">{lang === "th" ? "ยังไม่มีหุ่นยนต์ในทะเบียน" : "No robot models have been added yet."}</div>}
       </div>
     </>
   );

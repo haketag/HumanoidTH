@@ -26,7 +26,7 @@ export default async function RobotDetail({ params, searchParams }: {
   try {
     [robot, sources] = await Promise.all([
       prisma.robotModel.findUnique({ where: { id }, include: { contributions: { where: { visibility: 'public' } } } }),
-      getPublicImageSources()
+      getPublicImageSources().catch(() => [])
     ]);
   } catch {
     return <p role="alert">{th ? 'โหลดข้อมูลไม่ได้ กรุณาลองอีกครั้ง' : 'Database unavailable. Please try again.'} <Link href="/robots">{th ? 'คลังหุ่นยนต์' : 'Robot registry'}</Link></p>;
