@@ -44,8 +44,12 @@ test("does not infer that research is absent when retrieval returns no records",
 test("keeps role guidance separate from authorization", () => {
   const evidence = [{ id: "robot-1", type: "robot" as const, title: "NAO", excerpt: "A registry record", url: null, citation: 1, status: "Registry record" }];
   const company = excerptAnswer(evidence, "NAO", "company", "en");
+  assert.match(company.answer, /robot models/);
+  assert.doesNotMatch(company.answer, /รุ่นหุ่นยนต์/);
   assert.match(company.answer, /capability\/manufacturer/);
   assert.match(company.limitations.join(" "), /not independent/);
+  const thai = excerptAnswer(evidence, "NAO", "company", "th");
+  assert.match(thai.answer, /รุ่นหุ่นยนต์/);
 });
 
 test("validates plan evidence and bounded Living Lab context", () => {

@@ -16,5 +16,5 @@ export default async function ResearchAssistantPage({ searchParams }: { searchPa
   const params = await searchParams;
   const initialQuestion = (params?.q || "").trim().slice(0, 500);
   const geminiConfigured = Boolean(process.env.GEMINI_API_KEY?.trim() && process.env.GEMINI_MODEL?.trim());
-  return <ResearchAssistantClient lang={lang} geminiConfigured={geminiConfigured} initialQuestion={initialQuestion} />;
+  return <ResearchAssistantClient key={lang} lang={lang} geminiConfigured={geminiConfigured} initialQuestion={initialQuestion} />;
 }

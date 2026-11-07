@@ -56,9 +56,9 @@ export function excerptAnswer(evidence: Evidence[], question: string, role: Rese
 
   const types = new Set(evidence.map((item) => item.type));
   const labels = [
-    types.has("source") ? "แหล่งข้อมูล" : null,
-    types.has("robot") ? "รุ่นหุ่นยนต์" : null,
-    types.has("contribution") ? "ผลงานที่ส่งเข้าระบบ" : null
+    types.has("source") ? (language === "th" ? "แหล่งข้อมูล" : "source records") : null,
+    types.has("robot") ? (language === "th" ? "รุ่นหุ่นยนต์" : "robot models") : null,
+    types.has("contribution") ? (language === "th" ? "ผลงานที่ส่งเข้าระบบ" : "public contributions") : null
   ].filter(Boolean).join(", ");
 
   const answer = language === "th"
