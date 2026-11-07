@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };export default async function AdminLoginPage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams;
   const error = params.error;
-  const from = params.from || "/";
+  const from = params.from || "/admin?collection=submitted-data";
 
   const cookieStore = await cookies();
   const lang = (cookieStore.get("lang")?.value || "en") as "en" | "th";

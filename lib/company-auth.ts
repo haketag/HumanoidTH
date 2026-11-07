@@ -27,10 +27,10 @@ export async function rateLimit(scope: string, maximum = 60) {
   const rows = await prisma.$queryRaw<{attempts:number}[]>`INSERT INTO "CompanyRateLimit" (key, attempts, "expiresAt") VALUES (${key},1,NOW()+interval '15 minutes') ON CONFLICT(key) DO UPDATE SET attempts=CASE WHEN "CompanyRateLimit"."expiresAt"<NOW() THEN 1 ELSE "CompanyRateLimit".attempts+1 END, "expiresAt"=CASE WHEN "CompanyRateLimit"."expiresAt"<NOW() THEN NOW()+interval '15 minutes' ELSE "CompanyRateLimit"."expiresAt" END RETURNING attempts`;
   if (rows[0].attempts > maximum) throw new PortalError(429, 'ลองหลายครั้งเกินไป กรุณารอ 15 นาที');
 }
-export async function authenticate(input: unknown, register: boolean) {
+export async function authenticate(input: unknown, register: boolean, { adminOnly = false } = {}) {
   const value = credentials.parse(input);
   await rateLimit(`auth:${value.email}`, 8);
-  const configuredAdmin = !!process.env.ADMIN_BASIC_USER && !!process.env.ADMIN_BASIC_PASSWORD && value.email === process.env.ADMIN_BASIC_USER.toLowerCase() && tokenHash(value.password) === tokenHash(process.env.ADMIN_BASIC_PASSWORD);
+  const configuredAdmin = !adminOnly && !!process.env.ADMIN_BASIC_USER && !!process.env.ADMIN_BASIC_PASSWORD && value.email === process.env.ADMIN_BASIC_USER.toLowerCase() && tokenHash(value.password) === tokenHash(process.env.ADMIN_BASIC_PASSWORD);
   const rows = await prisma.$queryRaw<(Actor & {passwordHash:string | null})[]>`SELECT u.id,u.email,u.name,a."isAdmin",a."passwordHash" FROM "User" u LEFT JOIN "CompanyAccount" a ON a."userId"=u.id WHERE lower(u.email)=${value.email}`;
   let user = rows[0];
   if (register && (user || configuredAdmin)) throw new PortalError(409, 'อีเมลนี้มีบัญชีแล้ว กรุณาเข้าสู่ระบบหรือติดต่อผู้ดูแล');
@@ -47,6 +47,7 @@ export async function authenticate(input: unknown, register: boolean) {
     if (!user?.passwordHash) await scrypt(value.password, 'unregistered-account', 64);
     throw new PortalError(401, 'อีเมลหรือรหัสผ่านไม่ถูกต้อง');
   }
+  if (adminOnly) authorizeAdmin(user);
   const token = randomBytes(32).toString('hex');
   const expires = new Date(Date.now()+8*60*60*1000);
   await prisma.$executeRaw`INSERT INTO "CompanySession" ("tokenHash","userId","expiresAt") VALUES (${tokenHash(token)},${user.id},${expires})`;

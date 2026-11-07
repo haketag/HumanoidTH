@@ -3,7 +3,6 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import { timingSafeEqual } from "node:crypto";
 import type { SourceType } from "../generated/prisma";
 import { prisma } from "@/lib/prisma";
 import { runAdapter } from "@/lib/ingest/adapters";
@@ -377,43 +376,26 @@ export async function adminLoginAction(formData: FormData) {
   const email = String(formData.get("email") ?? "").trim();
   const password = String(formData.get("password") ?? "");
 
-  const expectedUser = process.env.ADMIN_BASIC_USER;
-  const expectedPassword = process.env.ADMIN_BASIC_PASSWORD;
   const requestedFrom = String(formData.get("from") ?? "/admin?collection=submitted-data");
   const redirectTo = requestedFrom.startsWith("/") && !requestedFrom.startsWith("//") && !requestedFrom.includes("\\")
     ? requestedFrom
     : "/admin?collection=submitted-data";
   const sessionToken = await createAdminSessionToken(process.env.ADMIN_SESSION_SECRET);
-  if (!expectedUser || !expectedPassword || !sessionToken) redirect("/admin-login?error=configuration");
-  const providedUser = Buffer.from(email);
-  const configuredUser = Buffer.from(expectedUser);
-  const providedPassword = Buffer.from(password);
-  const configuredPassword = Buffer.from(expectedPassword);
-  const credentialsMatch = providedUser.length === configuredUser.length
-    && providedPassword.length === configuredPassword.length
-    && timingSafeEqual(providedUser, configuredUser)
-    && timingSafeEqual(providedPassword, configuredPassword);
-
-  if (credentialsMatch) {
-    const actor = await authenticate({ email, password }, false);
-    if (!actor.isAdmin) throw new Error("Admin authorization required");
-    const user = await prisma.user.upsert({
-      where: { email },
-      update: { role: "ADMIN" },
-      create: { email, name: "Admin", role: "ADMIN" }
-    });
+  if (!sessionToken) redirect("/admin-login?error=configuration");
+  try {
+    const actor = await authenticate({ email, password }, false, { adminOnly: true });
 
     const cookieStore = await cookies();
     const secure = process.env.NODE_ENV === "production";
-    cookieStore.set("user_email", user.email, { path: "/", httpOnly: true, sameSite: "strict", secure });
+    cookieStore.set("user_email", actor.email, { path: "/", httpOnly: true, sameSite: "strict", secure });
     cookieStore.set("user_role", "ADMIN", { path: "/", httpOnly: true, sameSite: "strict", secure });
     cookieStore.set("admin_session", sessionToken, { path: "/", httpOnly: true, sameSite: "strict", secure, maxAge: 8 * 60 * 60 });
-    
-    revalidateAtlasCms();
-    redirect(redirectTo);
-  } else {
+  } catch {
     redirect("/admin-login?error=invalid_credentials");
   }
+
+  revalidateAtlasCms();
+  redirect(redirectTo);
 }
 
 export async function setLanguage(lang: "en" | "th") {
