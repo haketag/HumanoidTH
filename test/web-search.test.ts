@@ -66,6 +66,39 @@ test("uses Google Search grounding with only supplied HumanoidTH context", async
   }
 });
 
+test("uses URL context for explicitly supplied public paper URLs and reports retrieval status", async () => {
+  const priorKey = process.env.GEMINI_API_KEY;
+  const priorModel = process.env.GEMINI_MODEL;
+  process.env.GEMINI_API_KEY = "test-key-never-sent";
+  process.env.GEMINI_MODEL = "test-model";
+  let requestBody: unknown;
+  const generate = async (body: unknown) => {
+    requestBody = body;
+    return new Response(JSON.stringify({
+      ...groundedResponse("The paper reports a small feasibility study."),
+      candidates: [{
+        ...groundedResponse("The paper reports a small feasibility study.").candidates[0],
+        urlContextMetadata: { urlMetadata: [
+          { retrievedUrl: "https://repository.example/paper.pdf", urlRetrievalStatus: "URL_RETRIEVAL_STATUS_SUCCESS" },
+          { retrievedUrl: "http://127.0.0.1/private", urlRetrievalStatus: "URL_RETRIEVAL_STATUS_UNSAFE" }
+        ] }
+      }]
+    }), { status: 200 });
+  };
+  try {
+    const result = await searchWithGoogleGrounding({ question: "Summarize the paper", role: "researcher", language: "en", evidence, sourceUrls: ["https://repository.example/paper.pdf", "http://127.0.0.1/private"] }, { generate });
+    assert.ok(result);
+    const body = requestBody as { tools?: unknown[]; contents?: Array<{ parts?: Array<{ text?: string }> }> };
+    assert.deepEqual(body.tools, [{ google_search: {} }, { url_context: {} }]);
+    assert.deepEqual(result.urlReads, [{ url: "https://repository.example/paper.pdf", status: "URL_RETRIEVAL_STATUS_SUCCESS" }]);
+    assert.ok(result.sources.some((source) => source.url === "https://repository.example/paper.pdf"));
+    assert.match(body.contents?.[0]?.parts?.[0]?.text || "", /paper\.pdf/);
+  } finally {
+    if (priorKey === undefined) delete process.env.GEMINI_API_KEY; else process.env.GEMINI_API_KEY = priorKey;
+    if (priorModel === undefined) delete process.env.GEMINI_MODEL; else process.env.GEMINI_MODEL = priorModel;
+  }
+});
+
 test("does not invoke the generator when Gemini is not configured", async () => {
   const priorKey = process.env.GEMINI_API_KEY;
   const priorModel = process.env.GEMINI_MODEL;

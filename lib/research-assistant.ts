@@ -9,6 +9,7 @@ export type Evidence = {
   title: string;
   excerpt: string;
   url: string | null;
+  documentUrl?: string | null;
   citation: number;
   status: string;
   facts?: Record<string, string>;
@@ -29,6 +30,8 @@ export type ResearchResponse = {
   robotContext?: { id: string; name: string };
   externalSearchStatus?: "not_needed" | "not_configured" | "not_consented" | "unavailable" | "used";
   externalSources?: ExternalSource[];
+  documentReads?: Array<{ url: string; status: string }>;
+  externalSearchQueries?: string[];
   aiStatus?: "not_configured" | "not_consented" | "complete" | "unavailable" | "rate_limited";
 };
 
@@ -37,7 +40,8 @@ const MAX_EXCERPT_LENGTH = 360;
 
 const stopWords = new Set([
   "about", "after", "also", "company", "from", "have", "into", "makes", "more", "that", "them", "there", "this", "what", "when", "where", "which", "with",
-  "และ", "หรือ", "ของ", "ใน", "กับ", "จาก", "เกี่ยวกับ", "อะไร", "อย่างไร", "ไหม", "ได้", "มี", "เป็น", "ที่", "สำหรับ"
+  "who", "made", "manufacturer", "manufactures", "developer", "robot", "robots", "humanoid", "price", "availability", "country", "origin",
+  "และ", "หรือ", "ของ", "ใน", "กับ", "จาก", "เกี่ยวกับ", "อะไร", "อย่างไร", "ไหม", "ได้", "มี", "เป็น", "ที่", "สำหรับ", "ใคร", "ผู้ผลิต", "ผู้พัฒนา", "หุ่นยนต์", "ราคา"
 ]);
 
 export function searchTerms(question: string) {
@@ -56,14 +60,19 @@ function evidenceScore(item: Evidence, terms: string[], question: string) {
   const exactQuestion = normalizedText(question);
   const titleHits = terms.filter((term) => title.includes(term)).length;
   const excerptHits = terms.filter((term) => excerpt.includes(term)).length;
-  const robotFactQuestion = /\b(manufacturer|developer|who makes|who made|which company makes|price|availability|country of origin)\b|ผู้ผลิต|ผู้พัฒนา|ราคา|มีขาย|ประเทศไหน/iu.test(question);
-  const robotFactBoost = item.type === "robot" && robotFactQuestion ? 24 : 0;
+  const robotFactQuestion = /\b(manufacturer|manufactures|developer|who (?:makes|made|manufactures)|which company makes|price|availability|country of origin)\b|ผู้ผลิต|ผู้พัฒนา|ราคา|มีขาย|ประเทศไหน/iu.test(question);
+  // A fact question alone is not evidence that every robot record is relevant.
+  // Only boost a robot when its own name matches a query term.
+  const robotFactBoost = item.type === "robot" && robotFactQuestion && titleHits > 0 ? 24 : 0;
   return titleHits * 6 + excerptHits + robotFactBoost + (exactQuestion.length > 3 && title.includes(exactQuestion) ? 12 : 0);
 }
 
 export function rankEvidence<T extends Evidence>(evidence: T[], question: string) {
   const terms = searchTerms(question);
+  const robotFactQuestion = /\b(manufacturer|manufactures|developer|who (?:makes|made|manufactures)|which company makes|price|availability|country of origin)\b|ผู้ผลิต|ผู้พัฒนา|ราคา|มีขาย|ประเทศไหน/iu.test(question);
+  const hasNamedRobotMatch = robotFactQuestion && evidence.some((item) => item.type === "robot" && terms.some((term) => normalizedText(item.title).includes(term)));
   return evidence
+    .filter((item) => !hasNamedRobotMatch || item.type !== "robot" || terms.some((term) => normalizedText(item.title).includes(term)))
     .map((item, index) => ({ item, index, score: evidenceScore(item, terms, question) }))
     .sort((a, b) => b.score - a.score || a.index - b.index)
     .map(({ item }) => item);
@@ -130,7 +139,7 @@ function comparisonAnswer(evidence: Evidence[], language: "th" | "en") {
 function robotFactAnswer(evidence: Evidence[], question: string, language: "th" | "en") {
   const robots = evidence.filter((item) => item.type === "robot");
   if (!robots.length) return null;
-  const manufacturer = /\b(manufacturer|developer|who makes|who made|which company makes)\b|ผู้ผลิต|ผู้พัฒนา/iu.test(question);
+  const manufacturer = /\b(manufacturer|manufactures|developer|who (?:makes|made|manufactures)|which company makes)\b|ผู้ผลิต|ผู้พัฒนา/iu.test(question);
   const useCase = /\b(use case|used for|what.*do)\b|ใช้ทำอะไร|ทำอะไรได้|เหมาะกับ|งานอะไร/iu.test(question);
   const thailand = /\b(thailand|available|availability|for sale)\b|ในไทย|ประเทศไทย|มีขาย|จำหน่าย/iu.test(question);
   const country = /\b(country of origin|which country)\b|ประเทศต้นทาง|ประเทศไหน|ประเทศอะไร/iu.test(question);

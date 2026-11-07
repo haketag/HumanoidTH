@@ -1,6 +1,7 @@
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
+  engineType = "client"
 }
 
 datasource db {
@@ -275,6 +276,8 @@ model ResearchAssistantFeedback {
   questionCategory   String
   robotId            String?
   externalSearchUsed Boolean  @default(false)
+  issueCategory      String?
+  comment            String?
   createdAt          DateTime @default(now())
 
   @@index([createdAt])

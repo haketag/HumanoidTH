@@ -25,6 +25,9 @@ export function assessEvidenceConfidence(
     return { level: "LOW", reason: "The records do not contain structured capability evidence for a suitability recommendation.", matchedConcepts, totalConcepts };
   }
   if (fresh) return { level: "MEDIUM", reason: "The question asks for information that may change over time.", matchedConcepts, totalConcepts };
+  if (intent === "research" && evidence.some((item) => item.type === "source")) {
+    return { level: "MEDIUM", reason: "Research records contain abstracts or excerpts; the linked paper should be checked for full-text evidence.", matchedConcepts, totalConcepts };
+  }
   if (coverage >= 0.7 && hasCitableSource) return { level: "HIGH", reason: "Retrieved records directly match the question and include a citable source.", matchedConcepts, totalConcepts };
   if (coverage >= 0.3) return { level: "MEDIUM", reason: "Some relevant records were found, but they may not cover every part of the question.", matchedConcepts, totalConcepts };
   if (contextRobotSelected && evidence.some((item) => item.type === "robot")) {
@@ -34,5 +37,5 @@ export function assessEvidenceConfidence(
 }
 
 export function shouldSearchExternal(question: string, confidence: ConfidenceLevel, intent: ResearchIntent) {
-  return confidence === "LOW" || intent === "current_information" || questionNeedsFreshnessCheck(question);
+  return confidence !== "HIGH" || intent === "current_information" || questionNeedsFreshnessCheck(question);
 }

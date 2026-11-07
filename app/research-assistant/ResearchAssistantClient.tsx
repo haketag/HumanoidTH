@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { Evidence, ResearchResponse } from "@/lib/research-assistant";
 
 type Role = "student" | "researcher" | "company" | "general";
+type ConversationTurn = { question: string; answer: string; evidence: Evidence[]; externalSources: NonNullable<ResearchResponse["externalSources"]> };
 type Plan = {
   id: string; title: string; objective: string; steps: string; question: string; role: Role;
   participantGroup: string; participantCount: string; siteContext: string; activityGoal: string;
@@ -27,6 +28,7 @@ function EvidenceCards({ items, th }: { items: Evidence[]; th: boolean }) {
       </div>
       <p style={{ whiteSpace: "pre-wrap" }}>{item.excerpt || (th ? "รายการนี้ยังไม่มีบทคัดย่อหรือข้อความเนื้อหา จึงใช้ยืนยันผลการศึกษาไม่ได้" : "No abstract or text is available, so this record cannot support study outcome claims.")}</p>
       {item.url && <a href={item.url} target="_blank" rel="noreferrer">{th ? "เปิดแหล่งข้อมูล" : "Open source"}</a>}
+      {item.documentUrl && item.documentUrl !== item.url && <> · <a href={item.documentUrl} target="_blank" rel="noreferrer">{th ? "เปิดเอกสารฉบับเต็มที่เข้าถึงได้" : "Open accessible full text"}</a></>}
     </li>)}
   </ol>;
 }
@@ -80,6 +82,9 @@ export default function ResearchAssistantClient({ lang, geminiConfigured, initia
   const [deletingId, setDeletingId] = useState("");
   const [feedbackSent, setFeedbackSent] = useState(false);
   const [feedbackError, setFeedbackError] = useState("");
+  const [feedbackIssue, setFeedbackIssue] = useState<"incorrect" | "missing_information" | "broken_source" | "">("");
+  const [feedbackComment, setFeedbackComment] = useState("");
+  const [conversation, setConversation] = useState<ConversationTurn[]>([]);
 
   const loadPlans = useCallback(async () => {
     setPlansLoading(true);
@@ -96,16 +101,22 @@ export default function ResearchAssistantClient({ lang, geminiConfigured, initia
 
   async function ask(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault(); setLoading(true); setError(""); setNotice(""); setResult(null); setDraftId(""); setSaved(false); setStaleEvidenceIds([]);
-    setFeedbackSent(false); setFeedbackError("");
+    setFeedbackSent(false); setFeedbackError(""); setFeedbackIssue(""); setFeedbackComment("");
+    const askedQuestion = question.trim();
+    const history = conversation.slice(-3).flatMap((turn) => [
+      { role: "user" as const, content: turn.question.slice(0, 800) },
+      { role: "assistant" as const, content: turn.answer.slice(0, 800) }
+    ]).slice(-6);
     try {
       const response = await fetch("/api/research-assistant", {
-        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ question: question.trim(), role, language: lang, robotId: robotId || undefined, allowGemini: geminiConfigured && aiConsent, adultConfirmed: geminiConfigured && aiConsent })
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ question: askedQuestion, history, role, language: lang, robotId: robotId || undefined, allowGemini: geminiConfigured && aiConsent, adultConfirmed: geminiConfigured && aiConsent })
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || (th ? "ค้นข้อมูลไม่สำเร็จ" : "Search failed"));
       setResult(data as ResearchResponse);
+      setConversation((current) => [...current, { question: askedQuestion, answer: data.answer, evidence: data.evidence, externalSources: data.externalSources || [] }].slice(-6));
       if (data.robotContext) { setRobotId(data.robotContext.id); setRobotName(data.robotContext.name); }
-      setForm({ ...EMPTY_PLAN, question: question.trim(), role, evidence: data.evidence });
+      setForm({ ...EMPTY_PLAN, question: askedQuestion, role, evidence: data.evidence });
     } catch (failure) { setError(failure instanceof Error ? failure.message : (th ? "ค้นข้อมูลไม่สำเร็จ" : "Search failed")); }
     finally { setLoading(false); }
   }
@@ -116,7 +127,7 @@ export default function ResearchAssistantClient({ lang, geminiConfigured, initia
     try {
       const response = await fetch("/api/research-assistant/feedback", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ vote, questionCategory: result.intent || "general", robotId: robotId || null, externalSearchUsed: result.externalSearchStatus === "used" })
+        body: JSON.stringify({ vote, questionCategory: result.intent || "general", robotId: robotId || null, externalSearchUsed: result.externalSearchStatus === "used", issueCategory: feedbackIssue || null, comment: feedbackComment })
       });
       if (!response.ok) throw new Error("feedback unavailable");
       setFeedbackSent(true);
@@ -216,6 +227,7 @@ export default function ResearchAssistantClient({ lang, geminiConfigured, initia
     </form>
     {error && <p role="alert" style={{ color: "var(--danger)" }}>{error}</p>}
     {notice && <p role="status">{notice}</p>}
+    {conversation.length > 1 && <section aria-label={th ? "ประวัติการสนทนา" : "Conversation history"} style={{ display: "grid", gap: 10 }}><div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}><h2>{th ? "บทสนทนาก่อนหน้า" : "Earlier in this conversation"}</h2><button type="button" onClick={() => setConversation([])}>{th ? "เริ่มบทสนทนาใหม่" : "Start a new chat"}</button></div>{conversation.slice(0, -1).map((turn, index) => <article className="panel" key={`${index}-${turn.question}`}><p><strong>{th ? "คุณ:" : "You:"}</strong> {turn.question}</p><p style={{ whiteSpace: "pre-wrap" }}><strong>Pet AI:</strong> {turn.answer}</p><div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>{turn.evidence.map((item) => item.url ? <a key={`e-${item.citation}`} href={item.url} target="_blank" rel="noreferrer">[{item.citation}] {item.title}</a> : null)}{turn.externalSources.map((source) => <a key={`w-${source.citation}`} href={source.url} target="_blank" rel="noreferrer">[{source.citation}] {source.title}</a>)}</div></article>)}</section>}
     {staleEvidenceIds.length > 0 && <p role="alert" className="panel">{th ? `หลักฐาน ${staleEvidenceIds.length} รายการในแผนนี้ไม่อยู่ในชุดข้อมูลสาธารณะปัจจุบัน กรุณาค้นใหม่ก่อนบันทึก revision; ยังดาวน์โหลด snapshot เดิมได้` : `${staleEvidenceIds.length} evidence item(s) in this plan are no longer in the current public corpus. Search again before saving a revision; the saved snapshot can still be downloaded.`}</p>}
 
     {result && <section className="panel" aria-live="polite"><h2>{result.mode === "web" ? (th ? "คำตอบจากข้อมูลในระบบและการค้นเว็บ" : "Answer from system data and web search") : result.mode === "gemini" ? (th ? "ร่างสังเคราะห์จาก Gemini · ตรวจแหล่งอ้างอิง" : "Gemini-assisted draft · verify citations") : hasEvidence ? (th ? "สรุปผลค้นจากฐานข้อมูล" : "Database search summary") : (th ? "ไม่พบในชุดข้อมูลที่ค้น" : "Not found in the searched corpus")}</h2><p style={{ whiteSpace: "pre-wrap" }}>{result.answer.split(/(\[\d+\])/g).map((part, index) => { const match = /^\[(\d+)\]$/.exec(part); return match ? <a key={index} href={`#source-${match[1]}`}>{part}</a> : <span key={index}>{part}</span>; })}</p>
@@ -226,11 +238,14 @@ export default function ResearchAssistantClient({ lang, geminiConfigured, initia
       {result.externalSearchStatus === "not_consented" && <p className="muted">{th ? "หลักฐานยังไม่พอสำหรับคำตอบที่มั่นใจ · เปิดการยินยอมด้านบนเพื่อให้ค้นเว็บเพิ่มเติมได้" : "Evidence is limited; enable consent above to allow a web search."}</p>}
       {result.externalSearchStatus === "not_configured" && <p className="muted">{th ? "ยังไม่ได้ตั้งค่า Gemini · แสดงเฉพาะข้อมูลที่ค้นพบในระบบ" : "Gemini is not configured; showing only records found in the system."}</p>}
       {result.externalSearchStatus === "unavailable" && <p role="status">{th ? "ค้นเว็บเพิ่มเติมไม่สำเร็จ · แสดงข้อมูลที่พบในระบบและระบุส่วนที่ยังไม่ทราบ" : "Web search was unavailable; showing system records and noting what remains unknown."}</p>}
+      {result.externalSearchQueries?.length ? <p className="muted">{th ? "คำค้นบนเว็บ:" : "Web search queries:"} {result.externalSearchQueries.join(" · ")}</p> : null}
       {(hasEvidence || result.externalSources?.length) && <><h3>{th ? "ข้อจำกัดและสิ่งที่ยังไม่รู้" : "Limitations and unknowns"}</h3><ul>{(result.limitations || []).map((item, i) => <li key={`l${i}`}>{item}</li>)}{(result.unknowns || []).map((item, i) => <li key={`u${i}`}>{item}</li>)}</ul><small>{th ? "Accepted/Approved เป็นสถานะ workflow ไม่ใช่การตรวจข้อเท็จจริงอย่างอิสระ · AI ช่วยสรุปข้อมูล ไม่ใช่ผู้ประเมินหลักฐาน" : "Accepted/Approved are workflow states, not independent fact checks. AI summarizes evidence; it does not validate it."}</small></>}
+      <div style={{ display: "grid", gap: 8 }}><strong>{th ? "คำตอบนี้มีประโยชน์หรือไม่?" : "Was this answer helpful?"}</strong><label>{th ? "หากมีปัญหา เลือกหัวข้อ (ไม่บังคับ)" : "Issue (optional)"}<select value={feedbackIssue} onChange={(event) => setFeedbackIssue(event.target.value as typeof feedbackIssue)}><option value="">{th ? "ไม่ระบุ" : "Choose an issue"}</option><option value="incorrect">{th ? "ข้อมูลไม่ถูกต้อง" : "Incorrect information"}</option><option value="missing_information">{th ? "ข้อมูลยังไม่ครบ" : "Missing information"}</option><option value="broken_source">{th ? "แหล่งอ้างอิงเปิดไม่ได้" : "Broken source"}</option></select></label><label>{th ? "หมายเหตุเพิ่มเติม (ไม่บังคับ; อย่าใส่ข้อมูลส่วนบุคคล)" : "Comment (optional; do not include personal information)"}<textarea value={feedbackComment} onChange={(event) => setFeedbackComment(event.target.value)} maxLength={500} rows={2} /></label><div style={{ display: "flex", gap: 8 }}><button type="button" disabled={feedbackSent} onClick={() => void sendAnswerFeedback("HELPFUL")}>{th ? "มีประโยชน์" : "Helpful"}</button><button type="button" disabled={feedbackSent} onClick={() => void sendAnswerFeedback("NOT_HELPFUL")}>{th ? "ควรปรับปรุง" : "Not helpful"}</button>{feedbackSent && <span role="status">{th ? "ขอบคุณสำหรับ feedback" : "Thanks for your feedback."}</span>}</div>{feedbackError && <p role="alert">{feedbackError}</p>}</div>
     </section>}
 
     {hasEvidence && <section><h2>{th ? "หลักฐานที่พบ" : "Retrieved evidence"}</h2><EvidenceCards items={result?.evidence ?? []} th={th} /></section>}
     {result?.externalSources?.length ? <section><h2>{th ? "แหล่งข้อมูลจากเว็บ" : "Web sources"}</h2><ol style={{ display: "grid", gap: 8 }}>{result.externalSources.map((source) => <li id={`source-${source.citation}`} key={`${source.citation}-${source.url}`}><a href={source.url} target="_blank" rel="noreferrer">[{source.citation}] {source.title}</a> <small>({source.sourceKind === "academic" ? (th ? "แหล่งวิชาการ" : "Academic") : (th ? "เว็บภายนอก" : "External web")})</small></li>)}</ol></section> : null}
+    {result?.documentReads?.length ? <section><h2>{th ? "สถานะการอ่านลิงก์ต้นทาง" : "Source link reading status"}</h2><ul>{result.documentReads.map((item) => <li key={item.url}><a href={item.url} target="_blank" rel="noreferrer">{item.url}</a> · {item.status === "URL_RETRIEVAL_STATUS_SUCCESS" ? (th ? "เข้าถึงเนื้อหาได้ (ไม่ได้ยืนยันว่าอ่านครบทุกหน้า)" : "Content retrieved (this does not confirm every page was read)") : item.status === "URL_RETRIEVAL_STATUS_PAYWALL" ? (th ? "ติด paywall" : "Paywalled") : item.status === "URL_RETRIEVAL_STATUS_UNSAFE" ? (th ? "ระบบปฏิเสธลิงก์ที่ไม่ปลอดภัย" : "Rejected as unsafe") : (th ? "อ่านเนื้อหาไม่ได้" : "Content unavailable")}</li>)}</ul></section> : null}
 
     {result && <section className="panel" style={{ display: "grid", gap: 12 }}>
       <h2>{th ? "แผน HRI Wellness Living Lab" : "HRI Wellness Living Lab plan"}</h2>

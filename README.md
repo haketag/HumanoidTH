@@ -142,7 +142,7 @@ Explore the main app modules:
 - `🟢 /data-pulls` — 🔌 Control room to trigger data ingestion pipelines.
 - `🟡 /submit-data` — 📥 Submission form currently limited to signed-in administrators while verified community authentication is being built.
 
-Research Assistant plans are stored in the local PostgreSQL database and scoped to an HttpOnly browser capability token; losing that cookie means the guest cannot recover those plans. Search remains available without Gemini. Gemini synthesis requires a configured server key/model, explicit per-request consent, and an 18+ confirmation. See [local completion](docs/local-completion.md), [the baseline audit](docs/BASELINE_AUDIT.md), [feature specification](docs/FEATURE_SPEC.md), and [evaluation cases](docs/EVALUATION.md).
+Research Assistant plans are stored in PostgreSQL and scoped to an HttpOnly browser capability token; losing that cookie means the guest cannot recover those plans. Search remains available without Gemini. Gemini synthesis and web fallback require a configured server key/model, explicit per-request consent, and an 18+ confirmation. When internal evidence is partial or the question asks for current information, the assistant can use Google Search grounding and URL Context to inspect up to eight public source links, including supported PDF URLs. Paywalled or inaccessible documents are identified as unread; full paper text is not stored in HumanoidTH. Recent chat context stays in the current page session. See [the Pet AI audit](docs/PET_AI_AUDIT.md), [local completion](docs/local-completion.md), [the baseline audit](docs/BASELINE_AUDIT.md), [feature specification](docs/FEATURE_SPEC.md), and [evaluation cases](docs/EVALUATION.md).
 
 ---
 

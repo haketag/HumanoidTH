@@ -1,7 +1,13 @@
 export type ResearchIntent = "comparison" | "current_information" | "recommendation" | "robot_detail" | "research" | "general";
+export type ResearchConversationMessage = { role: "user" | "assistant"; content: string };
+
+export function buildResearchContext(question: string, history: ResearchConversationMessage[], robotName?: string | null) {
+  const priorQuestions = history.filter((message) => message.role === "user").slice(-2).map((message) => message.content);
+  return { priorQuestions, retrievalQuestion: [robotName, ...priorQuestions, question].filter(Boolean).join(" ") };
+}
 
 const currentPatterns = [
-  /\b(price|pricing|cost|available|availability|for sale|latest|current|recent|firmware|release|updated)\b/i,
+  /\b(price|pricing|cost|how much|what does it cost|available|availability|for sale|latest|current|recent|firmware|release|updated)\b/i,
   /ราคา|ค่าตัว|มีขาย|มีจำหน่าย|พร้อมจำหน่าย|ล่าสุด|ปัจจุบัน|อัปเดต|เฟิร์มแวร์|รุ่นใหม่/u
 ];
 const comparisonPatterns = [/\b(compare|comparison|versus|vs\.?|difference|different)\b/i, /เปรียบเทียบ|ต่างกัน|เทียบกับ/u];

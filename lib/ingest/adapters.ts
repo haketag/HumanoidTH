@@ -54,6 +54,18 @@ export function parseOpenAlexPublicationDate(value: unknown) {
   return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value ? date : null;
 }
 
+export function parseOpenAlexAccessLinks(value: unknown) {
+  const asRecord = (item: unknown): Record<string, unknown> => item && typeof item === "object" && !Array.isArray(item) ? item as Record<string, unknown> : {};
+  const work = asRecord(value);
+  const location = asRecord(work.best_oa_location);
+  const openAccess = asRecord(work.open_access);
+  return {
+    pdfUrl: isHttpUrl(location.pdf_url) ? location.pdf_url : null,
+    landingPageUrl: isHttpUrl(location.landing_page_url) ? location.landing_page_url : null,
+    isOpenAccess: typeof openAccess.is_oa === "boolean" ? openAccess.is_oa : null
+  };
+}
+
 export async function ingestOpenAlex({ query, limit = 25, fromYear = 2015 }: AdapterInput) {
   const url = new URL("https://api.openalex.org/works");
   url.searchParams.set("search", query);
@@ -72,6 +84,7 @@ export async function ingestOpenAlex({ query, limit = 25, fromYear = 2015 }: Ada
       : [];
     const url = isHttpUrl(work.doi) ? work.doi : work.id;
     if (!isHttpUrl(url)) return [];
+    const accessLinks = parseOpenAlexAccessLinks(work);
     return [{
       sourceType: "OPENALEX" as const,
       title: typeof work.display_name === "string" && work.display_name.trim() ? work.display_name : "Untitled OpenAlex work",
@@ -83,6 +96,9 @@ export async function ingestOpenAlex({ query, limit = 25, fromYear = 2015 }: Ada
       rawMeta: {
         openalexId: work.id,
         doi: work.doi ?? null,
+        openAccessPdfUrl: accessLinks.pdfUrl,
+        openAccessLandingUrl: accessLinks.landingPageUrl,
+        isOpenAccess: accessLinks.isOpenAccess,
         publicationYear: work.publication_year ?? null,
         publicationDatePrecision: publicationDate ? "day" : work.publication_year ? "year_only" : "unknown",
         abstractTruncated: reconstructedAbstract.length > 1200,
