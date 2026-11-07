@@ -1,4 +1,6 @@
-export type EvidenceType = "source" | "robot" | "contribution";
+import { isComparisonQuestion } from "./ai/intent";
+
+export type EvidenceType = "source" | "robot" | "contribution" | "perspective" | "inventory" | "organization";
 export type ResearchRole = "student" | "researcher" | "company" | "general";
 
 export type Evidence = {
@@ -9,17 +11,29 @@ export type Evidence = {
   url: string | null;
   citation: number;
   status: string;
+  facts?: Record<string, string>;
 };
+
+export type ExternalSource = { citation: number; title: string; url: string; sourceKind: "official" | "academic" | "external" };
 
 export type ResearchResponse = {
   answer: string;
   evidence: Evidence[];
-  mode: "extractive" | "gemini" | "no_results";
+  mode: "extractive" | "gemini" | "web" | "no_results";
   role: ResearchRole;
   limitations: string[];
   unknowns: string[];
+  confidence?: "HIGH" | "MEDIUM" | "LOW";
+  confidenceReason?: string;
+  intent?: string;
+  robotContext?: { id: string; name: string };
+  externalSearchStatus?: "not_needed" | "not_configured" | "not_consented" | "unavailable" | "used";
+  externalSources?: ExternalSource[];
   aiStatus?: "not_configured" | "not_consented" | "complete" | "unavailable" | "rate_limited";
 };
+
+const MAX_EXTRACTIVE_CLAIMS = 3;
+const MAX_EXCERPT_LENGTH = 360;
 
 const stopWords = new Set([
   "about", "after", "also", "from", "have", "into", "more", "that", "them", "there", "this", "what", "when", "where", "which", "with",
@@ -32,6 +46,52 @@ export function searchTerms(question: string) {
     .slice(0, 10);
 }
 
+function normalizedText(value: string) {
+  return value.toLocaleLowerCase().replace(/\s+/g, " ").trim();
+}
+
+function evidenceScore(item: Evidence, terms: string[], question: string) {
+  const title = normalizedText(item.title);
+  const excerpt = normalizedText(item.excerpt);
+  const exactQuestion = normalizedText(question);
+  const titleHits = terms.filter((term) => title.includes(term)).length;
+  const excerptHits = terms.filter((term) => excerpt.includes(term)).length;
+  return titleHits * 6 + excerptHits + (exactQuestion.length > 3 && title.includes(exactQuestion) ? 12 : 0);
+}
+
+export function rankEvidence<T extends Evidence>(evidence: T[], question: string) {
+  const terms = searchTerms(question);
+  return evidence
+    .map((item, index) => ({ item, index, score: evidenceScore(item, terms, question) }))
+    .sort((a, b) => b.score - a.score || a.index - b.index)
+    .map(({ item }) => item);
+}
+
+function excerptForAnswer(item: Evidence, terms: string[]) {
+  const text = item.excerpt.replace(/\r/g, "").trim();
+  if (!text) return "";
+
+  const segments = text.split(/\n+|(?<=[.!?。！？])\s+/).map((segment) => segment.replace(/\s+/g, " ").trim()).filter(Boolean);
+  const best = segments
+    .map((segment, index) => ({
+      segment,
+      index,
+      score: terms.filter((term) => normalizedText(segment).includes(term)).length
+    }))
+    .sort((a, b) => b.score - a.score || a.index - b.index)[0]?.segment ?? text;
+  if (best.length <= MAX_EXCERPT_LENGTH) return best;
+
+  const lower = normalizedText(best);
+  const firstMatch = terms.map((term) => lower.indexOf(term)).filter((index) => index >= 0).sort((a, b) => a - b)[0] ?? 0;
+  const start = Math.max(0, Math.min(firstMatch - 120, best.length - MAX_EXCERPT_LENGTH));
+  const end = Math.min(best.length, start + MAX_EXCERPT_LENGTH);
+  const nextWord = best.slice(start).indexOf(" ");
+  const left = start > 0 ? start + (nextWord >= 0 ? nextWord + 1 : 0) : 0;
+  const rightSpace = best.lastIndexOf(" ", end);
+  const excerpt = best.slice(left, rightSpace > left ? rightSpace : end).trim();
+  return `${left > 0 ? "…" : ""}${excerpt}${rightSpace < best.length - 1 ? "…" : ""}`;
+}
+
 export function safeSourceUrl(value: string | null | undefined) {
   if (!value) return null;
   try {
@@ -40,6 +100,29 @@ export function safeSourceUrl(value: string | null | undefined) {
   } catch {
     return null;
   }
+}
+
+function comparisonAnswer(evidence: Evidence[], language: "th" | "en") {
+  const robots = evidence.filter((item) => item.type === "robot");
+  if (robots.length < 2) return null;
+  const fields = [
+    { key: "manufacturer", en: "Manufacturer", th: "ผู้ผลิต" },
+    { key: "countryOfOrigin", en: "Country of origin", th: "ประเทศต้นทาง" },
+    { key: "robotType", en: "Robot type", th: "ประเภทหุ่นยนต์" },
+    { key: "primaryUseCase", en: "Reported use case", th: "การใช้งานที่รายงาน" },
+    { key: "thailandStatus", en: "Thailand status", th: "สถานะในประเทศไทย" },
+    { key: "specifications", en: "Specifications", th: "ข้อมูลทางเทคนิค" },
+    { key: "capabilities", en: "Reported capabilities", th: "ความสามารถที่รายงาน" }
+  ];
+  const availableFields = fields.filter((field) => robots.some((robot) => robot.facts?.[field.key]));
+  const unknown = language === "th" ? "ยังไม่มีข้อมูลยืนยัน" : "Not verified in HumanoidTH";
+  const rows = availableFields.map((field) => {
+    const values = robots.map((robot) => `${robot.facts?.[field.key] || unknown} [${robot.citation}]`);
+    return `${language === "th" ? field.th : field.en}: ${robots.map((robot, index) => `${robot.title} ${values[index]}`).join(" · ")}`;
+  });
+  return language === "th"
+    ? `เปรียบเทียบจากข้อมูลที่มีใน HumanoidTH:\n${rows.join("\n")}\nแสดงเฉพาะฟิลด์ที่มีในอย่างน้อยหนึ่งรายการ ช่องที่ขาดระบุว่า “${unknown}”; ข้อมูลที่ผู้ผลิตรายงานไม่ใช่การตรวจสอบอิสระ`
+    : `Comparison from available HumanoidTH records:\n${rows.join("\n")}\nOnly fields present in at least one record are listed. Missing values are marked “${unknown}”. Manufacturer-reported data is not independent verification.`;
 }
 
 export function excerptAnswer(evidence: Evidence[], question: string, role: ResearchRole = "general", language: "th" | "en" = "th"): ResearchResponse {
@@ -58,12 +141,26 @@ export function excerptAnswer(evidence: Evidence[], question: string, role: Rese
   const labels = [
     types.has("source") ? (language === "th" ? "แหล่งข้อมูล" : "source records") : null,
     types.has("robot") ? (language === "th" ? "รุ่นหุ่นยนต์" : "robot models") : null,
-    types.has("contribution") ? (language === "th" ? "ผลงานที่ส่งเข้าระบบ" : "public contributions") : null
+    types.has("contribution") ? (language === "th" ? "ผลงานที่ส่งเข้าระบบ" : "public contributions") : null,
+    types.has("perspective") ? (language === "th" ? "มุมมองที่เชื่อมกับแหล่งข้อมูลที่ยอมรับ" : "perspective annotations linked to accepted sources") : null,
+    types.has("inventory") ? (language === "th" ? "รายการคลังที่เปิดเผยสาธารณะ" : "public inventory records") : null,
+    types.has("organization") ? (language === "th" ? "โปรไฟล์องค์กรที่เผยแพร่แล้ว" : "published organization profiles") : null
   ].filter(Boolean).join(", ");
 
-  const answer = language === "th"
-    ? `พบ ${evidence.length} รายการที่ตรงกับคำค้นจาก ${labels} ในชุดข้อมูลปัจจุบัน${role === "student" ? " เริ่มจากเปิดแหล่งอ้างอิงและแยกวัตถุประสงค์ วิธีศึกษา และผลที่รายงาน" : role === "researcher" ? " ใช้รายการเหล่านี้ตรวจประชากร บริบท วิธีเปรียบเทียบ และผลลัพธ์ที่รายงาน" : role === "company" ? " ตรวจแยกข้อมูล capability/ผู้ผลิตออกจากหลักฐานการนำไปใช้งานจริง" : " โปรดเปิดรายการอ้างอิงเพื่ออ่านบริบท"} ผลค้นนี้ไม่ใช่การยืนยันประสิทธิผลหรือข้อเท็จจริงโดยอิสระ`
-    : `Found ${evidence.length} matching records from ${labels} in the current corpus.${role === "student" ? " Open sources and distinguish the study aim, method, and reported findings." : role === "researcher" ? " Check population, setting, comparator, and reported outcomes." : role === "company" ? " Separate declared capability/manufacturer details from deployment evidence." : " Open each source and review its context."} Search results do not independently verify facts or efficacy.`;
+  const terms = searchTerms(question);
+  const claims = evidence.slice(0, MAX_EXTRACTIVE_CLAIMS).map((item) => {
+    const excerpt = excerptForAnswer(item, terms);
+    if (!excerpt) {
+      return language === "th"
+        ? `[${item.citation}] ${item.title}: มีเพียงข้อมูลกำกับในระบบ ยังไม่มีข้อความที่ใช้ตอบรายละเอียดหรือยืนยันผลการศึกษา`
+        : `[${item.citation}] ${item.title}: metadata only; the record does not contain text to answer details or establish study outcomes`;
+    }
+    return `[${item.citation}] ${item.title}: ${excerpt}`;
+  });
+  const comparison = isComparisonQuestion(question) ? comparisonAnswer(evidence, language) : null;
+  const answer = comparison || (language === "th"
+    ? `จากข้อมูลในระบบที่ตรงกับคำถาม พบ ${evidence.length} รายการ${labels ? ` จาก ${labels}` : ""} ข้อความที่เกี่ยวข้อง:\n${claims.join("\n")}${role === "researcher" ? "\nควรตรวจประชากร วิธีศึกษา ตัวเปรียบเทียบ และผลลัพธ์ในต้นฉบับก่อนสรุปผล" : role === "company" ? "\nแยกข้อมูล capability/ผู้ผลิตออกจากหลักฐานการนำไปใช้งานจริง" : ""}`
+    : `From ${evidence.length} matching ${labels || "records"} in the system, the retrieved evidence says:\n${claims.join("\n")}${role === "researcher" ? "\nCheck the original study's population, methods, comparator, and outcomes before drawing conclusions." : role === "company" ? "\nSeparate capability/manufacturer claims from evidence of real-world deployment." : ""}`);
   const metadataOnly = evidence.filter((item) => !item.excerpt.trim()).length;
   const limitations = language === "th"
     ? ["สถานะ Accepted/Approved เป็น workflow label ไม่ใช่การตรวจสอบข้อเท็จจริงโดยอิสระ", "ผลค้นอิง metadata/ข้อความที่นำเข้า ไม่ใช่การทบทวนวรรณกรรมอย่างเป็นระบบ", "ระบบยังตรวจจับผลการศึกษาที่ขัดแย้งกันโดยอัตโนมัติไม่ได้", "หากไม่ระบุประชากร วิธี และผลลัพธ์ใน record จะสรุปผลของกิจกรรมไม่ได้", ...(metadataOnly ? [`${metadataOnly} รายการมีเฉพาะ metadata ไม่มีข้อความพอรองรับข้อสรุปผลการศึกษา`] : [])]

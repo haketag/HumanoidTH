@@ -53,6 +53,7 @@ export default async function RobotDetail({ params, searchParams }: {
           <div><dt>{th ? 'ผู้ผลิต / ผู้พัฒนาในคลัง' : 'Manufacturer / developer in registry'}</dt><dd>{developer || (th ? 'ยังไม่ระบุ' : 'Not documented')}</dd></div>
         </dl>
         {profile.sourceUrl && <a className="button primary robot-source-button" href={profile.sourceUrl} target="_blank" rel="noopener noreferrer"><ExternalLink size={17} aria-hidden="true" />{th ? 'เปิดเอกสารต้นทาง' : 'Open original source'}</a>}
+        <Link className="button" href={`/research-assistant?robotId=${encodeURIComponent(robot.id)}&q=${encodeURIComponent(th ? 'หุ่นตัวนี้มีข้อมูลการใช้งานและข้อจำกัดอะไรบ้าง' : 'What uses and limitations are documented for this robot?')}`}>{th ? 'ถาม Pet AI เกี่ยวกับหุ่นตัวนี้' : 'Ask Pet AI about this robot'}</Link>
         <p className="muted robot-source-hint">{th ? 'เปิดบทความโครงการ งานวิจัย หรือหน้าผลิตภัณฑ์ในแท็บใหม่' : 'Opens the project article, research paper or product page in a new tab.'}</p>
       </section>
     </div>

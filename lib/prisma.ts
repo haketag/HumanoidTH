@@ -24,10 +24,11 @@ function getPrismaClient(): PrismaClient {
     url.searchParams.delete("sslmode");
     adapter = new PrismaPg({
       connectionString: url.toString(),
+      max: 3,
       ssl: { ca: supabasePoolerCa, rejectUnauthorized: true }
     });
   } else {
-    adapter = new PrismaPg(connectionString);
+    adapter = new PrismaPg({ connectionString, max: 3 });
   }
 
   const client = new PrismaClient({

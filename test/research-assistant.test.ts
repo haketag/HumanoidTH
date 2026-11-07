@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { parseOpenAlexPublicationDate, reconstructOpenAlexAbstract } from "../lib/ingest/adapters";
-import { excerptAnswer, safeSourceUrl, searchTerms } from "../lib/research-assistant";
+import { excerptAnswer, rankEvidence, safeSourceUrl, searchTerms, type Evidence } from "../lib/research-assistant";
 import { createPlanOwnerToken, hashPlanOwnerToken, isValidPlanOwnerToken, planInputSchema, validatePlanOrigin } from "../lib/living-lab-plans";
 
 test("reconstructs an OpenAlex abstract in token order", () => {
@@ -39,6 +39,26 @@ test("does not infer that research is absent when retrieval returns no records",
   assert.equal(result.mode, "no_results");
   assert.match(result.answer, /does not establish/i);
   assert.equal(result.evidence.length, 0);
+});
+
+test("extractive answer includes matching database text and citation numbers without Gemini", () => {
+  const evidence: Evidence[] = [{
+    id: "source-1", type: "source", title: "NAO group activity", excerpt: "The study explored a NAO robot in a group activity with older adults.",
+    url: "https://example.org/study", citation: 1, status: "ACCEPTED"
+  }];
+  const result = excerptAnswer(evidence, "NAO older adults", "researcher", "en");
+  assert.equal(result.mode, "extractive");
+  assert.match(result.answer, /\[1\] NAO group activity/);
+  assert.match(result.answer, /older adults/);
+  assert.match(result.answer, /original study's population/);
+});
+
+test("ranks title matches above weak excerpt-only matches", () => {
+  const evidence: Evidence[] = [
+    { id: "weak", type: "source", title: "Social robotics overview", excerpt: "A general paper that mentions NAO once.", url: null, citation: 0, status: "ACCEPTED" },
+    { id: "strong", type: "robot", title: "NAO humanoid robot", excerpt: "A robot registry entry.", url: null, citation: 0, status: "Registry record" }
+  ];
+  assert.deepEqual(rankEvidence(evidence, "NAO robot").map((item) => item.id), ["strong", "weak"]);
 });
 
 test("keeps role guidance separate from authorization", () => {

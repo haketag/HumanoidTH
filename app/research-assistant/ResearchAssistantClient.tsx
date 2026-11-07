@@ -58,9 +58,11 @@ function makePlan(form: PlanForm, th: boolean): PlanForm {
   return { ...form, title: (th ? `แผน Living Lab: ${activity}` : `Living Lab plan: ${activity}`).slice(0, 120), objective, steps };
 }
 
-export default function ResearchAssistantClient({ lang, geminiConfigured, initialQuestion = "" }: { lang: "en" | "th"; geminiConfigured: boolean; initialQuestion?: string }) {
+export default function ResearchAssistantClient({ lang, geminiConfigured, initialQuestion = "", initialRobotId = "", initialRobotName = "" }: { lang: "en" | "th"; geminiConfigured: boolean; initialQuestion?: string; initialRobotId?: string; initialRobotName?: string }) {
   const th = lang === "th";
   const [question, setQuestion] = useState(initialQuestion);
+  const [robotId, setRobotId] = useState(initialRobotId);
+  const [robotName, setRobotName] = useState(initialRobotName);
   const [role, setRole] = useState<Role>("general");
   const [aiConsent, setAiConsent] = useState(false);
   const [result, setResult] = useState<ResearchResponse | null>(null);
@@ -75,6 +77,8 @@ export default function ResearchAssistantClient({ lang, geminiConfigured, initia
   const [staleEvidenceIds, setStaleEvidenceIds] = useState<string[]>([]);
   const [saving, setSaving] = useState(false);
   const [deletingId, setDeletingId] = useState("");
+  const [feedbackSent, setFeedbackSent] = useState(false);
+  const [feedbackError, setFeedbackError] = useState("");
 
   const loadPlans = useCallback(async () => {
     setPlansLoading(true);
@@ -91,16 +95,31 @@ export default function ResearchAssistantClient({ lang, geminiConfigured, initia
 
   async function ask(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault(); setLoading(true); setError(""); setNotice(""); setResult(null); setDraftId(""); setSaved(false); setStaleEvidenceIds([]);
+    setFeedbackSent(false); setFeedbackError("");
     try {
       const response = await fetch("/api/research-assistant", {
-        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ question: question.trim(), role, language: lang, allowGemini: geminiConfigured && aiConsent, adultConfirmed: geminiConfigured && aiConsent })
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ question: question.trim(), role, language: lang, robotId: robotId || undefined, allowGemini: geminiConfigured && aiConsent, adultConfirmed: geminiConfigured && aiConsent })
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || (th ? "ค้นข้อมูลไม่สำเร็จ" : "Search failed"));
       setResult(data as ResearchResponse);
+      if (data.robotContext) { setRobotId(data.robotContext.id); setRobotName(data.robotContext.name); }
       setForm({ ...EMPTY_PLAN, question: question.trim(), role, evidence: data.evidence });
     } catch (failure) { setError(failure instanceof Error ? failure.message : (th ? "ค้นข้อมูลไม่สำเร็จ" : "Search failed")); }
     finally { setLoading(false); }
+  }
+
+  async function sendAnswerFeedback(vote: "HELPFUL" | "NOT_HELPFUL") {
+    if (!result || feedbackSent) return;
+    setFeedbackError("");
+    try {
+      const response = await fetch("/api/research-assistant/feedback", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ vote, questionCategory: result.intent || "general", robotId: robotId || null, externalSearchUsed: result.externalSearchStatus === "used" })
+      });
+      if (!response.ok) throw new Error("feedback unavailable");
+      setFeedbackSent(true);
+    } catch { setFeedbackError(th ? "ส่ง feedback ไม่สำเร็จ ลองอีกครั้งได้" : "Could not save feedback. Please try again."); }
   }
 
   function buildPlan() {
@@ -172,7 +191,9 @@ export default function ResearchAssistantClient({ lang, geminiConfigured, initia
   const hasEvidence = Boolean(result?.evidence.length);
 
   return <div style={{ display: "grid", gap: 18, maxWidth: 1000 }}>
-    <header><h1>Research Assistant · Living Lab</h1><p className="muted">{th ? "ค้นหลักฐานใน HumanoidTH แล้วเปลี่ยนเป็นแผน HRI Wellness ที่ตรวจสอบที่มาและแก้ไขเป็นรุ่นได้" : "Search HumanoidTH evidence, then turn it into a source-linked, versioned HRI wellness plan."}</p></header>
+    <header><h1>Pet AI · Research Assistant</h1><p className="muted">{th ? "ถามจากข้อมูล HumanoidTH พร้อมแหล่งอ้างอิง แล้วต่อยอดเป็นแผน HRI Living Lab ได้" : "Ask about HumanoidTH data with citations, then turn the evidence into an HRI Living Lab plan."}</p></header>
+
+    {robotId && <section className="panel" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}><span>{th ? "กำลังถามเกี่ยวกับ:" : "Asking about:"} <strong>{robotName || robotId}</strong></span><div style={{ display: "flex", gap: 8 }}><Link className="button" href="/robots">{th ? "เปลี่ยนหุ่นยนต์" : "Change robot"}</Link><button type="button" onClick={() => { setRobotId(""); setRobotName(""); }}>{th ? "เอาบริบทออก" : "Remove context"}</button></div></section>}
 
     <section className="panel" aria-live="polite" style={{ display: "flex", alignItems: "center", gap: 14 }}>
       <div aria-hidden="true" style={{ width: 48, height: 48, borderRadius: 16, display: "grid", placeItems: "center", background: "#e9f7ee", fontSize: 25 }}>🤖</div>
@@ -187,20 +208,21 @@ export default function ResearchAssistantClient({ lang, geminiConfigured, initia
         <option value="general">General · {th ? "สรุปสั้นและอ่านง่าย" : "plain-language overview"}</option>
       </select><small>{th ? "บทบาทปรับแนวทางช่วยคิดเท่านั้น ไม่เปลี่ยนสิทธิ์ข้อมูล" : "Role changes the guidance only; it never changes data access."}</small></label>
       <label>{th ? "คำถามหรือ scenario" : "Question or scenario"}<textarea value={question} onChange={(event) => setQuestion(event.target.value)} rows={3} maxLength={500} required placeholder={th ? "เช่น เรามี NAO อยากทำกิจกรรมสนทนากลุ่มผู้สูงอายุ มีหลักฐานและข้อควรระวังอะไร?" : "Example: We have a NAO for a group activity with older adults. What evidence and limits should we check?"} style={{ display: "block", width: "100%", marginTop: 6 }} /></label>
-      {geminiConfigured && <label style={{ display: "flex", alignItems: "flex-start", gap: 8 }}><input type="checkbox" checked={aiConsent} onChange={(event) => setAiConsent(event.target.checked)} /><span>{th ? "ฉันอายุ 18 ปีขึ้นไป และยินยอมส่งคำถามกับข้อมูลสาธารณะที่ค้นพบให้ Google Gemini ช่วยร่างคำตอบ ห้ามใส่ชื่อหรือข้อมูลส่วนบุคคล" : "I am 18 or older and consent to sending my question and retrieved public records to Google Gemini for a draft. Do not include personal data."}</span></label>}
-      {!geminiConfigured && <small>{th ? "Gemini ยังไม่ได้ตั้งค่า ระบบค้นหลักฐานและสร้างโครงร่างแบบ extractive ได้" : "Gemini is not configured; evidence retrieval and extractive planning remain available."}</small>}
-      <button className="primary" type="submit" disabled={loading || question.trim().length < 3}>{loading ? (th ? "กำลังค้น..." : "Searching...") : (th ? "ค้นข้อมูลพร้อมหลักฐาน" : "Search with evidence")}</button>
+      <div><small>{th ? "ลองถาม:" : "Try asking:"}</small><div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 6 }}>{(th ? ["ผู้ผลิตคือใคร", "มีงานวิจัยอะไร", "เปรียบเทียบกับรุ่นอื่น", "มีข้อมูลราคา/จำหน่ายไหม"] : ["Who makes it?", "What research is linked?", "Compare with another robot", "Is current pricing available?"]).map((sample) => <button key={sample} type="button" onClick={() => setQuestion(robotName ? `${robotName} ${sample}` : sample)}>{sample}</button>)}</div></div>
+      {geminiConfigured && <label style={{ display: "flex", alignItems: "flex-start", gap: 8 }}><input type="checkbox" checked={aiConsent} onChange={(event) => setAiConsent(event.target.checked)} /><span>{th ? "ฉันอายุ 18 ปีขึ้นไป และยินยอมส่งคำถามกับข้อความจากข้อมูลสาธารณะที่ค้นพบให้ Google Gemini ช่วยร่างคำตอบ ห้ามใส่ชื่อหรือข้อมูลส่วนบุคคล" : "I am 18 or older and consent to sending my question and retrieved public records to Google Gemini for a draft. Do not include personal data."}</span></label>}
+      {!geminiConfigured && <small>{th ? "Gemini ยังไม่ได้ตั้งค่า · คำตอบจะแสดงข้อความจากรายการในระบบพร้อมแหล่งอ้างอิง" : "Gemini is not configured; answers use retrieved system excerpts with citations."}</small>}
+      <button className="primary" type="submit" disabled={loading || question.trim().length < 3}>{loading ? (th ? "กำลังค้นฐานข้อมูล..." : "Searching HumanoidTH...") : (th ? "ถาม Pet AI" : "Ask Pet AI")}</button>
     </form>
     {error && <p role="alert" style={{ color: "var(--danger)" }}>{error}</p>}
     {notice && <p role="status">{notice}</p>}
     {staleEvidenceIds.length > 0 && <p role="alert" className="panel">{th ? `หลักฐาน ${staleEvidenceIds.length} รายการในแผนนี้ไม่อยู่ในชุดข้อมูลสาธารณะปัจจุบัน กรุณาค้นใหม่ก่อนบันทึก revision; ยังดาวน์โหลด snapshot เดิมได้` : `${staleEvidenceIds.length} evidence item(s) in this plan are no longer in the current public corpus. Search again before saving a revision; the saved snapshot can still be downloaded.`}</p>}
 
     {result && <section className="panel" aria-live="polite"><h2>{result.mode === "gemini" ? (th ? "ร่างสังเคราะห์จาก Gemini · ตรวจแหล่งอ้างอิง" : "Gemini-assisted draft · verify citations") : hasEvidence ? (th ? "สรุปผลค้นจากฐานข้อมูล" : "Database search summary") : (th ? "ไม่พบในชุดข้อมูลที่ค้น" : "Not found in the searched corpus")}</h2><p style={{ whiteSpace: "pre-wrap" }}>{result.answer.split(/(\[\d+\])/g).map((part, index) => { const match = /^\[(\d+)\]$/.exec(part); return match ? <a key={index} href={`#source-${match[1]}`}>{part}</a> : <span key={index}>{part}</span>; })}</p>
-      {result.aiStatus === "unavailable" && <p role="status">{th ? "Gemini ใช้งานไม่ได้ในขณะนี้ แสดงผลค้นจากฐานข้อมูลโดยไม่สร้างคำตอบทดแทน" : "Gemini is unavailable. Showing database retrieval without generated replacement text."}</p>}
-      {result.aiStatus === "not_configured" && <p className="muted">{th ? "ยังไม่ได้ตั้งค่า Gemini API key/model · คำตอบนี้เป็น extractive" : "Gemini API key/model are not configured; this is an extractive response."}</p>}
-      {result.aiStatus === "not_consented" && <p className="muted">{th ? "ไม่ได้ส่งข้อมูลไป Gemini เพราะยังไม่ได้ให้ความยินยอม · แสดงผลค้นแบบ extractive" : "Nothing was sent to Gemini because consent was not given; showing extractive retrieval."}</p>}
-      {result.aiStatus === "rate_limited" && <p role="status">{th ? "ถึงขีดจำกัดการเรียก Gemini ชั่วคราวแล้ว แสดงผลค้นแบบ extractive โปรดลองใหม่ภายหลัง" : "Gemini request limit reached for this window. Showing extractive retrieval; try again later."}</p>}
-      {hasEvidence && <><h3>{th ? "ข้อจำกัดและสิ่งที่ยังไม่รู้" : "Limitations and unknowns"}</h3><ul>{(result.limitations || []).map((item, i) => <li key={`l${i}`}>{item}</li>)}{(result.unknowns || []).map((item, i) => <li key={`u${i}`}>{item}</li>)}</ul><small>{th ? "Accepted/Approved เป็นสถานะ workflow ไม่ใช่การตรวจข้อเท็จจริงอย่างอิสระ · AI ช่วยจัดข้อมูลไม่ใช่ผู้ประเมินหลักฐาน" : "Accepted/Approved are workflow states, not independent fact checks. AI organizes evidence; it does not validate it."}</small></>}
+      {result.aiStatus === "unavailable" && <p role="status">{th ? "Gemini ใช้งานไม่ได้ในขณะนี้ จึงแสดงข้อความหลักฐานจากฐานข้อมูลพร้อมแหล่งอ้างอิงแทน" : "Gemini is unavailable; showing retrieved database excerpts with citations."}</p>}
+      {result.aiStatus === "not_configured" && <p className="muted">{th ? "ยังไม่ได้ตั้งค่า Gemini API key/model · คำตอบนี้ยกข้อความที่ตรงจากข้อมูลในระบบพร้อม citation" : "Gemini API key/model are not configured; this answer quotes matching system records with citations."}</p>}
+      {result.aiStatus === "not_consented" && <p className="muted">{th ? "ไม่ได้ส่งข้อมูลไป Gemini เพราะยังไม่ได้ให้ความยินยอม · คำตอบใช้ข้อความจากข้อมูลในระบบพร้อม citation" : "Nothing was sent to Gemini because consent was not given; the answer uses retrieved system excerpts with citations."}</p>}
+      {result.aiStatus === "rate_limited" && <p role="status">{th ? "ถึงขีดจำกัดการเรียก Gemini ชั่วคราวแล้ว · แสดงข้อความหลักฐานจากฐานข้อมูลพร้อม citation" : "Gemini request limit reached; showing retrieved database excerpts with citations."}</p>}
+      {hasEvidence && <><h3>{th ? "ข้อจำกัดและสิ่งที่ยังไม่รู้" : "Limitations and unknowns"}</h3><ul>{(result.limitations || []).map((item, i) => <li key={`l${i}`}>{item}</li>)}{(result.unknowns || []).map((item, i) => <li key={`u${i}`}>{item}</li>)}</ul><small>{th ? "Accepted/Approved เป็นสถานะ workflow ไม่ใช่การตรวจข้อเท็จจริงอย่างอิสระ · เมื่อเปิดใช้ AI จะช่วยจัดข้อมูล ไม่ใช่ผู้ประเมินหลักฐาน" : "Accepted/Approved are workflow states, not independent fact checks. When enabled, AI organizes evidence; it does not validate it."}</small></>}
     </section>}
 
     {hasEvidence && <section><h2>{th ? "หลักฐานที่พบ" : "Retrieved evidence"}</h2><EvidenceCards items={result?.evidence ?? []} th={th} /></section>}

@@ -269,6 +269,18 @@ model SourcePullJob {
   @@index([status])
 }
 
+model ResearchAssistantFeedback {
+  id                 String   @id @default(cuid())
+  vote               String
+  questionCategory   String
+  robotId            String?
+  externalSearchUsed Boolean  @default(false)
+  createdAt          DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([robotId, createdAt])
+}
+
 model OwnedInventory {
   id                 String      @id @default(cuid())
   robotModelId       String?

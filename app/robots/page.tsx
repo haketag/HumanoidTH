@@ -99,7 +99,7 @@ export default async function RobotsPage() {
               <p><span className="badge">{robot.robotType}</span> <span className="badge">{robot.thailandStatus}</span></p>
               <p><strong>{robot.manufacturer ?? robot.developerOrg ?? "Unknown developer"}</strong><br />{robot.primaryUseCase ?? "Use case unclassified"}</p>
               {profile.sourceUrl && <a className="button robot-source-button" href={profile.sourceUrl} target="_blank" rel="noopener noreferrer" aria-label={`${lang === "th" ? "เปิดเอกสารต้นทางของ" : "Open original source for"} ${robot.canonicalName} (${lang === "th" ? "แท็บใหม่" : "new tab"})`}><ExternalLink size={16} aria-hidden="true" />{lang === "th" ? "เปิดเอกสารต้นทาง" : "Original source"}</a>}
-              <div style={{ marginTop: 10 }}><Link className="button" href={`/research-assistant?q=${encodeURIComponent(`What evidence and limitations are available for ${robot.canonicalName}?`)}`}>Ask Research Assistant</Link></div>
+              <div style={{ marginTop: 10 }}><Link className="button" href={`/research-assistant?robotId=${encodeURIComponent(robot.id)}&q=${encodeURIComponent(`What evidence and limitations are available for ${robot.canonicalName}?`)}`}>Ask Pet AI</Link></div>
               {evidenceUrl && <p><a href={evidenceUrl} target="_blank" rel="noopener noreferrer">{lang === "th" ? "หลักฐานที่ส่งมา" : "Submitted evidence"}</a></p>}
             </article>
           );
