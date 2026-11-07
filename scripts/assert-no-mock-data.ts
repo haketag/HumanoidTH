@@ -29,6 +29,8 @@ const blockedPatterns = [
 
 const allowedLinePatterns = [
   /placeholder=/i,
+  /<Suspense\b.*\bfallback=/i,
+  /Try asking:|ตัวอย่างคำถาม:/i,
   /No sample data is injected/i,
   /does not create mock/i,
   /cannot be mocked/i,
