@@ -1,12 +1,14 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { parseOpenAlexAccessLinks, parseOpenAlexPublicationDate, reconstructOpenAlexAbstract } from "../lib/ingest/adapters";
-import { excerptAnswer, rankEvidence, safeSourceUrl, searchTerms, type Evidence } from "../lib/research-assistant";
+import { excerptAnswer, insufficientEvidenceAnswer, rankEvidence, safeSourceUrl, searchTerms, type Evidence } from "../lib/research-assistant";
 import { createPlanOwnerToken, hashPlanOwnerToken, isValidPlanOwnerToken, planInputSchema, validatePlanOrigin } from "../lib/living-lab-plans";
 import { assessEvidenceConfidence, shouldSearchExternal } from "../lib/ai/confidence";
 import { buildResearchContext, classifyResearchIntent } from "../lib/ai/intent";
 import { researchFeedbackSchema } from "../lib/ai/feedback";
 import { robotCatalogAnswer } from "../lib/ai/robot-context";
+import { EXPERT_ROLE_CONFIGS, EXPERT_ROLE_IDS, getExpertInstruction, isExpertRole } from "../lib/ai/expert-roles";
+import { parseChatHistory, serializeChatHistory, type StoredConversation } from "../lib/ai/chat-history";
 
 test("reconstructs an OpenAlex abstract in token order", () => {
   assert.equal(reconstructOpenAlexAbstract({
@@ -44,6 +46,37 @@ test("keeps only public HTTP(S) OpenAlex full-text and landing-page URLs", () =>
 
 test("deduplicates query terms and ignores common Thai stop words", () => {
   assert.deepEqual(searchTerms("หุ่นยนต์ NAO และ NAO"), ["nao"]);
+  assert.deepEqual(searchTerms("มีหุ่นแนะนำไหม"), []);
+  assert.deepEqual(searchTerms("Who makes NAO? And which country is it from?"), ["nao"]);
+  assert.ok(searchTerms("หุ่นยนต์สำหรับช่วยยกของในโกดัง").includes("warehouse"));
+  assert.ok(searchTerms("หุ่นยนต์สำหรับช่วยยกของในโกดัง").includes("lifting"));
+});
+
+test("defines exactly three distinct server-side expert roles", () => {
+  assert.deepEqual(EXPERT_ROLE_IDS, ["robotics_engineer", "research_scientist", "hri_wellness_specialist"]);
+  assert.equal(isExpertRole("robotics_engineer"), true);
+  assert.equal(isExpertRole("company"), false);
+  assert.equal(new Set(EXPERT_ROLE_IDS.map((role) => getExpertInstruction(role))).size, 3);
+  assert.match(EXPERT_ROLE_CONFIGS.research_scientist.instruction, /methodology|method/i);
+  assert.match(EXPERT_ROLE_CONFIGS.hri_wellness_specialist.instruction, /clinical/i);
+  assert.match(EXPERT_ROLE_CONFIGS.robotics_engineer.instruction, /actuators|control/i);
+});
+
+test("persists bounded per-browser chat snapshots and rejects invalid roles or unsafe links", () => {
+  const chat: StoredConversation = {
+    id: "chat-one", title: "NAO facts", expertRole: "research_scientist", robotId: "nao-id", robotName: "NAO",
+    createdAt: "2026-11-07T00:00:00Z", updatedAt: "2026-11-07T00:00:00Z",
+    messages: [{
+      id: "turn-one", question: "Who makes NAO?", answer: "SoftBank [1]", expertRole: "research_scientist",
+      response: { answer: "SoftBank [1]", evidence: [{ id: "nao", type: "robot", title: "NAO", excerpt: "Manufacturer: SoftBank", url: "javascript:alert(1)", citation: 1, status: "Registry" }], mode: "extractive", role: "researcher", limitations: [], unknowns: [] }
+    }]
+  };
+  const restored = parseChatHistory(serializeChatHistory([chat]));
+  assert.equal(restored.length, 1);
+  assert.equal(restored[0].expertRole, "research_scientist");
+  assert.equal(restored[0].messages[0].response.evidence[0].url, null);
+  assert.equal(parseChatHistory(JSON.stringify([{ ...chat, expertRole: "admin" }])).length, 0);
+  assert.deepEqual(parseChatHistory("not-json"), []);
 });
 
 test("classifies broad robot list questions as catalog requests and answers from registry entries", () => {
@@ -84,7 +117,18 @@ test("extractive answer includes matching database text and citation numbers wit
   assert.match(result.answer, /original study's population/);
 });
 
-test("research excerpts trigger source reading/web research, while sufficient facts do not", () => {
+test("insufficient evidence produces a concise source pointer instead of concatenated excerpts", () => {
+  const evidence: Evidence[] = [1, 2, 3, 4].map((citation) => ({
+    id: `source-${citation}`, type: "source", title: `Paper ${citation}`, excerpt: "A long imported excerpt that should not be copied into the fallback answer.",
+    url: null, citation, status: "ACCEPTED"
+  }));
+  const answer = insufficientEvidenceAnswer(evidence, "th");
+  assert.match(answer, /พบข้อมูลที่อาจเกี่ยวข้อง 4 รายการ/);
+  assert.match(answer, /\[1\] \[2\] \[3\]/);
+  assert.doesNotMatch(answer, /Paper 1|long imported excerpt/);
+});
+
+test("external research runs for research and robot facts, with internal records as context", () => {
   const paper: Evidence = {
     id: "paper-1", type: "source", title: "NAO older adults group activity research", excerpt: "An abstract describing a feasibility study.",
     url: "https://example.org/paper", citation: 1, status: "ACCEPTED"
@@ -102,7 +146,16 @@ test("research excerpts trigger source reading/web research, while sufficient fa
   };
   const direct = assessEvidenceConfidence("NAO manufacturer", [sufficient], "robot_detail");
   assert.equal(direct.level, "HIGH");
-  assert.equal(shouldSearchExternal("NAO manufacturer", direct.level, "robot_detail"), false);
+  assert.equal(shouldSearchExternal("NAO manufacturer", direct.level, "robot_detail"), true);
+
+  const relatedRepository: Evidence = {
+    id: "repo-1", type: "source", title: "Unitree G1 autonomous navigation", excerpt: "A GitHub repository for a Unitree G1 project.",
+    url: "https://github.com/example/unitree-g1", citation: 1, status: "ACCEPTED"
+  };
+  const missingRegistry = assessEvidenceConfidence("Who manufactures Unitree G1?", [relatedRepository], "robot_detail");
+  assert.equal(missingRegistry.level, "LOW");
+  assert.match(missingRegistry.reason, /robot registry/i);
+  assert.equal(shouldSearchExternal("Who manufactures Unitree G1?", missingRegistry.level, "robot_detail"), true);
 });
 
 test("robot catalog retrieval does not trigger external search", () => {
@@ -123,7 +176,9 @@ test("follow-up retrieval keeps the robot from earlier user turns without trusti
 
 test("validates minimal answer feedback and optional issue/comment fields", () => {
   assert.equal(researchFeedbackSchema.safeParse({ vote: "HELPFUL" }).success, true);
+  assert.equal(researchFeedbackSchema.safeParse({ vote: "HELPFUL", expertRole: "research_scientist" }).success, true);
   assert.equal(researchFeedbackSchema.safeParse({ vote: "NOT_HELPFUL", issueCategory: "broken_source", comment: "Link returns 404" }).success, true);
+  assert.equal(researchFeedbackSchema.safeParse({ vote: "HELPFUL", expertRole: "admin" }).success, false);
   assert.equal(researchFeedbackSchema.safeParse({ vote: "NOT_HELPFUL", issueCategory: "unknown" }).success, false);
   assert.equal(researchFeedbackSchema.safeParse({ vote: "NOT_HELPFUL", comment: "x".repeat(501) }).success, false);
 });
@@ -143,6 +198,8 @@ test("manufacturer questions for a named robot exclude unrelated robot records",
   ];
   const ranked = rankEvidence(evidence, "Who manufactures the NAO robot?");
   assert.deepEqual(ranked.map((item) => item.id), ["nao"]);
+  const followUp = rankEvidence(evidence, "Who makes NAO? And which country is it from?");
+  assert.deepEqual(followUp.map((item) => item.id), ["nao"]);
   const answer = excerptAnswer(ranked, "Who manufactures the NAO robot?", "general", "en");
   assert.match(answer.answer, /NAO: Manufacturer listed in HumanoidTH — SoftBank Robotics/);
   assert.doesNotMatch(answer.answer, /CORGI/);

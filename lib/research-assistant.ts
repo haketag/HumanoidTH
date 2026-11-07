@@ -15,10 +15,14 @@ export type Evidence = {
   facts?: Record<string, string>;
 };
 
-export type ExternalSource = { citation: number; title: string; url: string; sourceKind: "official" | "academic" | "external" };
+export type ExternalSource = { citation: number; title: string; url: string; sourceKind: "official" | "academic" | "external"; contentLevel?: "intro" | "abstract" | "metadata" | "internal" };
 
 export type ResearchResponse = {
   answer: string;
+  researchProvider?: "public" | "google";
+  retrievedAt?: string;
+  evidenceChecks?: { citationIdsValid: boolean; quotesMatched: boolean; independentlyVerified: false };
+  citationEvidence?: Array<{ citation: number; quote: string }>;
   evidence: Evidence[];
   mode: "extractive" | "gemini" | "web" | "no_results";
   role: ResearchRole;
@@ -39,14 +43,36 @@ const MAX_EXTRACTIVE_CLAIMS = 3;
 const MAX_EXCERPT_LENGTH = 360;
 
 const stopWords = new Set([
-  "about", "after", "also", "company", "from", "have", "into", "makes", "more", "that", "them", "there", "this", "what", "when", "where", "which", "with",
+  "about", "after", "also", "and", "company", "from", "have", "into", "it", "makes", "more", "that", "them", "there", "this", "what", "when", "where", "which", "with", "the", "a", "an", "is", "are", "do", "does", "can", "could", "would", "should", "tell", "me", "please", "list", "database", "system", "was",
   "who", "made", "manufacturer", "manufactures", "developer", "robot", "robots", "humanoid", "price", "availability", "country", "origin",
-  "และ", "หรือ", "ของ", "ใน", "กับ", "จาก", "เกี่ยวกับ", "อะไร", "อย่างไร", "ไหม", "ได้", "มี", "เป็น", "ที่", "สำหรับ", "ใคร", "ผู้ผลิต", "ผู้พัฒนา", "หุ่นยนต์", "ราคา"
+  "และ", "หรือ", "ของ", "ใน", "กับ", "จาก", "เกี่ยวกับ", "อะไร", "อย่างไร", "ไหม", "ไหมบ้าง", "ได้", "ได้บ้าง", "มี", "เป็น", "ที่", "สำหรับ", "ใคร", "ผู้ผลิต", "ผู้", "ผลิต", "ผู้พัฒนา", "หุ่นยนต์", "หุ่น", "ยนต์", "รุ่น", "ไหน", "บ้าง", "ฐาน", "ข้อมูล", "คือ", "ทำ", "ต่าง", "กัน", "อย่าง", "ไร", "หรือไม่", "ยัง", "แล้ว", "ฉัน", "ผม", "เรา", "ช่วย", "หน่อย", "บอก", "รายการ", "ทั้งหมด", "ในระบบ", "แนะนำ"
 ]);
 
 export function searchTerms(question: string) {
-  return [...new Set(question.toLocaleLowerCase().match(/[a-z0-9][a-z0-9-]{1,}|[ก-๙]{2,}/g) ?? [])]
+  const lower = question.toLocaleLowerCase();
+  const extracted: string[] = [];
+  if (typeof Intl.Segmenter === "function") {
+    const segmenter = new Intl.Segmenter("th", { granularity: "word" });
+    for (const part of segmenter.segment(lower)) {
+      if (part.isWordLike && /[a-z0-9ก-๙]/i.test(part.segment)) extracted.push(part.segment);
+    }
+  } else {
+    extracted.push(...(lower.match(/[a-z0-9][a-z0-9-]{1,}|[ก-๙]{2,}/g) ?? []));
+  }
+  const expansions: Array<[RegExp, string]> = [
+    [/งานวิจัย|วิจัย|paper|study|research/i, "research"],
+    [/คลังสินค้า|โกดัง|warehouse/i, "warehouse"],
+    [/ยกของ|ยก|lifting|payload/i, "lifting"],
+    [/โรงงาน|factory/i, "factory"],
+    [/โรงพยาบาล|hospital/i, "hospital"],
+    [/ผู้สูงอายุ|สูงวัย|older adults?/i, "older adults"],
+    [/คลัง|inventory/i, "inventory"]
+  ];
+  const expanded = expansions.filter(([pattern]) => pattern.test(question)).map(([, term]) => term);
+  return [...new Set([...extracted, ...expanded])]
     .filter((term) => !stopWords.has(term))
+    .filter((term) => !/^[0-9]+$/.test(term))
+    .filter((term) => !/[ก-๙]/.test(term) || !/(ผู้ผลิต|ใคร|คือ|อะไร|อย่างไร|เท่าไหร่|ราคา|ต่างกัน|ยังไง|ทำอะไร|งานอะไร|เหมาะ|ในไทย|ประเทศไทย|มีขาย|จำหน่าย)/.test(term))
     .slice(0, 10);
 }
 
@@ -60,21 +86,21 @@ function evidenceScore(item: Evidence, terms: string[], question: string) {
   const exactQuestion = normalizedText(question);
   const titleHits = terms.filter((term) => title.includes(term)).length;
   const excerptHits = terms.filter((term) => excerpt.includes(term)).length;
-  const robotFactQuestion = /\b(manufacturer|manufactures|developer|who (?:makes|made|manufactures)|which company makes|price|availability|country of origin)\b|ผู้ผลิต|ผู้พัฒนา|ราคา|มีขาย|ประเทศไหน/iu.test(question);
+  const robotFactQuestion = /\b(manufacturer|manufactures|developer|who (?:makes|made|manufactures)|which company makes|price|availability|country of origin|(?:which|what) country|where (?:is|was) .+ from)\b|ผู้ผลิต|ผู้พัฒนา|ราคา|มีขาย|ประเทศไหน/iu.test(question);
   // A fact question alone is not evidence that every robot record is relevant.
   // Only boost a robot when its own name matches a query term.
   const robotFactBoost = item.type === "robot" && robotFactQuestion && titleHits > 0 ? 24 : 0;
   return titleHits * 6 + excerptHits + robotFactBoost + (exactQuestion.length > 3 && title.includes(exactQuestion) ? 12 : 0);
 }
 
-export function rankEvidence<T extends Evidence>(evidence: T[], question: string) {
+export function rankEvidence<T extends Evidence>(evidence: T[], question: string, preferredTypes: EvidenceType[] = []) {
   const terms = searchTerms(question);
-  const robotFactQuestion = /\b(manufacturer|manufactures|developer|who (?:makes|made|manufactures)|which company makes|price|availability|country of origin)\b|ผู้ผลิต|ผู้พัฒนา|ราคา|มีขาย|ประเทศไหน/iu.test(question);
+  const robotFactQuestion = /\b(manufacturer|manufactures|developer|who (?:makes|made|manufactures)|which company makes|price|availability|country of origin|(?:which|what) country|where (?:is|was) .+ from)\b|ผู้ผลิต|ผู้พัฒนา|ราคา|มีขาย|ประเทศไหน/iu.test(question);
   const hasNamedRobotMatch = robotFactQuestion && evidence.some((item) => item.type === "robot" && terms.some((term) => normalizedText(item.title).includes(term)));
   return evidence
     .filter((item) => !hasNamedRobotMatch || item.type !== "robot" || terms.some((term) => normalizedText(item.title).includes(term)))
     .map((item, index) => ({ item, index, score: evidenceScore(item, terms, question) }))
-    .sort((a, b) => b.score - a.score || a.index - b.index)
+    .sort((a, b) => b.score - a.score || (preferredTypes.includes(b.item.type) ? 1 : 0) - (preferredTypes.includes(a.item.type) ? 1 : 0) || a.index - b.index)
     .map(({ item }) => item);
 }
 
@@ -158,6 +184,14 @@ function robotFactAnswer(evidence: Evidence[], question: string, language: "th" 
       : "";
   return [claims.join("\n"), note].filter(Boolean).join("\n");
 }
+
+export function insufficientEvidenceAnswer(evidence: Evidence[], language: "th" | "en") {
+  const citations = evidence.slice(0, 3).map((item) => `[${item.citation}]`).join(" ");
+  return language === "th"
+    ? `พบข้อมูลที่อาจเกี่ยวข้อง ${evidence.length} รายการ แต่ข้อความที่ดึงมายังไม่เพียงพอสำหรับสรุปคำตอบอย่างน่าเชื่อถือ โปรดตรวจแหล่งต้นฉบับและข้อจำกัดของแต่ละรายการด้านล่าง ${citations}`.trim()
+    : `Found ${evidence.length} potentially related records, but the retrieved excerpts are not sufficient for a reliable answer. Review the original sources and each record's limitations below. ${citations}`.trim();
+}
+
 export function excerptAnswer(evidence: Evidence[], question: string, role: ResearchRole = "general", language: "th" | "en" = "th"): ResearchResponse {
   if (!evidence.length) {
     return {
