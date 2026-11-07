@@ -29,7 +29,9 @@ export async function rateLimit(scope: string, maximum = 60) {
 }
 export async function authenticate(input: unknown, register: boolean, { adminOnly = false } = {}) {
   const value = credentials.parse(input);
-  await rateLimit(`auth:${value.email}`, 8);
+  if (!adminOnly || process.env.NODE_ENV !== 'development') {
+    await rateLimit(`auth:${value.email}`, 8);
+  }
   const configuredAdmin = !adminOnly && !!process.env.ADMIN_BASIC_USER && !!process.env.ADMIN_BASIC_PASSWORD && value.email === process.env.ADMIN_BASIC_USER.toLowerCase() && tokenHash(value.password) === tokenHash(process.env.ADMIN_BASIC_PASSWORD);
   const rows = await prisma.$queryRaw<(Actor & {passwordHash:string | null})[]>`SELECT u.id,u.email,u.name,a."isAdmin",a."passwordHash" FROM "User" u LEFT JOIN "CompanyAccount" a ON a."userId"=u.id WHERE lower(u.email)=${value.email}`;
   let user = rows[0];
