@@ -100,6 +100,12 @@ pnpm dev
 ```
 Open [http://localhost:3000](http://localhost:3000) inside your browser to see the atlas alive! 🟢✨
 
+For the VS Code terminal, open the `HumanoidTH` folder and run `npm run dev`
+after installing dependencies. This starts Next.js without a background database
+sync. To explicitly start the server together with the seed watcher, use
+`npm run dev:sync` (requires a configured database and may update seed records).
+In PowerShell, `npm.cmd run dev` also works when script execution policy blocks `npm.ps1`.
+
 ---
 
 ## 🔌 API Ingestion & Data Pulls
@@ -288,7 +294,8 @@ The platform provides a suite of developer utilities for testing, data integrity
 
 | Script Command | Purpose | Details |
 | :--- | :--- | :--- |
-| `pnpm dev` | Run full dev suite | Boots the Next.js local server *and* starts the background dataset hot-reloader. |
+| `pnpm dev` / `npm run dev` | Next.js development server | Starts the local website without automatic seed writes. |
+| `pnpm dev:sync` / `npm run dev:sync` | Full dev suite | Starts Next.js and the background dataset hot-reloader; requires database configuration. |
 | `pnpm dev:next` | Next.js server only | Launches only the local Next.js client (`localhost:3000`). |
 | `pnpm seed:watch` | Hot-reloading seed sync | Watches [thailand_humanoid_atlas_seed_records.json](file:///C:/Users/HP%20OMEN/HumanoidTH/thailand_humanoid_atlas_seed_records.json) for modifications and automatically synchronizes updates into PostgreSQL. |
 | `pnpm check:no-mock-data` | Audit data integrity | Checks page components under `/app` to ensure no mock constants, fallback placeholders, or static records are used, enforcing active DB routing. |

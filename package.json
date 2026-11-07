@@ -7,7 +7,8 @@
     "node": ">=20.11"
   },
   "scripts": {
-    "dev": "tsx scripts/dev.ts",
+    "dev": "next dev",
+    "dev:sync": "tsx scripts/dev.ts",
     "dev:next": "next dev",
     "seed:watch": "tsx scripts/watch-seed.ts",
     "build": "prisma generate && next build",
